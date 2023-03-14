@@ -89,6 +89,35 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === SETUP_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === SETUP_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertType: "success",
+      alertText: action.payload.alertText,
+    };
+  }
+
+  if (action.type === SETUP_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+
   throw new Error(`No such action: ${action.type}`);
 };
 
