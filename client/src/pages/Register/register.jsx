@@ -113,7 +113,7 @@ const Register = () => {
 
 const Wrapper = styled.section`
   /* background: url("../assets/login-bg.png"); */
-  background: linear-gradient(326.9deg, #13132b 5.79%, #135e87 283.21%);
+  background: radial-gradient(circle, #2a41c5 0%, #0d1b33 100%);
   height: 100vh;
   width: 100%;
   background-size: cover;

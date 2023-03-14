@@ -13,6 +13,7 @@ const Navbar = () => {
             <h1>John Doe</h1>
             <small>@JohnDoe</small>
           </div>
+          <button className="btn">Edit profile</button>
           <div className="badge">
             <img src={badge} alt="badge" />
             <h4>Ape</h4>

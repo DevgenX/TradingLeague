@@ -38,10 +38,9 @@
 
       img {
         width: 30%;
-        border-radius: 50%;
+        clip-path: pentagon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
       }
     }
-
     .left-bar {
       display: flex;
       margin-top: 20px;
