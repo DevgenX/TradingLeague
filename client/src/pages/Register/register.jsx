@@ -1,17 +1,20 @@
-import FormRow from "../../components/FormRow/FormRow";
+import { Logo, FormRow, Alert } from "../../components";
 import styled from "styled-components";
 import { useState } from "react";
-import Logo from "../../components/Logo/Logo";
+import { useAppContext } from "../../context/appContext";
 
 const initialState = {
   name: "",
   email: "",
   password: "",
-  isUser: false,
+  isUser: true,
+  showAlert: true,
 };
 
 const Register = () => {
   const [values, setValues] = useState(initialState);
+
+  const { isLoading, showAlert, displayAlert } = useAppContext();
 
   const toggleUser = () => {
     setValues({ ...values, isUser: !values.isUser });
@@ -19,13 +22,20 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
     setValues({ ...values, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitted");
+
+    const { email, name, password, isUser } = values;
+
+    if (!email || !password || (!isUser && !name)) {
+      displayAlert();
+      return;
+    }
+
+    console.log(values);
   };
 
   return (
@@ -33,7 +43,7 @@ const Register = () => {
       <form className="form" onSubmit={handleSubmit}>
         <Logo />
         <h3>{values.isUser ? "Login" : "Register"}</h3>
-
+        {showAlert && <Alert />}
         {!values.isUser && (
           <FormRow
             type="text"
@@ -62,7 +72,7 @@ const Register = () => {
         <p>
           {values.isUser ? "Don't have an account?" : "Have an account?"}
           <button type="button" onClick={toggleUser} className="user-btn">
-            {values.isUser ? "Register" : "Login"}
+            {values.isUser ? " Register" : " Login"}
           </button>
         </p>
       </form>
