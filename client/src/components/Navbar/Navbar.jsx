@@ -1,5 +1,4 @@
 import "./navbar.scss";
-import Logo from "../Logo/Logo";
 import Profile from "../../assets/default-user.png";
 import badge from "../../assets/badge/Ape.svg";
 import { FaHome, FaBook, FaBell } from "react-icons/fa";
