@@ -8,7 +8,7 @@ const TopNav = () => {
   return (
     <Navbar className="topnav" expand="lg">
       <Container>
-        <Navbar.Brand className="brand">
+        <Navbar.Brand className="brand p-6">
           <Link to="/" className="link">
             <img src={logo} alt="img" className="nav-img" />
             TradingLeague

@@ -1,0 +1,77 @@
+.pending-container {
+  background: radial-gradient(circle, #2a41c5 0%, #0d1b33 100%);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 50%;
+  margin-top: 2rem; /* added margin */
+}
+
+.pending-title {
+  text-align: center;
+  background: linear-gradient(180deg, #56ccf2 0%, #0081ab 100%);
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.table {
+  border: none;
+
+  thead th {
+    color: white;
+    border: none;
+  }
+
+  tbody tr td:not(:last-child) {
+    border-right: none;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.table-hover tbody tr:hover {
+  background: radial-gradient(
+    circle,
+    #00bfff,
+    #2d88ff,
+    #594cff,
+    #8519ff,
+    #a600ff
+  );
+}
+
+.btn-success {
+  background-color: #17f01e !important;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}

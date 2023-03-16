@@ -297,6 +297,10 @@ ul {
   list-style: none;
 }
 
+span {
+  color: gold;
+}
+
 .link {
   text-decoration: none;
   color: #fff !important;

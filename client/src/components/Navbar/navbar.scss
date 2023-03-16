@@ -1,37 +1,65 @@
+.navbar-container {
+  background-color: transparent;
+  color: white;
+  padding: 10px;
+  margin: 20px 20px;
+}
+
+.profile-container {
+  align-items: center;
+  background: linear-gradient(284deg, #ffed00, #f80 25%, #f80, #ffed00);
+  transition: 0.4s ease;
+  background-size: 300%;
+  border-radius: 12px;
+  justify-content: space-between;
+}
+
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+}
+
 .profile {
-  margin-top: 20px;
-  width: 50%;
   border-radius: 50%;
-  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
 }
 
 .badge {
-  h4 {
-    color: white;
-    font-size: 15px;
-  }
+  display: flex;
+  margin: 10px;
 
   img {
-    clip-path: pentagon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    width: 30%;
+    height: 30%;
+  }
+
+  h4 {
+    font-size: 15px;
+    margin: 0.5rem;
   }
 }
 
 .ledgers {
   display: flex;
-  margin-top: 20px;
-  color: white;
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+}
 
-  .item {
-    display: flex;
-    justify-content: center;
-    font-size: 30px;
-    background-color: black;
-    border-radius: 50px;
-    padding: 10px;
-    margin: 10px;
+.item {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 30px;
+}
 
-    &:hover {
-      font-size: large;
-    }
-  }
+.item:hover {
+  font-size: large;
 }

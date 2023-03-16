@@ -1,146 +1,85 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import TopNav from "../TopNav/TopNav";
 import { Link } from "react-router-dom";
+import "./ranking.scss";
+
+import RankingIcon from "../../assets/ledgers/ranking.png";
+import ApeIcon from "../../assets/badge/Ape.svg";
+import DegenIcon from "../../assets/badge/Degen.svg";
+import QuantIcon from "../../assets/badge/Quant.svg";
+import FomoIcon from "../../assets/badge/Fomo.svg";
+import ScalperIcon from "../../assets/badge/Scalper.svg";
 
 const Ranking = () => {
   return (
     <div className="ranking">
-      <TopNav />
       <Container>
-        <Row>
-          <Col lg="9">
+        <Row className="justify-content-center">
+          <Col lg="8">
             <div className="page-box ranking-container mb-4">
               <div className="header">
                 <div className="img-container">
-                  <img
-                    src="/assets/img/ledgers/ranking.png"
-                    alt=""
-                    className="icon"
-                  />
+                  <img src={RankingIcon} alt="" className="icon" />
                 </div>
-                Trading League Rank Badges
+                <h1 className="rank-title">TradingLeague Rank Badges</h1>
               </div>
+
               <div className="body">
-                <div className="rank-container">
-                  <img
-                    src="../../assets/badge/Quant.svg"
-                    className="rank-img quant"
-                    alt=""
-                  />
-
-                  <h5 className="rank-title">
-                    Quant
-                    <span className="mmr">
-                      <i className="fa-solid fa-circle"></i> 3000+
-                    </span>
-                  </h5>
-                  <p className="rank-desc m-0">
-                    If you reach this rank, Alameda Research will send you an
-                    offer.
-                  </p>
+                <div className="rank-container quant">
+                  <img src={QuantIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Quant
+                      <span className="mmr">3000+</span>
+                    </h5>
+                  </div>
                 </div>
-
-                <div className="rank-container">
-                  <img
-                    src="../../assets/badge/Degen.svg"
-                    className="rank-img degen"
-                    alt=""
-                  />
-
-                  <h5 className="rank-title">
-                    Degen
-                    <span className="mmr">
-                      <i className="fa-solid fa-circle"></i> 1800-2999+
-                    </span>
-                  </h5>
-                  <p className="rank-desc m-0">
-                    Welcome to the club, fellow degen! Degens are experts in any
-                    market may it be Bull or Bear, NFTs or DeFi.
-                  </p>
+                <div className="rank-container degen">
+                  <img src={DegenIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Degen
+                      <span className="mmr">1800-2999+</span>
+                    </h5>
+                  </div>
                 </div>
-
-                <div className="rank-container">
-                  <img
-                    src="../../assets/badge/Ape.svg"
-                    className="rank-img ape"
-                    alt=""
-                  />
-
-                  <h5 className="rank-title">
-                    Ape
-                    <span className="mmr">
-                      <i className="fa-solid fa-circle"></i> 900-1799+
-                    </span>
-                  </h5>
-                  <p className="rank-desc m-0">
-                    Ape tier promotes you into an intermediate trader. Your
-                    skill level makes you profitable in the market but still
-                    lacks emotion management.
-                  </p>
+                <div className="rank-container ape">
+                  <img src={ApeIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Ape
+                      <span className="mmr">900-1799+</span>
+                    </h5>
+                  </div>
                 </div>
-
-                <div className="rank-container">
-                  <img
-                    src="../../assets/badge/Scalper.svg"
-                    className="rank-img scalper"
-                    alt=""
-                  />
-
-                  <h5 className="rank-title">
-                    Scalper
-                    <span className="mmr">
-                      <i className="fa-solid fa-circle"></i> 350-899+
-                    </span>
-                  </h5>
-                  <p className="rank-desc m-0">
-                    The Scalper is the next division after Fomo. Scalper tier
-                    users are knowledgeable enough to escape the elo hell and
-                    are considered to be slightly consistent traders.
-                  </p>
+                <div className="rank-container scalper">
+                  <img src={ScalperIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Scalper
+                      <span className="mmr">350-899+</span>
+                    </h5>
+                  </div>
                 </div>
-
-                <div className="rank-container">
-                  <img
-                    src="../../assets/badge/Fomo.svg"
-                    className="rank-img fomo"
-                    alt=""
-                  />
-
-                  <h5 className="rank-title">
-                    Fomo
-                    <span className="mmr">
-                      <i className="fa-solid fa-circle"></i> 0-349+
-                    </span>
-                  </h5>
-                  <p className="rank-desc m-0">
-                    Fomo tier marks the beginning of your trading journey in
-                    MTL. It is colored in bronze that signifies novicity and
-                    lack of experience in trading.
-                  </p>
+                <div className="rank-container fomo">
+                  <img src={FomoIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Fomo
+                      <span className="mmr">0-349+</span>
+                    </h5>
+                  </div>
                 </div>
-
-                <p
-                  className="text-center mt-5 mb-4"
-                  // style={{ color: "#9b94c1" }}
-                >
-                  The starting point of every user is in the Fomo Division with
-                  300 MMR.
-                </p>
-                <Link
-                  to="/"
-                  className="back-page-btn"
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  <i className="fa-solid fa-caret-left"></i> Game Lobby
-                </Link>
               </div>
+              <Link to="/" className="back-btn">
+                <Button>Game Lobby</Button>
+              </Link>
             </div>
-
-            {/* {user && <GameModes />} */}
           </Col>
         </Row>
       </Container>
     </div>
   );
 };
+
 export default Ranking;

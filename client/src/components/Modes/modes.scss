@@ -1,0 +1,55 @@
+@import "~bootstrap/scss/bootstrap";
+
+.modes-container {
+  border: 1px solid #39485a;
+  border-radius: 8px;
+  padding: 20px;
+  display: block;
+  background: radial-gradient(circle, #2a41c5 0%, #0d1b33 100%);
+  color: #fff;
+  font-family: "Exo 2", sans-serif;
+}
+
+.header {
+  color: #fff;
+  padding: 20px;
+  width: 100%;
+  border-bottom: 2px solid yellow;
+  margin: 20px;
+}
+
+.box1,
+.box2,
+.box3 {
+  color: #fff;
+  padding: 40px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.box1 {
+  background: linear-gradient(180deg, #991bf9 0%, #6400b0 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  font-size: 24px;
+}
+
+.box2 {
+  background: linear-gradient(180deg, #56ccf2 0%, #0081ab 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  font-size: 24px;
+}
+
+.box3 {
+  background: linear-gradient(180deg, #ff2d2e 0%, #8f0001 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  font-size: 24px;
+}
