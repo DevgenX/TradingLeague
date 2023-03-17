@@ -8,6 +8,7 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  TOGGLE_SIDEBAR,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -16,6 +17,7 @@ const token = localStorage.getItem("token");
 const initialState = {
   isLoading: false,
   showAlert: false,
+  showSidebar: false,
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
@@ -48,42 +50,6 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
-  // const registerUser = async (currentUser) => {
-  //   dispatch({ type: REGISTER_USER_BEGIN });
-  //   try {
-  //     const { data } = await axios.post("/api/v1/auth/register", currentUser);
-  //     const { user, token } = data;
-  //     dispatch({ type: REGISTER_USER_SUCCESS, payload: { user, token } });
-  //     addUserToLocalStorage({ user, token });
-  //   } catch (error) {
-  //     dispatch({
-  //       type: REGISTER_USER_ERROR,
-  //       payload: {
-  //         msg: error.response.data.msg,
-  //       },
-  //     });
-  //   }
-  //   clearAlert();
-  // };
-
-  // const loginUser = async (currentUser) => {
-  //   dispatch({ type: LOGIN_USER_BEGIN });
-  //   try {
-  //     const { data } = await axios.post("/api/v1/auth/login", currentUser);
-  //     const { user, token } = data;
-  //     dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
-  //     addUserToLocalStorage({ user, token });
-  //   } catch (error) {
-  //     dispatch({
-  //       type: LOGIN_USER_ERROR,
-  //       payload: {
-  //         msg: error.response.data.msg,
-  //       },
-  //     });
-  //   }
-  //   clearAlert();
-  // };
-
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
@@ -108,12 +74,18 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
+
   const logoutUser = () => {
     removeUserFromLocalStorage();
   };
 
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, setupUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser }}
+    >
       {children}
     </AppContext.Provider>
   );
@@ -124,3 +96,39 @@ export const useAppContext = () => {
 };
 
 export { AppProvider, initialState };
+
+// const registerUser = async (currentUser) => {
+//   dispatch({ type: REGISTER_USER_BEGIN });
+//   try {
+//     const { data } = await axios.post("/api/v1/auth/register", currentUser);
+//     const { user, token } = data;
+//     dispatch({ type: REGISTER_USER_SUCCESS, payload: { user, token } });
+//     addUserToLocalStorage({ user, token });
+//   } catch (error) {
+//     dispatch({
+//       type: REGISTER_USER_ERROR,
+//       payload: {
+//         msg: error.response.data.msg,
+//       },
+//     });
+//   }
+//   clearAlert();
+// };
+
+// const loginUser = async (currentUser) => {
+//   dispatch({ type: LOGIN_USER_BEGIN });
+//   try {
+//     const { data } = await axios.post("/api/v1/auth/login", currentUser);
+//     const { user, token } = data;
+//     dispatch({ type: LOGIN_USER_SUCCESS, payload: { user, token } });
+//     addUserToLocalStorage({ user, token });
+//   } catch (error) {
+//     dispatch({
+//       type: LOGIN_USER_ERROR,
+//       payload: {
+//         msg: error.response.data.msg,
+//       },
+//     });
+//   }
+//   clearAlert();
+// };

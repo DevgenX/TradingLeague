@@ -29,14 +29,6 @@
   tbody tr td:not(:last-child) {
     border-right: none;
   }
-
-  tbody tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
 }
 
 .table-hover tbody tr:hover {

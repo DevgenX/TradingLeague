@@ -2,7 +2,7 @@ import "./navbar.scss";
 import Profile from "../../assets/default-user.png";
 
 import { Link } from "react-router-dom";
-import { FaHome, FaBook, FaBell } from "react-icons/fa";
+
 import { useAppContext } from "../../context/appContext";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -31,7 +31,7 @@ const Navbar = () => {
             <h4>{`MMR: ${user?.mmr}`}</h4>
           </div>
         </Col>
-        <Col xs="6" md="4">
+        <Col xs="6" md="4" className="ledgers-container">
           <div className="ledgers">
             <ul>
               <li className="item">
@@ -46,7 +46,7 @@ const Navbar = () => {
               </li>
               <li className="item">
                 <Link to="/" style={{ color: "white" }}>
-                  <img src={History} />
+                  <img src={History} alt="" />
                 </Link>
               </li>
             </ul>

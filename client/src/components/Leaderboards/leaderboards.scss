@@ -22,10 +22,13 @@
   border: none;
 }
 
-.table tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 .table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background: radial-gradient(
+    circle,
+    #00bfff,
+    #2d88ff,
+    #594cff,
+    #8519ff,
+    #a600ff
+  );
 }
