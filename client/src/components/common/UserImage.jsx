@@ -4,7 +4,7 @@ const UserImage = ({ user }) => {
       {user && (
         <div className="badge-container">
           <img
-            src={`../../assets/badge/${
+            src={require(`../../assets/badge/${
               user.mmr > 2999
                 ? `Quant`
                 : user.mmr > 1799 && user.mmr < 3000
@@ -14,7 +14,7 @@ const UserImage = ({ user }) => {
                 : user.mmr > 349 && user.mmr < 900
                 ? `Scalper`
                 : "Fomo"
-            }.svg`}
+            }.svg`)}
             className="badge-img"
             alt=""
           />

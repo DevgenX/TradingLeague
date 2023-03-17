@@ -7,7 +7,9 @@ import { useAppContext } from "../../context/appContext";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserImage from "../common/UserImage";
-import badge from "../../assets/badge/Ape.svg";
+import Challenger from "../../assets/ledgers/challengers.png";
+import Ranking from "../../assets/ledgers/ranking.png";
+import History from "../../assets/ledgers/history.png";
 
 const Navbar = () => {
   const { user } = useAppContext();
@@ -24,8 +26,8 @@ const Navbar = () => {
             </div>
           </div>
           <div className="badge">
-            <img src={badge} alt="" />
-            {/* <UserImage user={user} /> */}
+            {/* <img src={badge} alt="" /> */}
+            <UserImage user={user} />
             <h4>{`MMR: ${user?.mmr}`}</h4>
           </div>
         </Col>
@@ -34,17 +36,17 @@ const Navbar = () => {
             <ul>
               <li className="item">
                 <Link to="/" style={{ color: "white" }}>
-                  <FaHome />
+                  <img src={Challenger} alt="" />
                 </Link>
               </li>
               <li className="item">
                 <Link to="/ranking" style={{ color: "white" }}>
-                  <FaBook />
+                  <img src={Ranking} alt="" />
                 </Link>
               </li>
               <li className="item">
                 <Link to="/" style={{ color: "white" }}>
-                  <FaBell />
+                  <img src={History} />
                 </Link>
               </li>
             </ul>
