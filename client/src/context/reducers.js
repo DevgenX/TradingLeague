@@ -4,8 +4,13 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
-  TOGGLE_SIDEBAR,
+  SHOW_POPUP,
+  LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "./actions";
+import { initialState } from "./appContext";
 
 const reducer = (state, action) => {
   if (action.type === SHOW_ALERT) {
@@ -55,10 +60,46 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === TOGGLE_SIDEBAR) {
+  if (action.type === SHOW_POPUP) {
     return {
       ...state,
-      showSidebar: !state.showSidebar,
+      showPopup: !state.showPopup,
+    };
+  }
+
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...initialState,
+      user: null,
+      token: null,
+    };
+  }
+
+  if (action.type === UPDATE_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: true,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Profile updated successfully!",
+    };
+  }
+
+  if (action.type === UPDATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
 
@@ -66,61 +107,3 @@ const reducer = (state, action) => {
 };
 
 export default reducer;
-
-// if (action.type === REGISTER_USER_BEGIN) {
-//   return {
-//     ...state,
-//     isLoading: true,
-//   };
-// }
-
-// if (action.type === REGISTER_USER_SUCCESS) {
-//   return {
-//     ...state,
-//     user: action.payload.user,
-//     token: action.payload.token,
-//     isLoading: false,
-//     showAlert: true,
-//     alertType: "success",
-//     alertText: "Sign up success! Redirecting...",
-//   };
-// }
-
-// if (action.type === REGISTER_USER_ERROR) {
-//   return {
-//     ...state,
-//     isLoading: false,
-//     showAlert: true,
-//     alertType: "danger",
-//     alertText: action.payload.msg,
-//   };
-// }
-
-// if (action.type === LOGIN_USER_BEGIN) {
-//   return {
-//     ...state,
-//     isLoading: true,
-//   };
-// }
-
-// if (action.type === LOGIN_USER_SUCCESS) {
-//   return {
-//     ...state,
-//     user: action.payload.user,
-//     token: action.payload.token,
-//     isLoading: false,
-//     showAlert: true,
-//     alertType: "success",
-//     alertText: "Login success! Redirecting...",
-//   };
-// }
-
-// if (action.type === LOGIN_USER_ERROR) {
-//   return {
-//     ...state,
-//     isLoading: false,
-//     showAlert: true,
-//     alertType: "danger",
-//     alertText: action.payload.msg,
-//   };
-// }

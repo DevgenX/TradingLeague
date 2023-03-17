@@ -1,10 +1,19 @@
 import express from "express";
 const router = express.Router();
 
-import { register, login, updateUser } from "../controllers/authController.js";
+import {
+  getAllUsers,
+  register,
+  login,
+  updateUser,
+  updateMMR,
+} from "../controllers/authController.js";
+import authenticateUser from "../middleware/auth.js";
 
+router.route("/users").get(getAllUsers);
 router.route("/register").post(register);
 router.route("/login").post(login);
-router.route("/updateUser").patch(updateUser);
+router.route("/updateUser").patch(authenticateUser, updateUser);
+router.route("/updateMMR").patch(updateMMR);
 
 export default router;

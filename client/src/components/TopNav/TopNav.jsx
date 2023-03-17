@@ -9,7 +9,7 @@ import { FaCaretDown } from "react-icons/fa";
 import "./topnav.scss";
 
 const TopNav = () => {
-  const { user } = useAppContext();
+  const { user, logoutUser } = useAppContext();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleDropdown = () => {
@@ -43,11 +43,7 @@ const TopNav = () => {
               >
                 Profile
               </button>
-              <button
-                type="button"
-                className="logout-btn"
-                onClick={() => console.log("Logging out user")}
-              >
+              <button type="button" className="logout-btn" onClick={logoutUser}>
                 Logout
               </button>
             </div>

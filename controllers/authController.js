@@ -2,6 +2,16 @@ import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, unAuthenticatedError } from "../errors/index.js";
 
+const getAllUsers = async (req, res, next) => {
+  const users = await User.find();
+
+  if (users) {
+    throw new BadRequestError("failed to fetch users");
+  }
+
+  res.status(StatusCodes.OK).json(users);
+};
+
 const register = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -48,8 +58,25 @@ const login = async (req, res) => {
   });
 };
 
-const updateUser = (req, res) => {
-  res.send("update user");
+const updateUser = async (req, res) => {
+  const { email, name } = req.body;
+
+  if (!email || !name) {
+    throw new BadRequestError("please provide all required values");
+  }
+
+  const user = await User.findOne({ _id: req.user.userId });
+
+  user.email = email;
+  user.name = name;
+
+  await user.save();
+  const token = user.createJWT();
+  res.status(StatusCodes.OK).json({ user, token });
 };
 
-export { register, login, updateUser };
+const updateMMR = (req, res) => {
+  res.send("update MMR");
+};
+
+export { getAllUsers, register, login, updateUser, updateMMR };

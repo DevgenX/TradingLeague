@@ -25,30 +25,12 @@ const Ranking = () => {
               </div>
 
               <div className="body">
-                <div className="rank-container quant">
-                  <img src={QuantIcon} className="rank-img" alt="" />
+                <div className="rank-container fomo">
+                  <img src={FomoIcon} className="rank-img" alt="" />
                   <div className="rank-info">
                     <h5 className="rank-title">
-                      Quant
-                      <span className="mmr">3000+</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container degen">
-                  <img src={DegenIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Degen
-                      <span className="mmr">1800-2999+</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container ape">
-                  <img src={ApeIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Ape
-                      <span className="mmr">900-1799+</span>
+                      Fomo
+                      <span className="mmr">0-349</span>
                     </h5>
                   </div>
                 </div>
@@ -57,16 +39,34 @@ const Ranking = () => {
                   <div className="rank-info">
                     <h5 className="rank-title">
                       Scalper
-                      <span className="mmr">350-899+</span>
+                      <span className="mmr">350-899</span>
                     </h5>
                   </div>
                 </div>
-                <div className="rank-container fomo">
-                  <img src={FomoIcon} className="rank-img" alt="" />
+                <div className="rank-container ape">
+                  <img src={ApeIcon} className="rank-img" alt="" />
                   <div className="rank-info">
                     <h5 className="rank-title">
-                      Fomo
-                      <span className="mmr">0-349+</span>
+                      Ape
+                      <span className="mmr">900-1799</span>
+                    </h5>
+                  </div>
+                </div>
+                <div className="rank-container degen">
+                  <img src={DegenIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Degen
+                      <span className="mmr">1800-2999</span>
+                    </h5>
+                  </div>
+                </div>
+                <div className="rank-container quant">
+                  <img src={QuantIcon} className="rank-img" alt="" />
+                  <div className="rank-info">
+                    <h5 className="rank-title">
+                      Quant
+                      <span className="mmr">3000+</span>
                     </h5>
                   </div>
                 </div>
