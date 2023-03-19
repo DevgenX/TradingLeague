@@ -10,6 +10,7 @@ import {
   SETUP_USER_ERROR,
   LOGOUT_USER,
   SHOW_POPUP,
+  HIDE_POPUP,
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
@@ -116,6 +117,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SHOW_POPUP });
   };
 
+  const hidePopup = () => {
+    dispatch({ type: HIDE_POPUP });
+  };
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
@@ -155,6 +160,7 @@ const AppProvider = ({ children }) => {
         logoutUser,
         updateUser,
         showPopup,
+        hidePopup,
       }}
     >
       {children}

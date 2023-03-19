@@ -7,9 +7,11 @@ import defaultUser from "../../assets/default-user.png";
 import { useAppContext } from "../../context/appContext";
 import { FaCaretDown } from "react-icons/fa";
 import "./topnav.scss";
+import styled from "styled-components";
+import PopupForm from "../common/Editprofile";
 
 const TopNav = () => {
-  const { user, logoutUser } = useAppContext();
+  const { user, logoutUser, showPopup } = useAppContext();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleDropdown = () => {
@@ -33,24 +35,68 @@ const TopNav = () => {
               {user?.name}
               <FaCaretDown />
             </button>
-            <div
-              className={showDropdown ? "dropdown show-dropdown" : "dropdown"}
-            >
-              <button
-                type="button"
-                className="edit-btn"
-                onClick={() => console.log("Editing user")}
-              >
-                Profile
-              </button>
-              <button type="button" className="logout-btn" onClick={logoutUser}>
-                Logout
-              </button>
+            <div className="dropdown show-dropdown">
+              {showDropdown && (
+                <PopUps>
+                  <button type="button" onClick={showPopup}>
+                    Profile
+                  </button>
+                  <button type="button" onClick={logoutUser}>
+                    Logout
+                  </button>
+                </PopUps>
+              )}
             </div>
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {!showPopup && <PopupForm />}
     </Navbar>
   );
 };
 export default TopNav;
+
+const PopUps = styled.div`
+  button {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.4s ease-in-out;
+    &:first-child {
+      background: linear-gradient(326.9deg, #393984 5.79%, #135e87 283.21%);
+      &:hover {
+        background: linear-gradient(326.9deg, #393984 5.79%, #135e87 283.21%);
+        background-image: linear-gradient(
+          to right,
+          #25aae1,
+          #40e495,
+          #30dd8a,
+          #2bb673
+        );
+        box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+      }
+    }
+    &:last-child {
+      background: linear-gradient(326.9deg, #393984 5.79%, #135e87 283.21%);
+      &:hover {
+        background: linear-gradient(326.9deg, #393984 5.79%, #135e87 283.21%);
+        background-image: linear-gradient(
+          to right,
+          #25aae1,
+          #40e495,
+          #30dd8a,
+          #2bb673
+        );
+        box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+      }
+    }
+  }
+`;

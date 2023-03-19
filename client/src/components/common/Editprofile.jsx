@@ -60,7 +60,9 @@ const PopupForm = () => {
             <button type="submit" disabled={isLoading} onClick={updateUser}>
               {isLoading ? "Please Wait..." : "Save Changes"}
             </button>
-            <button type="button">Cancel</button>
+            <button type="button" onClick={showPopup}>
+              Cancel
+            </button>
           </div>
         </form>
       </PopupInner>

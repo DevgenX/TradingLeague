@@ -5,6 +5,7 @@ import {
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
   SHOW_POPUP,
+  HIDE_POPUP,
   LOGOUT_USER,
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
@@ -61,6 +62,13 @@ const reducer = (state, action) => {
   }
 
   if (action.type === SHOW_POPUP) {
+    return {
+      ...state,
+      showPopup: !state.showPopup,
+    };
+  }
+
+  if (action.type === HIDE_POPUP) {
     return {
       ...state,
       showPopup: !state.showPopup,
