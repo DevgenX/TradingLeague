@@ -99,6 +99,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Profile updated successfully!",
+      showPopup: false,
     };
   }
 

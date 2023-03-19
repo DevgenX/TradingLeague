@@ -10,7 +10,6 @@ import {
   SETUP_USER_ERROR,
   LOGOUT_USER,
   SHOW_POPUP,
-  HIDE_POPUP,
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
@@ -113,12 +112,8 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const showPopup = () => {
+  const ShowModal = () => {
     dispatch({ type: SHOW_POPUP });
-  };
-
-  const hidePopup = () => {
-    dispatch({ type: HIDE_POPUP });
   };
 
   const logoutUser = () => {
@@ -159,8 +154,7 @@ const AppProvider = ({ children }) => {
         setupUser,
         logoutUser,
         updateUser,
-        showPopup,
-        hidePopup,
+        ShowModal,
       }}
     >
       {children}

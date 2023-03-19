@@ -11,7 +11,7 @@ import styled from "styled-components";
 import PopupForm from "../common/Editprofile";
 
 const TopNav = () => {
-  const { user, logoutUser, showPopup } = useAppContext();
+  const { user, logoutUser, showModal, showPopup } = useAppContext();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleDropdown = () => {
@@ -38,7 +38,7 @@ const TopNav = () => {
             <div className="dropdown show-dropdown">
               {showDropdown && (
                 <PopUps>
-                  <button type="button" onClick={showPopup}>
+                  <button type="button" onClick={showModal}>
                     Profile
                   </button>
                   <button type="button" onClick={logoutUser}>
@@ -50,7 +50,7 @@ const TopNav = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-      {!showPopup && <PopupForm />}
+      {showPopup && <PopupForm />}
     </Navbar>
   );
 };
