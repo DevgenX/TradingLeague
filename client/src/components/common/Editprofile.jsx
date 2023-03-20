@@ -4,7 +4,7 @@ import { useAppContext } from "../../context/appContext";
 import Alert from "../Alert/Alert";
 
 const PopupForm = () => {
-  const { user, showAlert, displayAlert, updateUser, isLoading, showPopup } =
+  const { user, showAlert, displayAlert, updateUser, isLoading, showModal } =
     useAppContext();
 
   const [name, setName] = useState(user?.name);
@@ -60,7 +60,7 @@ const PopupForm = () => {
             <button type="submit" disabled={isLoading} onClick={updateUser}>
               {isLoading ? "Please Wait..." : "Save Changes"}
             </button>
-            <button type="button" onClick={showPopup}>
+            <button type="button" onClick={showModal}>
               Cancel
             </button>
           </div>
@@ -76,6 +76,7 @@ const Popup = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9999999;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);

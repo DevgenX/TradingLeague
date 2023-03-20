@@ -3,13 +3,13 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, unAuthenticatedError } from "../errors/index.js";
 
 const getAllUsers = async (req, res, next) => {
-  const users = await User.find();
+  const users = await User.find({});
 
-  if (users) {
+  if (!users) {
     throw new BadRequestError("failed to fetch users");
   }
 
-  res.status(StatusCodes.OK).json(users);
+  res.status(StatusCodes.OK).send(users);
 };
 
 const register = async (req, res) => {

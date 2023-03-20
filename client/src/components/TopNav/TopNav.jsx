@@ -37,14 +37,18 @@ const TopNav = () => {
             </button>
             <div className="dropdown show-dropdown">
               {showDropdown && (
-                <PopUps>
-                  <button type="button" onClick={showModal}>
-                    Profile
-                  </button>
-                  <button type="button" onClick={logoutUser}>
-                    Logout
-                  </button>
-                </PopUps>
+                <>
+                  <PopUps>
+                    <button type="button" onClick={showModal}>
+                      Profile
+                    </button>
+                  </PopUps>
+                  <PopUps>
+                    <button type="button" onClick={logoutUser}>
+                      Logout
+                    </button>
+                  </PopUps>
+                </>
               )}
             </div>
           </Nav>

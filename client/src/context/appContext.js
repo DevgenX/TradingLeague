@@ -112,7 +112,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const ShowModal = () => {
+  const showModal = () => {
     dispatch({ type: SHOW_POPUP });
   };
 
@@ -154,7 +154,7 @@ const AppProvider = ({ children }) => {
         setupUser,
         logoutUser,
         updateUser,
-        ShowModal,
+        showModal,
       }}
     >
       {children}
