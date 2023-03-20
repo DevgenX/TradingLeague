@@ -1,10 +1,11 @@
-import { useReducer, useContext, createContext } from "react";
+import { useReducer, useContext, createContext, useEffect } from "react";
 import reducer from "./reducers";
 import axios from "axios";
 
 import {
   SHOW_ALERT,
   CLEAR_ALERT,
+  GET_ALL_USERS,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
@@ -19,6 +20,7 @@ const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 
 const initialState = {
+  users: [],
   isLoading: false,
   showAlert: false,
   showPopup: false,
@@ -63,6 +65,20 @@ const AppProvider = ({ children }) => {
     }
   );
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4999/api/v1/auth/users"
+        );
+        dispatch({ type: GET_ALL_USERS, payload: response.data });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
   const displayAlert = () => {
     dispatch({ type: SHOW_ALERT });
     clearAlert();
@@ -82,10 +98,6 @@ const AppProvider = ({ children }) => {
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-  };
-
-  const getAllUsers = () => {
-    console.log("Users");
   };
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
@@ -149,7 +161,6 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
-        getAllUsers,
         displayAlert,
         setupUser,
         logoutUser,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../../assets/logo/logo.png";
 import defaultUser from "../../assets/default-user.png";
@@ -53,8 +53,8 @@ const TopNav = () => {
             </div>
           </Nav>
         </Navbar.Collapse>
+        {showPopup && <PopupForm />}
       </Container>
-      {showPopup && <PopupForm />}
     </Navbar>
   );
 };

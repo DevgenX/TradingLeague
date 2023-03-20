@@ -11,18 +11,19 @@ const Pending = () => {
   ];
 
   return (
-    <Container className="pending-container">
-      <Row className="justify-content-center mb-4">
-        <Col>
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8" className="mt-5 mb-1">
           <h1 className="pending-title">Pending Challengers</h1>
         </Col>
+        <Col md="4"></Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row className="justify-content-center text-center">
         <Col md={8}>
           <Table
             hover
             bordered
-            className="table  table-hover table-bordered table-no-border"
+            className="table table-hover table-bordered table-no-border"
           >
             <tbody>
               {data.map((user) => (
@@ -41,8 +42,9 @@ const Pending = () => {
             </tbody>
           </Table>
         </Col>
+        <Col md="4"></Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 

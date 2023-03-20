@@ -1,6 +1,8 @@
 export const SHOW_ALERT = "SHOW_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";
 
+export const GET_ALL_USERS = "GET_ALL_USERS";
+
 export const SETUP_USER_BEGIN = "SETUP_USER_BEGIN";
 export const SETUP_USER_SUCCESS = "SETUP_USER_SUCCESS";
 export const SETUP_USER_ERROR = "SETUP_USER_ERROR";

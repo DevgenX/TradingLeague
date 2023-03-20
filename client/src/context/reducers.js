@@ -10,6 +10,7 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  GET_ALL_USERS,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -29,6 +30,13 @@ const reducer = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
+    };
+  }
+
+  if (action.type === GET_ALL_USERS) {
+    return {
+      ...state,
+      users: action.payload,
     };
   }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAppContext } from "../../context/appContext";
 import Alert from "../Alert/Alert";
+import FormRow from "../FormRow/FormRow";
 
 const PopupForm = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading, showModal } =
@@ -9,14 +10,6 @@ const PopupForm = () => {
 
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
-
-  const handleUsernameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,35 +25,33 @@ const PopupForm = () => {
   return (
     <Popup>
       <PopupInner>
-        <PopupTitle>Edit Profile</PopupTitle>
         {showAlert && <Alert />}
-        <form onSubmit={handleSubmit}>
-          <FormGroup>
-            <FormGroupLabel htmlFor="username">Username:</FormGroupLabel>
-            <FormGroupInput
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-center">
+            <FormRow
               type="text"
-              id="username"
+              name="name"
               value={name}
-              onChange={handleUsernameChange}
+              handleChange={(e) => setName(e.target.value)}
             />
-          </FormGroup>
-          <FormGroup>
-            <FormGroupLabel htmlFor="email">Email:</FormGroupLabel>
-            <FormGroupInput
+
+            <FormRow
               type="email"
+              name="email"
               value={email}
-              onChange={handleEmailChange}
+              handleChange={(e) => setEmail(e.target.value)}
             />
-          </FormGroup>
-          <FormGroup>
-            <FormGroupLabel htmlFor="mmr">MMR:</FormGroupLabel>
-            <FormGroupInput type="number" value={user?.mmr} />
-          </FormGroup>
-          <div className="form-actions">
-            <button type="submit" disabled={isLoading} onClick={updateUser}>
-              {isLoading ? "Please Wait..." : "Save Changes"}
+
+            <FormRow type="number" name="MMR" value={user?.mmr} />
+
+            <button
+              className="btn btn-block"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Please wait..." : "Save Changes"}
             </button>
-            <button type="button" onClick={showModal}>
+            <button className="btn btn-block" onClick={showModal}>
               Cancel
             </button>
           </div>
@@ -86,45 +77,11 @@ const Popup = styled.div`
 `;
 
 const PopupInner = styled.div`
-  background: radial-gradient(
-    circle,
-    rgba(0, 89, 255, 1) 0%,
-    rgba(0, 38, 255, 1) 100%
-  );
+  background: linear-gradient(326.9deg, #13132b 5.79%, #135e87 283.21%);
   padding: 2rem;
   border-radius: 12px;
   max-width: 500px;
   max-height: 500px;
   overflow-y: auto;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
-`;
-
-const PopupTitle = styled.h2`
-  margin-top: 0;
-  font-size: 2rem;
-  text-align: center;
-  color: white;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-`;
-
-const FormGroupLabel = styled.label`
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-`;
-
-const FormGroupInput = styled.input`
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  border-radius: 4px;
-  border: none;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  background-color: white;
-  color: black;
 `;

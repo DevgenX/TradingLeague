@@ -4,16 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./leaderboards.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useAppContext } from "../../context/appContext";
+
 const Leaderboard = () => {
-  const users = [
-    { username: "JohnDoe", mmr: 2500 },
-    { username: "JaneDoe", mmr: 2300 },
-    { username: "BobSmith", mmr: 2100 },
-    // ... add more fake data here
-  ];
+  const { users } = useAppContext();
+
+  console.log(users);
 
   return (
-    <Container fluid>
+    <div>
       <Row>
         <Col>
           <h1 className="title">Leaderboards</h1>
@@ -35,7 +34,7 @@ const Leaderboard = () => {
                   <td>
                     <FontAwesomeIcon icon={faUser} size="2x" />
                   </td>
-                  <td>{user.username}</td>
+                  <td>{user.name}</td>
                   <td className="mmr">
                     <span className="gold">{user.mmr}</span>
                   </td>
@@ -45,7 +44,7 @@ const Leaderboard = () => {
           </Table>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 

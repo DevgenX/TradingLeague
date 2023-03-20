@@ -13,71 +13,69 @@ import ScalperIcon from "../../assets/badge/Scalper.svg";
 const Ranking = () => {
   return (
     <div className="ranking">
-      <Container>
-        <Row className="justify-content-center">
-          <Col lg="8">
-            <div className="page-box ranking-container mb-4">
-              <div className="header">
-                <div className="img-container">
-                  <img src={RankingIcon} alt="" className="icon" />
-                </div>
-                <h1 className="rank-title">TradingLeague Rank Badges</h1>
+      <Row className="justify-content-center">
+        <Col lg="8">
+          <div className="page-box ranking-container mb-4">
+            <div className="header">
+              <div className="img-container">
+                <img src={RankingIcon} alt="" className="icon" />
               </div>
-
-              <div className="body">
-                <div className="rank-container fomo">
-                  <img src={FomoIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Fomo
-                      <span className="mmr">0-349</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container scalper">
-                  <img src={ScalperIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Scalper
-                      <span className="mmr">350-899</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container ape">
-                  <img src={ApeIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Ape
-                      <span className="mmr">900-1799</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container degen">
-                  <img src={DegenIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Degen
-                      <span className="mmr">1800-2999</span>
-                    </h5>
-                  </div>
-                </div>
-                <div className="rank-container quant">
-                  <img src={QuantIcon} className="rank-img" alt="" />
-                  <div className="rank-info">
-                    <h5 className="rank-title">
-                      Quant
-                      <span className="mmr">3000+</span>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-              <Link to="/" className="back-btn">
-                <Button>Game Lobby</Button>
-              </Link>
+              <h1 className="rank-title">TradingLeague Rank Badges</h1>
             </div>
-          </Col>
-        </Row>
-      </Container>
+
+            <div className="body">
+              <div className="rank-container fomo">
+                <img src={FomoIcon} className="rank-img" alt="" />
+                <div className="rank-info">
+                  <h5 className="rank-title">
+                    Fomo
+                    <span className="mmr">0-349</span>
+                  </h5>
+                </div>
+              </div>
+              <div className="rank-container scalper">
+                <img src={ScalperIcon} className="rank-img" alt="" />
+                <div className="rank-info">
+                  <h5 className="rank-title">
+                    Scalper
+                    <span className="mmr">350-899</span>
+                  </h5>
+                </div>
+              </div>
+              <div className="rank-container ape">
+                <img src={ApeIcon} className="rank-img" alt="" />
+                <div className="rank-info">
+                  <h5 className="rank-title">
+                    Ape
+                    <span className="mmr">900-1799</span>
+                  </h5>
+                </div>
+              </div>
+              <div className="rank-container degen">
+                <img src={DegenIcon} className="rank-img" alt="" />
+                <div className="rank-info">
+                  <h5 className="rank-title">
+                    Degen
+                    <span className="mmr">1800-2999</span>
+                  </h5>
+                </div>
+              </div>
+              <div className="rank-container quant">
+                <img src={QuantIcon} className="rank-img" alt="" />
+                <div className="rank-info">
+                  <h5 className="rank-title">
+                    Quant
+                    <span className="mmr">3000+</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <Link to="/" className="back-btn">
+              <Button>Game Lobby</Button>
+            </Link>
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 };
