@@ -68,9 +68,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4999/api/v1/auth/users"
-        );
+        const response = await axios.get("api/v1/auth/users");
         dispatch({ type: GET_ALL_USERS, payload: response.data });
       } catch (error) {
         console.log(error);
