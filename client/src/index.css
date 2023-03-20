@@ -155,9 +155,9 @@ button:disabled {
   width: 100%;
   max-width: var(--fixed-width);
   background: radial-gradient(circle, #2a41c5 0%, #0d1b33 100%);
-  border-radius: var(--borderRadius);
+  border-radius: 1rem;
   box-shadow: var(--shadow-2);
-  padding: 2rem 2.5rem;
+  padding: 4rem 5rem;
   margin: 3rem auto;
   transition: var(--transition);
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
 import styled from "styled-components";
 import { useAppContext } from "../../context/appContext";
 import Alert from "../Alert/Alert";
@@ -24,39 +25,33 @@ const PopupForm = () => {
 
   return (
     <Popup>
-      <PopupInner>
+      <form className="form" onSubmit={handleSubmit}>
         {showAlert && <Alert />}
-        <form className="form" onSubmit={handleSubmit}>
-          <div className="form-center">
-            <FormRow
-              type="text"
-              name="name"
-              value={name}
-              handleChange={(e) => setName(e.target.value)}
-            />
+        <div className="form-center">
+          <FormRow
+            type="text"
+            name="name"
+            value={name}
+            handleChange={(e) => setName(e.target.value)}
+          />
 
-            <FormRow
-              type="email"
-              name="email"
-              value={email}
-              handleChange={(e) => setEmail(e.target.value)}
-            />
+          <FormRow
+            type="email"
+            name="email"
+            value={email}
+            handleChange={(e) => setEmail(e.target.value)}
+          />
 
-            <FormRow type="number" name="MMR" value={user?.mmr} />
+          <FormRow type="number" name="MMR" value={user?.mmr} />
 
-            <button
-              className="btn btn-block"
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading ? "Please wait..." : "Save Changes"}
-            </button>
-            <button className="btn btn-block" onClick={showModal}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </PopupInner>
+          <button className="btn btn-block" type="submit" disabled={isLoading}>
+            Save Changes
+          </button>
+          <button className="btn btn-block" onClick={showModal}>
+            Cancel
+          </button>
+        </div>
+      </form>
     </Popup>
   );
 };
