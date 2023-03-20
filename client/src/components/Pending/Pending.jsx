@@ -2,12 +2,13 @@ import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import "./pending.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import UserImage from "../common/UserImage";
 
 const Pending = () => {
   const data = [
-    { username: "John Doe" },
-    { username: "Mike Smith" },
-    { username: "George Clooney" },
+    { username: "John Doe", mmr: 3000 },
+    { username: "Mike Smith", mmr: 2500 },
+    { username: "George Clooney", mmr: 1000 },
   ];
 
   return (
@@ -29,7 +30,7 @@ const Pending = () => {
               {data.map((user) => (
                 <tr key={user.username}>
                   <td>
-                    <FontAwesomeIcon icon={faUser} size="2x" />
+                    <UserImage user={user} size="2x" />
                   </td>
                   <td>{user.username}</td>
                   <td>PvP</td>

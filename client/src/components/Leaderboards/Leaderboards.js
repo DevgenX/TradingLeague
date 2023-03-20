@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./leaderboards.scss";
+import UserImage from "../../components/common/UserImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "../../context/appContext";
@@ -29,17 +30,19 @@ const Leaderboard = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
-                <tr key={index}>
-                  <td>
-                    <FontAwesomeIcon icon={faUser} size="2x" />
-                  </td>
-                  <td>{user.name}</td>
-                  <td className="mmr">
-                    <span className="gold">{user.mmr}</span>
-                  </td>
-                </tr>
-              ))}
+              {users
+                .sort((a, b) => b.mmr - a.mmr)
+                .map((user, index) => (
+                  <tr key={index}>
+                    <td>
+                      <UserImage user={user} size="2x" />
+                    </td>
+                    <td>{user.name}</td>
+                    <td className="mmr">
+                      <span className="gold">{user.mmr}</span>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </Col>

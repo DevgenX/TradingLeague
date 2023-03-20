@@ -19,7 +19,6 @@ const PopupForm = () => {
       displayAlert();
       return;
     }
-
     updateUser({ name, email });
   };
 
@@ -34,7 +33,6 @@ const PopupForm = () => {
             value={name}
             handleChange={(e) => setName(e.target.value)}
           />
-
           <FormRow
             type="email"
             name="email"
@@ -43,7 +41,6 @@ const PopupForm = () => {
           />
 
           <FormRow type="number" name="MMR" value={user?.mmr} />
-
           <button className="btn btn-block" type="submit" disabled={isLoading}>
             Save Changes
           </button>

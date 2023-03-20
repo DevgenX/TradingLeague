@@ -44,7 +44,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="item">
-              <Link to="/" style={{ color: "white" }}>
+              <Link to="/history" style={{ color: "white" }}>
                 <img src={History} alt="" />
               </Link>
             </li>
