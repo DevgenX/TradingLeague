@@ -8,7 +8,7 @@ import TopNav from "../../components/TopNav/TopNav";
 
 const Game = () => {
   return (
-    <>
+    <GameDiv>
       <TopNav />
       <Container>
         <ContainerDiv>
@@ -27,9 +27,13 @@ const Game = () => {
           </Row>
         </ContainerDiv>
       </Container>
-    </>
+    </GameDiv>
   );
 };
+
+const GameDiv = styled.div`
+  background-color: #101124;
+`;
 
 const ContainerDiv = styled.div`
   margin-bottom: 5rem;

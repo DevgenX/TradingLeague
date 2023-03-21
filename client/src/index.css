@@ -75,7 +75,7 @@ body {
   font-family: var(--bodyFont);
   font-weight: 500;
   line-height: 1.75;
-  background: linear-gradient(326.9deg, #13132b 5.79%, #135e87 283.21%);
+  background: #101124 !important;
 }
 
 p {
