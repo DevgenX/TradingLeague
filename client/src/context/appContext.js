@@ -56,8 +56,8 @@ const AppProvider = ({ children }) => {
       return Promise.reject(error);
     }
   );
-  // response
 
+  // response
   authFetch.interceptors.response.use(
     (response) => {
       return response;

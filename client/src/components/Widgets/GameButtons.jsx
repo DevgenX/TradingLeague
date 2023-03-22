@@ -7,6 +7,7 @@ const GameButtons = ({
   currentBar,
   positionDays,
   positionSize = 1000,
+  showNextDay,
 }) => {
   const handleEndGame = () => {
     console.log("game ended");
@@ -150,7 +151,10 @@ const GameButtons = ({
             </Button>
           </Col>
           <Col xs="6">
-            <Button className="game-btn next-day w-100 mb-2">
+            <Button
+              className="game-btn next-day w-100 mb-2"
+              onClick={showNextDay}
+            >
               Next Candle
             </Button>
           </Col>

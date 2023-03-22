@@ -1,14 +1,35 @@
 import { Col, Row, Container } from "react-bootstrap";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
-import { widget } from "../../charting_library";
+
 import GameButtons from "../../components/Widgets/GameButtons";
-import ChartWidget from "../../components/Widgets/ChartWidget";
 import Positions from "../../components/Widgets/Positions";
 import TopNav from "../../components/TopNav/TopNav";
 
-const Game = ({ mode, Challenge }) => {
-  let tvWidget;
+import Datafeed from "../../datafeed/datafeed";
+import { _lastbar, nextDay } from "../../datafeed/stream";
+import { next_feed, c_name } from "../../datafeed/historyProvider";
+import { widget } from "../../charting_library";
+
+export const rand_om = Math.floor(Math.random() * 268);
+export let crypto_name = null;
+
+let tvWidget;
+export let token_name = null;
+
+const Game = ({ mode = "practice", Challenge }) => {
+  const [currentBar, setCurrentBar] = useState(null);
+  const [counter, setCounter] = useState(0);
+  const [tradeHistory, setTradeHistory] = useState([]);
+  const [withPosition, setWithPosition] = useState({
+    status: false,
+    desc: null,
+  });
+  const [position, setPosition] = useState(null);
+  const [leverage, setLeverage] = useState(1);
+  const [positionSize, setPositionSize] = useState(1000);
+  const [totalProfit, setTotalProfit] = useState(0);
+  const [positionDays, setPositionDays] = useState(0);
 
   const ref = useRef();
 
@@ -22,12 +43,11 @@ const Game = ({ mode, Challenge }) => {
     };
 
     const widgetOptions = {
-      // debug: true,
       symbol: mode === "practice" ? "BTC" : "TradingLeague",
-      datafeed: "AAPL",
+      datafeed: Datafeed,
       interval: "240",
       container: "tv",
-      timeframe: "1M",
+      timeframe: "15D",
       library_path: "/charting_library/",
       locale: getLanguageFromURL() || "en",
       clientId: "test",
@@ -58,23 +78,143 @@ const Game = ({ mode, Challenge }) => {
         "source_selection_markers",
         "scales_date_format",
       ],
-      // custom_css_url: "/src/assets/style.css",
+      custom_css_url: "../../assets/style.css",
       overrides: {},
     };
 
     tvWidget = new widget(widgetOptions);
 
-    // tvWidget.onChartReady(() => {
-    //   // setCurrentBar({ ..._lastbar });
-    //   console.log("ready");
-    //   const iframe = document.querySelector(`[id^="tradingview_"]`);
+    tvWidget.onChartReady(() => {
+      setCurrentBar({ ..._lastbar });
 
-    //   const elmnt = iframe.contentWindow.document.getElementsByClassName(
-    //     "chart-markup-table time-axis"
-    //   )[0];
-    //   elmnt.style.display = "none";
-    // });
-  }, []);
+      const iframe = document.querySelector(`[id^="tradingview_"]`);
+
+      const elmnt = iframe.contentWindow.document.getElementsByClassName(
+        "chart-markup-table time-axis"
+      )[0];
+      elmnt.style.display = "none";
+    });
+  }, [mode]);
+
+  const handleClosePosition = () => {
+    console.log("closed");
+  };
+
+  const handleEndGame = () => {
+    console.log("game ended");
+  };
+
+  const showNextDay = () => {
+    if (mode === "practice") {
+      if (counter < 100) {
+        nextDay(next_feed[counter]);
+        setCounter((prev) => prev + 1);
+        setCurrentBar(next_feed[counter]);
+        if (withPosition.status) {
+          if (withPosition.desc === "long") {
+            const long_gain_loss =
+              (_lastbar.close - position.close) / position.close;
+            const profit = positionSize * long_gain_loss * leverage;
+            setPosition({
+              ...position,
+              gain_loss: parseFloat(long_gain_loss).toFixed(2),
+              profit: profit.toFixed(2),
+            });
+          } else if (withPosition.desc === "short") {
+            const short_gain_loss =
+              ((_lastbar.close - position.close) / position.close) * -1;
+            const profit = positionSize * short_gain_loss * leverage;
+            setPosition({
+              ...position,
+              gain_loss: parseFloat(short_gain_loss).toFixed(2),
+              profit: profit.toFixed(2),
+            });
+          }
+          setPositionDays((prev) => prev + 1);
+        }
+      } else {
+        handleEndGame();
+      }
+    } else if (mode === "casual") {
+      nextDay(next_feed[counter]);
+      setCounter((prev) => prev + 1);
+      setCurrentBar(next_feed[counter]);
+      if (withPosition.status) {
+        if (withPosition.desc === "long") {
+          const long_gain_loss =
+            (_lastbar.close - position.close) / position.close;
+          const profit = positionSize * long_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(long_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        } else if (withPosition.desc === "short") {
+          const short_gain_loss =
+            ((_lastbar.close - position.close) / position.close) * -1;
+          const profit = positionSize * short_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(short_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        }
+        setPositionDays((prev) => prev + 1);
+      }
+    } else if (mode === "rank") {
+      nextDay(next_feed[counter]);
+      setCounter((prev) => prev + 1);
+      setCurrentBar(next_feed[counter]);
+      if (withPosition.status) {
+        if (withPosition.desc === "long") {
+          const long_gain_loss =
+            (_lastbar.close - position.close) / position.close;
+          const profit = positionSize * long_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(long_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        } else if (withPosition.desc === "short") {
+          const short_gain_loss =
+            ((_lastbar.close - position.close) / position.close) * -1;
+          const profit = positionSize * short_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(short_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        }
+        setPositionDays((prev) => prev + 1);
+      }
+    } else if (mode === "tournament") {
+      nextDay(next_feed[counter]);
+      setCounter((prev) => prev + 1);
+      setCurrentBar(next_feed[counter]);
+      if (withPosition.status) {
+        if (withPosition.desc === "long") {
+          const long_gain_loss =
+            (_lastbar.close - position.close) / position.close;
+          const profit = positionSize * long_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(long_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        } else if (withPosition.desc === "short") {
+          const short_gain_loss =
+            ((_lastbar.close - position.close) / position.close) * -1;
+          const profit = positionSize * short_gain_loss * leverage;
+          setPosition({
+            ...position,
+            gain_loss: parseFloat(short_gain_loss).toFixed(2),
+            profit: profit.toFixed(2),
+          });
+        }
+        setPositionDays((prev) => prev + 1);
+      }
+    }
+  };
   return (
     <GameDiv>
       <TopNav />
@@ -82,13 +222,12 @@ const Game = ({ mode, Challenge }) => {
         <ContainerDiv>
           <Row>
             <Col>
-              {/* <ChartWidget /> */}
-              <div className="game-body" id="tv" ref={ref}></div>
+              <ChartDiv id="tv" ref={ref}></ChartDiv>
             </Col>
           </Row>
           <Row>
             <Col>
-              <GameButtons />
+              <GameButtons showNextDay={showNextDay} />
             </Col>
             <Col>
               <Positions />
@@ -102,6 +241,12 @@ const Game = ({ mode, Challenge }) => {
 
 const GameDiv = styled.div`
   background-color: #101124;
+`;
+
+const ChartDiv = styled.div`
+  margin: 10px;
+  height: 60vh;
+  min-height: 60vh;
 `;
 
 const ContainerDiv = styled.div`
