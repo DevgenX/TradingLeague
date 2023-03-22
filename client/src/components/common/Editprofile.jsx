@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Toast, ToastContainer } from "react-bootstrap";
+import React, { useState, useCallback } from "react";
+
 import styled from "styled-components";
 import { useAppContext } from "../../context/appContext";
 import Alert from "../Alert/Alert";
@@ -12,15 +12,19 @@ const PopupForm = () => {
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
 
-    if (!name || !email) {
-      displayAlert();
-      return;
-    }
-    updateUser({ name, email });
-  };
+      if (!name || !email) {
+        displayAlert();
+        return;
+      }
+
+      updateUser({ name, email });
+    },
+    [name, email, displayAlert, updateUser]
+  );
 
   return (
     <Popup>

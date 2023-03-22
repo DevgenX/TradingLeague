@@ -1,4 +1,10 @@
-import { useReducer, useContext, createContext, useEffect } from "react";
+import {
+  useReducer,
+  useContext,
+  createContext,
+  useEffect,
+  useCallback,
+} from "react";
 import reducer from "./reducers";
 import axios from "axios";
 
@@ -77,26 +83,26 @@ const AppProvider = ({ children }) => {
     getData();
   }, []);
 
-  const displayAlert = () => {
-    dispatch({ type: SHOW_ALERT });
-    clearAlert();
-  };
-
-  const clearAlert = () => {
+  const clearAlert = useCallback(() => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
-  };
+  }, []);
 
-  const addUserToLocalStorage = ({ user, token }) => {
+  const displayAlert = useCallback(() => {
+    dispatch({ type: SHOW_ALERT });
+    clearAlert();
+  }, [dispatch, clearAlert]);
+
+  const addUserToLocalStorage = useCallback(({ user, token }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
-  };
+  }, []);
 
-  const removeUserFromLocalStorage = () => {
+  const removeUserFromLocalStorage = useCallback(() => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-  };
+  }, []);
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
@@ -131,30 +137,32 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage();
   };
 
-  const updateUser = async (currentUser) => {
-    dispatch({ type: UPDATE_USER_BEGIN });
+  const updateUser = useCallback(
+    async (currentUser) => {
+      dispatch({ type: UPDATE_USER_BEGIN });
 
-    try {
-      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+      try {
+        const { data } = await authFetch.patch("/auth/updateUser", currentUser);
 
-      const { user, token } = data;
+        const { user, token } = data;
 
-      dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: { user, token },
-      });
-      addUserToLocalStorage({ user, token });
-    } catch (error) {
-      if (error.response.status !== 401) {
         dispatch({
-          type: UPDATE_USER_ERROR,
-          payload: { msg: error.response.data.msg },
+          type: UPDATE_USER_SUCCESS,
+          payload: { user, token },
         });
+        addUserToLocalStorage({ user, token });
+      } catch (error) {
+        if (error.response.status !== 401) {
+          dispatch({
+            type: UPDATE_USER_ERROR,
+            payload: { msg: error.response.data.msg },
+          });
+        }
       }
-    }
-    clearAlert();
-  };
-
+      clearAlert();
+    },
+    [dispatch, authFetch, addUserToLocalStorage, clearAlert]
+  );
   return (
     <AppContext.Provider
       value={{
