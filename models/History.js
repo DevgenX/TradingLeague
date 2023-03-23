@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const historySchema = new mongoose.Schema(
   {
-    user_2: {
+    user: {
       type: Object,
     },
     gain_loss: {
@@ -16,9 +16,6 @@ const historySchema = new mongoose.Schema(
     game_mode: {
       type: String,
       required: true,
-    },
-    replay: {
-      type: String,
     },
     owner: {
       type: String,

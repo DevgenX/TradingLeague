@@ -2,12 +2,15 @@ import { Col, Row, Button } from "react-bootstrap";
 import styled from "styled-components";
 
 const GameButtons = ({
-  mode = "practice",
+  mode,
   position,
   currentBar,
   positionDays,
-  positionSize = 1000,
+  positionSize,
   showNextDay,
+  handleLongPosition,
+  handleShortPosition,
+  handleClosePosition,
 }) => {
   const handleEndGame = () => {
     console.log("game ended");
@@ -76,7 +79,7 @@ const GameButtons = ({
             <div className="position-container">
               <p className="m-0">
                 Position Size:
-                <span className="amount">${positionSize}</span>
+                <span className="amount">${positionSize.toFixed(2)}</span>
               </p>
             </div>
           </Col>
@@ -138,15 +141,28 @@ const GameButtons = ({
       <ButtonContainer>
         <Row className="gx-2">
           <Col xs="6">
-            <Button className="game-btn long w-100 mb-2">Long</Button>
+            <Button
+              className="game-btn long w-100 mb-2"
+              onClick={handleLongPosition}
+            >
+              Long
+            </Button>
           </Col>
           <Col xs="6">
-            <Button className="game-btn short w-100 mb-2">Short</Button>
+            <Button
+              className="game-btn short w-100 mb-2"
+              onClick={handleShortPosition}
+            >
+              Short
+            </Button>
           </Col>
         </Row>
         <Row className="gx-2">
           <Col xs="6">
-            <Button className="game-btn close-btn w-100 mb-2">
+            <Button
+              className="game-btn close-btn w-100 mb-2"
+              onClick={handleClosePosition}
+            >
               Close Position
             </Button>
           </Col>

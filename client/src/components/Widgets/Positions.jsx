@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { Col, Row } from "react-bootstrap";
 
-const Positions = () => {
-  const tradeHistory = [{}];
-
+const Positions = ({ tradeHistory }) => {
   return (
     <PositionDiv>
       <div className="game-section history-container">

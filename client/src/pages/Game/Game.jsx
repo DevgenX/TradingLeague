@@ -97,7 +97,49 @@ const Game = ({ mode = "practice", Challenge }) => {
   }, [mode]);
 
   const handleClosePosition = () => {
-    console.log("closed");
+    if (position.profit && position.gain_loss) {
+      tvWidget
+        .activeChart()
+        .createExecutionShape()
+        .setDirection("sell")
+        .setText("Sell at " + _lastbar.close)
+        .setTextColor("#F00")
+        .setArrowColor("#F00")
+        .setArrowHeight(40)
+        .setFont("12pt Verdan")
+        .setTime(_lastbar.time / 1000)
+        .setPrice(_lastbar.close);
+
+      // push data to trading history
+
+      const history = {
+        entry: position.close,
+        end: currentBar.close,
+        days: positionDays,
+        gain_loss: position.gain_loss,
+        profit: position.profit,
+      };
+
+      let temp_hist = [history, ...tradeHistory];
+
+      const up_profit = temp_hist.reduce(
+        (prev, current) => prev + +current.profit,
+        0
+      );
+
+      if (1000 + up_profit < 0) handleEndGame();
+
+      setTotalProfit(up_profit.toFixed(2));
+      setPositionSize(1000 + up_profit);
+      setTradeHistory([history, ...tradeHistory]);
+      setWithPosition({ status: false, desc: null });
+      setPosition(null);
+      setPositionDays(0);
+
+      setLeverage(1);
+
+      temp_hist = [];
+    }
   };
 
   const handleEndGame = () => {
@@ -215,6 +257,41 @@ const Game = ({ mode = "practice", Challenge }) => {
       }
     }
   };
+
+  const handleLongPosition = () => {
+    tvWidget
+      .activeChart()
+      .createExecutionShape()
+      .setDirection("buy")
+      .setText("Long at " + _lastbar.close)
+      .setTextColor("#5eff5b ")
+      .setArrowColor("#5eff5b ")
+      .setArrowHeight(40)
+      .setFont("12pt Verdan")
+      .setTime(_lastbar.time / 1000)
+      .setPrice(_lastbar.close);
+
+    setPosition({ ...currentBar });
+    setWithPosition({ status: true, desc: "long" });
+  };
+
+  const handleShortPosition = () => {
+    tvWidget
+      .activeChart()
+      .createExecutionShape()
+      .setDirection("sell")
+      .setText("Short at " + _lastbar.close)
+      .setTextColor("#5eff5b ")
+      .setArrowColor("#5eff5b ")
+      .setArrowHeight(40)
+      .setFont("12pt Verdan")
+      .setTime(_lastbar.time / 1000)
+      .setPrice(_lastbar.close);
+
+    setPosition({ ...currentBar });
+    setWithPosition({ status: true, desc: "short" });
+  };
+
   return (
     <GameDiv>
       <TopNav />
@@ -227,10 +304,20 @@ const Game = ({ mode = "practice", Challenge }) => {
           </Row>
           <Row>
             <Col>
-              <GameButtons showNextDay={showNextDay} />
+              <GameButtons
+                mode={mode}
+                position={position}
+                currentBar={currentBar}
+                positionSize={positionSize}
+                positionDays={positionDays}
+                showNextDay={showNextDay}
+                handleLongPosition={handleLongPosition}
+                handleShortPosition={handleShortPosition}
+                handleClosePosition={handleClosePosition}
+              />
             </Col>
             <Col>
-              <Positions />
+              <Positions tradeHistory={tradeHistory} />
             </Col>
           </Row>
         </ContainerDiv>
