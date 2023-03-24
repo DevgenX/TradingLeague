@@ -4,9 +4,11 @@ import styled from "styled-components";
 const GameButtons = ({
   mode,
   position,
+  withPosition,
   currentBar,
   positionDays,
   positionSize,
+  totalProfit,
   showNextDay,
   handleLongPosition,
   handleShortPosition,
@@ -94,7 +96,7 @@ const GameButtons = ({
           </Col>
           <Col>
             <p>
-              Total PnL: <span>$1000</span>
+              Total PnL: <span>{`$${totalProfit}`}</span>
             </p>
           </Col>
         </Row>
@@ -144,6 +146,7 @@ const GameButtons = ({
             <Button
               className="game-btn long w-100 mb-2"
               onClick={handleLongPosition}
+              disabled={withPosition.status}
             >
               Long
             </Button>
@@ -152,6 +155,7 @@ const GameButtons = ({
             <Button
               className="game-btn short w-100 mb-2"
               onClick={handleShortPosition}
+              disabled={withPosition.status}
             >
               Short
             </Button>
@@ -162,6 +166,11 @@ const GameButtons = ({
             <Button
               className="game-btn close-btn w-100 mb-2"
               onClick={handleClosePosition}
+              disabled={
+                !withPosition.status || position?.close === currentBar?.close
+                  ? true
+                  : false
+              }
             >
               Close Position
             </Button>

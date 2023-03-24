@@ -1,30 +1,37 @@
-import useAppContext from "../../../context/appContext";
+import { useAppContext } from "../../../context/appContext";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserImage from "../../common/UserImage/UserImage";
+import UserImage from "../../../components/common/UserImage";
 
-const PracticeModal = ({ show, setShow }) => {
-  const { user } = useAppContext();
+const PracticeModal = () => {
+  const { user, ShowPractice, handlePracticeModal } = useAppContext();
 
   const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
-
   const redirect = () => {
-    setShow(false);
+    // setShow(false);
     navigate("/");
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered className="practice-modal">
+    <Modal
+      show={ShowPractice}
+      onHide={handlePracticeModal}
+      centered
+      className="practice-modal"
+    >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="/assets/img/game_modes/practice.png" alt="" />
+          <img src="../../../assets/game_modes/practice.png" alt="" />
         </div>
 
         <Modal.Title>Battle Test</Modal.Title>
 
-        <div className="btn-close" aria-label="Close" onClick={handleClose}>
+        <div
+          className="btn-close"
+          aria-label="Close"
+          onClick={handlePracticeModal}
+        >
           <i className="fa-solid fa-xmark"></i>
         </div>
       </Modal.Header>
@@ -37,7 +44,7 @@ const PracticeModal = ({ show, setShow }) => {
         </div>
 
         <div className="btn-container">
-          <Button className="sub-btn" onClick={handleClose}>
+          <Button className="sub-btn" onClick={handlePracticeModal}>
             Back to Lobby
           </Button>
           <Button className="main-btn" onClick={redirect}>

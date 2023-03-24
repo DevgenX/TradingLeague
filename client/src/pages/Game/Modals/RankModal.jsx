@@ -1,14 +1,12 @@
-import useAppContext from "../../../context/appContext";
+import { useAppContext } from "../../../context/appContext";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserImage from "../../common/UserImage/UserImage";
+import UserImage from "../../../components/common/UserImage";
 
 const RankModal = ({ show, setShow }) => {
-  const { user, setGameDuration } = useAppContext();
+  const { user, showRankModal, handleRankModal } = useAppContext();
 
   const navigate = useNavigate();
-
-  const handleClose = () => setShow(false);
 
   const redirect = () => {
     setShow(false);
@@ -17,19 +15,19 @@ const RankModal = ({ show, setShow }) => {
 
   return (
     <Modal
-      show={show}
-      onHide={handleClose}
+      show={showRankModal}
+      onHide={handleRankModal}
       centered
       className="practice-modal rank-modal"
     >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="/assets/img/game_modes/rank.png" alt="" />
+          <img src="../../../assets/game_modes/rank.png" alt="" />
         </div>
 
         <Modal.Title>Trading Floor</Modal.Title>
 
-        <div className="btn-close" aria-label="Close" onClick={handleClose}>
+        <div className="btn-close" aria-label="Close" onClick={handleRankModal}>
           <i className="fa-solid fa-xmark"></i>
         </div>
       </Modal.Header>
@@ -43,7 +41,7 @@ const RankModal = ({ show, setShow }) => {
         </div>
 
         <div className="btn-container">
-          <Button className="sub-btn" onClick={handleClose}>
+          <Button className="sub-btn" onClick={handleRankModal}>
             Back to Lobby
           </Button>
           <Button className="main-btn" onClick={redirect}>

@@ -11,6 +11,9 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   GET_ALL_USERS,
+  SHOW_PRACTICE_MODAL,
+  SHOW_PVP_MODAL,
+  SHOW_RANK_MODAL,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -117,6 +120,27 @@ const reducer = (state, action) => {
       isLoading: false,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+
+  if (action.type === SHOW_PRACTICE_MODAL) {
+    return {
+      ...state,
+      showPractice: !state.showPractice,
+    };
+  }
+
+  if (action.type === SHOW_RANK_MODAL) {
+    return {
+      ...state,
+      showRankModal: !state.showRankModal,
+    };
+  }
+
+  if (action.type === SHOW_PVP_MODAL) {
+    return {
+      ...state,
+      showPvPModal: !state.showPvPModal,
     };
   }
 

@@ -20,6 +20,9 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  SHOW_PVP_MODAL,
+  SHOW_PRACTICE_MODAL,
+  SHOW_RANK_MODAL,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -30,6 +33,9 @@ const initialState = {
   isLoading: false,
   showAlert: false,
   showPopup: false,
+  showPvPModal: false,
+  showRankModal: false,
+  showPractice: false,
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
@@ -132,6 +138,18 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SHOW_POPUP });
   };
 
+  const handlePvPModal = () => {
+    dispatch({ type: SHOW_PVP_MODAL });
+  };
+
+  const handlePracticeModal = () => {
+    dispatch({ type: SHOW_PRACTICE_MODAL });
+  };
+
+  const handleRankModal = () => {
+    dispatch({ type: SHOW_RANK_MODAL });
+  };
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
@@ -172,6 +190,9 @@ const AppProvider = ({ children }) => {
         logoutUser,
         updateUser,
         showModal,
+        handlePvPModal,
+        handlePracticeModal,
+        handleRankModal,
       }}
     >
       {children}

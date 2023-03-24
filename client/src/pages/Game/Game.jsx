@@ -1,6 +1,7 @@
 import { Col, Row, Container } from "react-bootstrap";
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+
+import { GameDiv, ChartDiv, ContainerDiv } from "./game.styles";
 
 import GameButtons from "../../components/Widgets/GameButtons";
 import Positions from "../../components/Widgets/Positions";
@@ -307,6 +308,8 @@ const Game = ({ mode = "practice", Challenge }) => {
               <GameButtons
                 mode={mode}
                 position={position}
+                withPosition={withPosition}
+                totalProfit={totalProfit}
                 currentBar={currentBar}
                 positionSize={positionSize}
                 positionDays={positionDays}
@@ -325,19 +328,5 @@ const Game = ({ mode = "practice", Challenge }) => {
     </GameDiv>
   );
 };
-
-const GameDiv = styled.div`
-  background-color: #101124;
-`;
-
-const ChartDiv = styled.div`
-  margin: 10px;
-  height: 60vh;
-  min-height: 60vh;
-`;
-
-const ContainerDiv = styled.div`
-  margin-bottom: 5rem;
-`;
 
 export default Game;

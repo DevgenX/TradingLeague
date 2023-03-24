@@ -10,8 +10,6 @@ import { useAppContext } from "../../context/appContext";
 const Leaderboard = () => {
   const { users } = useAppContext();
 
-  console.log(users);
-
   return (
     <div>
       <Row>

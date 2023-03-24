@@ -1,13 +1,13 @@
-import useAppContext from "../../../context/appContext";
+import { useAppContext } from "../../../context/appContext";
 import { useContext } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
-import GeneralContext from "../../context/GeneralContext";
+// import GeneralContext from "../../context/GeneralContext";
 
-const PvPModal = ({ show, setShow }) => {
-  const { user, setGameDuration } = useAppContext();
-  const { toChallenge, setToChallenge } = useContext(GeneralContext);
+const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
+  const { user, setGameDuration, ShowPvP, handlePvPModal } = useAppContext();
+  // const { toChallenge, setToChallenge } = useContext(GeneralContext);
 
   const navigate = useNavigate();
 
@@ -31,19 +31,19 @@ const PvPModal = ({ show, setShow }) => {
   return (
     <Modal
       dialogClassName="modal-40w"
-      show={show}
+      show={ShowPvP}
       onHide={handleClose}
       centered
       className="casual-modal"
     >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="/assets/img/game_modes/casual.png" alt="" />
+          <img src="../../../assets/game_modes/casual.png" alt="" />
         </div>
 
         <Modal.Title>Battle Arena</Modal.Title>
 
-        <div className="btn-close" aria-label="Close" onClick={handleClose}>
+        <div className="btn-close" aria-label="Close" onClick={handlePvPModal}>
           <i className="fa-solid fa-xmark"></i>
         </div>
       </Modal.Header>
@@ -121,7 +121,7 @@ const PvPModal = ({ show, setShow }) => {
         </div>
 
         <div className="btn-container">
-          <Button className="sub-btn" onClick={handleClose}>
+          <Button className="sub-btn" onClick={handlePvPModal}>
             Back to Lobby
           </Button>
           <Button className="main-btn" onClick={start100Day}>
