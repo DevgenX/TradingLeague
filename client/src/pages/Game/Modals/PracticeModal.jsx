@@ -9,7 +9,7 @@ const PracticeModal = () => {
   const navigate = useNavigate();
 
   const redirect = () => {
-    // setShow(false);
+    handlePracticeModal();
     navigate("/");
   };
 
