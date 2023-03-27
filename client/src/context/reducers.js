@@ -16,6 +16,11 @@ import {
   SHOW_RANK_MODAL,
   SET_GAME_MODE,
   SHOW_GAME_RESULT_MODAL,
+  GET_ALL_HISTORY,
+  ADD_NEW_HISTORY,
+  SHOW_FIND_MODAL,
+  SET_TO_CHALLENGE,
+  GET_ALL_CHALLENGES,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -157,6 +162,42 @@ const reducer = (state, action) => {
     return {
       ...state,
       showGameResult: !state.showGameResult,
+    };
+  }
+
+  if (action.type === SHOW_FIND_MODAL) {
+    return {
+      ...state,
+      showFindModal: !state.showFindModal,
+    };
+  }
+  if (action.type === GET_ALL_HISTORY) {
+    return {
+      ...state,
+      history: action.payload.history,
+    };
+  }
+
+  // ADD NEW GAME HISTORY
+  if (action.type === ADD_NEW_HISTORY) {
+    return {
+      ...state,
+      history: [action.payload.history, ...state.history],
+    };
+  }
+
+  // SET TO CHALLENGE USER
+  if (action.type === SET_TO_CHALLENGE) {
+    return {
+      ...state,
+      toChallenge: action.payload.user,
+    };
+  }
+
+  if (action.type === GET_ALL_CHALLENGES) {
+    return {
+      ...state,
+      challenges: action.payload.challenges,
     };
   }
 

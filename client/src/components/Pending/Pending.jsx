@@ -3,13 +3,15 @@ import "./pending.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import UserImage from "../common/UserImage";
+import { useEffect } from "react";
+import { useAppContext } from "../../context/appContext";
 
 const Pending = () => {
-  const data = [
-    { username: "John Doe", mmr: 3000 },
-    { username: "Mike Smith", mmr: 2500 },
-    { username: "George Clooney", mmr: 1000 },
-  ];
+  const { user, challenges, getAllChallenges } = useAppContext();
+
+  useEffect(() => {
+    getAllChallenges(user._id);
+  }, [user]);
 
   return (
     <div>
@@ -27,19 +29,25 @@ const Pending = () => {
             className="table table-hover table-bordered table-no-border"
           >
             <tbody>
-              {data.map((user) => (
-                <tr key={user.username}>
-                  <td>
-                    <UserImage user={user} size="2x" />
-                  </td>
-                  <td>{user.username}</td>
-                  <td>PvP</td>
-                  <td>
-                    <Button variant="success">Accept</Button>
-                    <Button variant="danger">Decline</Button>
-                  </td>
+              {challenges.length === 0 ? (
+                <tr>
+                  <td colSpan={4}>No pending challenges</td>
                 </tr>
-              ))}
+              ) : (
+                challenges.map((challenge) => (
+                  <tr key={challenge._id}>
+                    <td>
+                      <UserImage user={challenge.challenger} size="2x" />
+                    </td>
+                    <td>{challenge.challenger.name}</td>
+                    <td>PvP</td>
+                    <td>
+                      <Button variant="success">Accept</Button>
+                      <Button variant="danger">Decline</Button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </Table>
         </Col>

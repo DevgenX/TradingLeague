@@ -13,6 +13,8 @@ import connectDB from "./db/connect.js";
 // routers
 
 import authRouter from "./routes/authRoutes.js";
+import historyRouter from "./routes/historyRoutes.js";
+import challengeRouter from "./routes/challengeRoutes.js";
 
 // middlewares
 
@@ -35,6 +37,8 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/history", historyRouter);
+app.use("/api/v1/challenge", challengeRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

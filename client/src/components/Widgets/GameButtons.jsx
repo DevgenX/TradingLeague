@@ -58,11 +58,10 @@ const GameButtons = ({
               </p>
             </div>
 
-            {mode === "practice" && (
-              <span className="end-game-btn" onClick={handleEndGame}>
-                Quit Game
-              </span>
-            )}
+            <span className="end-game-btn" onClick={handleEndGame}>
+              Quit Game
+            </span>
+
             {/* {mode !== "practice" && (
                   <Timer
                     expiryTimestamp={time.setSeconds(time.getSeconds() + 20)}

@@ -1,16 +1,25 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "./gamehistory.scss";
 import TopNav from "../TopNav/TopNav";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAppContext } from "../../context/appContext";
 
 const GameHistoryTable = () => {
+  const { history, getAllHistory } = useAppContext();
+
+  const [gameHistory, setGameHistory] = useState([]);
+
   const gameHistoryData = [
     { rank: "Ape", opponent: "Player 1", match: "PvP", result: "Win" },
     { rank: "Degen", opponent: "Player 2", match: "PvP", result: "Lose" },
     { rank: "Quant", opponent: "Player 3", match: "PvP", result: "Win" },
   ];
+
+  useEffect(() => {
+    getAllHistory();
+  }, []);
 
   return (
     <>
@@ -39,12 +48,12 @@ const GameHistoryTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {gameHistoryData.map((game, index) => (
+                  {history.map((game, index) => (
                     <tr key={index}>
-                      <td>{game.rank}</td>
-                      <td>{game.opponent}</td>
-                      <td>{game.match}</td>
-                      <td>{game.result}</td>
+                      <td>{game.game_mode}</td>
+                      <td>{game.game_mode}</td>
+                      <td>{game.game_mode}</td>
+                      <td>{game.game_mode}</td>
                     </tr>
                   ))}
                 </tbody>

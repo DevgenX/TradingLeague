@@ -13,7 +13,7 @@ const challengerSchema = new mongoose.Schema(
     },
     duration: {
       type: String,
-      required: true,
+      // required: true,
     },
     to_challenge: {
       type: String,
@@ -21,7 +21,7 @@ const challengerSchema = new mongoose.Schema(
     },
     game_id: {
       type: String,
-      required: true,
+      // required: true,
     },
     gain_loss: {
       type: Number,

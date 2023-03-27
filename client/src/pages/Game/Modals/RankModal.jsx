@@ -2,6 +2,8 @@ import { useAppContext } from "../../../context/appContext";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
+import RankedImage from "../../../assets/game_modes/rank.png";
+import "./modals.scss";
 
 const RankModal = ({ show, setShow }) => {
   const { user, showRankModal, handleRankModal, handleSetMode } =
@@ -24,7 +26,7 @@ const RankModal = ({ show, setShow }) => {
     >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="../../../assets/game_modes/rank.png" alt="" />
+          <img src={RankedImage} alt="" />
         </div>
 
         <Modal.Title>Trading Floor</Modal.Title>
@@ -38,7 +40,7 @@ const RankModal = ({ show, setShow }) => {
         <div className="box practice">
           <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} />
 
-          <p className="m-0">Your game is about to begin. </p>
+          <p className="my-3">Your game is about to begin. </p>
           <p>You have a minute to beat the clock. Good luck!</p>
         </div>
 

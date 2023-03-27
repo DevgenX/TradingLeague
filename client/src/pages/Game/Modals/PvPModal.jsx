@@ -4,11 +4,21 @@ import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
 import { handle } from "express/lib/router";
+import PvpImage from "../../../assets/game_modes/casual.png";
+import { SET_TO_CHALLENGE } from "./../../../context/actions";
+
+import "./modals.scss";
 // import GeneralContext from "../../context/GeneralContext";
 
-const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
-  const { user, setGameDuration, showPvPModal, handlePvPModal, handleSetMode } =
-    useAppContext();
+const PvPModal = () => {
+  const {
+    user,
+    toChallenge,
+    showPvPModal,
+    handlePvPModal,
+    handleSetMode,
+    handleSetToChallenge,
+  } = useAppContext();
   // const { toChallenge, setToChallenge } = useContext(GeneralContext);
 
   const navigate = useNavigate();
@@ -19,10 +29,12 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
   //   navigate("/");
   // };
 
-  const start100Day = () => {
-    setShow(false);
-    setGameDuration(100);
-    navigate("/");
+  const handleClose = () => {
+    // Clear to challenge user
+    handleSetToChallenge(null);
+
+    // setToChallenge(null);
+    handlePvPModal();
   };
 
   const redirect = () => {
@@ -41,7 +53,7 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
     >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="../../../assets/game_modes/casual.png" alt="" />
+          <img src={PvpImage} alt="" />
         </div>
 
         <Modal.Title>Battle Arena</Modal.Title>
@@ -66,8 +78,8 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
                     user?.name?.includes(".") ? "ens" : ""
                   }`}
                 >
-                  {user?.name || "Unnamed"} <br />{" "}
-                  <small className="username">
+                  {user?.name || "Unnamed"} <br />
+                  {/* <small className="username">
                     @
                     {user?.name.length > 16
                       ? `${user?.name.substring(0, 8)}...${user?.name.substring(
@@ -75,13 +87,13 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
                           user?.name.length
                         )}`
                       : user?.name}
-                  </small>
+                  </small> */}
                 </p>
-                <UserImage
+                {/* <UserImage
                   name="modal-img"
                   user={user}
                   pic={user?.profilepic?.key}
-                />
+                /> */}
               </div>
             </Col>
 
@@ -91,18 +103,18 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
 
             <Col md="5">
               <div className="user d-flex align-items-center">
-                <UserImage
+                {/* <UserImage
                   user={toChallenge}
                   profilepic={toChallenge?.profilepic}
                   name="modal-img"
-                />
+                /> */}
                 <p
                   className={`user-name ${
                     toChallenge?.name?.includes(".") ? "ens" : ""
                   }`}
                 >
                   {toChallenge?.name || "Unnamed"} <br />{" "}
-                  <small className="username">
+                  {/* <small className="username">
                     @
                     {toChallenge?.username?.length > 16
                       ? `${toChallenge?.username?.substring(
@@ -113,7 +125,7 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
                           toChallenge?.username?.length
                         )}`
                       : toChallenge?.username}
-                  </small>
+                  </small> */}
                 </p>
               </div>
             </Col>
@@ -121,7 +133,7 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
         </div>
 
         <div className="btn-container">
-          <Button className="sub-btn" onClick={handlePvPModal}>
+          <Button className="sub-btn" onClick={handleClose}>
             Back to Lobby
           </Button>
           <Button className="main-btn" onClick={redirect}>

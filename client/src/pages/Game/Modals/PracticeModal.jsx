@@ -2,6 +2,9 @@ import { useAppContext } from "../../../context/appContext";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
+import PracticeImage from "../../../assets/game_modes/practice.png";
+
+import "./modals.scss";
 
 const PracticeModal = () => {
   const { user, showPractice, handlePracticeModal, handleSetMode } =
@@ -24,7 +27,7 @@ const PracticeModal = () => {
     >
       <Modal.Header>
         <div className="modal-head-img">
-          <img src="../../../assets/game_modes/practice.png" alt="" />
+          <img src={PracticeImage} alt="" />
         </div>
 
         <Modal.Title>Battle Test</Modal.Title>
@@ -42,7 +45,7 @@ const PracticeModal = () => {
         <div className="box practice">
           <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} />
 
-          <p>Practice is about to begin. </p>
+          <p className="my-3">Practice is about to begin. </p>
         </div>
 
         <div className="btn-container">

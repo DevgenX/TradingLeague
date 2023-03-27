@@ -21,8 +21,15 @@ export let crypto_name = null;
 let tvWidget;
 export let token_name = null;
 
-const Game = ({ mode, Challenge }) => {
-  const { showGameResult, handleGameResultModal } = useAppContext();
+const Game = ({ mode, challenge }) => {
+  const {
+    user,
+    showGameResult,
+    toChallenge,
+    newHistory,
+    newChallenge,
+    handleGameResultModal,
+  } = useAppContext();
   const [currentBar, setCurrentBar] = useState(null);
   const [counter, setCounter] = useState(0);
   const [tradeHistory, setTradeHistory] = useState([]);
@@ -35,8 +42,11 @@ const Game = ({ mode, Challenge }) => {
   const [positionSize, setPositionSize] = useState(1000);
   const [totalProfit, setTotalProfit] = useState(0);
   const [positionDays, setPositionDays] = useState(0);
+  const [winRate, setWinRate] = useState(0);
 
   const ref = useRef();
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 60);
 
   useEffect(() => {
     rand_om = Math.floor(Math.random() * 268);
@@ -159,9 +169,176 @@ const Game = ({ mode, Challenge }) => {
     }
   };
 
-  const handleEndGame = () => {
+  const handleEndGame = async () => {
+    let total_gain;
+    let final_profit;
+
+    if (withPosition.status) {
+      // push data to trading history if with current position
+
+      const history = {
+        entry: position.close,
+        end: currentBar.close,
+        days: positionDays,
+        gain_loss: position.gain_loss,
+        profit: position.profit,
+      };
+
+      let temp_hist = [history, ...tradeHistory];
+
+      const up_profit = temp_hist.reduce(
+        (prev, current) => prev + +current.profit,
+        0
+      );
+
+      final_profit = up_profit;
+
+      setPositionSize(1000 + up_profit);
+      setTradeHistory((prev) => [history, ...prev]);
+      setWithPosition({ status: false, desc: null });
+      setPosition(null);
+      setPositionDays(0);
+
+      // WIN RATE
+      let win = [];
+
+      temp_hist?.map((h) => (h.gain_loss > 0 ? win.push(h.gain_loss) : null));
+
+      const win_rate = (win.length / temp_hist.length) * 100;
+
+      if (temp_hist.length > 0) setWinRate(win_rate);
+
+      total_gain = temp_hist
+        .reduce((prev, current) => prev + +current.gain_loss, 0)
+        .toFixed(2);
+
+      temp_hist = [];
+    } else {
+      total_gain = tradeHistory
+        .reduce((prev, current) => prev + +current.gain_loss, 0)
+        .toFixed(2);
+
+      const up_profit = tradeHistory.reduce(
+        (prev, current) => prev + +current.profit,
+        0
+      );
+
+      final_profit = up_profit;
+
+      setPositionSize(1000 + up_profit);
+      setPosition(null);
+      setPositionDays(0);
+    }
     handleGameResultModal();
-    console.log("game ended");
+    try {
+      if (mode === "rank") {
+        // rank
+        const rank_history = {
+          profit: final_profit.toFixed(2),
+          gain_loss: total_gain,
+          game_mode: mode,
+          owner: user?._id,
+          status: "done",
+        };
+
+        let new_mmr;
+
+        const up_profit = tradeHistory.reduce(
+          (prev, current) => prev + +current.profit,
+          0
+        );
+
+        if (up_profit < 0) new_mmr = -15;
+        else if (up_profit > 0 && up_profit < 100) new_mmr = 10;
+        else if (up_profit >= 100 && up_profit < 200) new_mmr = 15;
+        else if (up_profit >= 200) new_mmr = 25;
+        else if (up_profit === 0) new_mmr = 0;
+
+        // const leaderboard_up = leaderboard.map((l) =>
+        //   l?._id == user?._id
+        //     ? {
+        //         ...l,
+        //         mmr: l.mmr + new_mmr,
+        //       }
+        //     : l
+        // );
+
+        // setUser({ ...user, mmr: user.mmr + new_mmr });
+        // setLeaderboard(leaderboard_up);
+
+        // Save history to db
+        // newHistory(rank_history);
+
+        // Update user's MMR
+      } else if (mode === "casual" && !challenge) {
+        // casual - new challenge
+        const new_casual_history = {
+          user_2: toChallenge,
+          gain_loss: total_gain,
+          profit: final_profit.toFixed(2),
+          game_mode: mode,
+          owner: user._id,
+          status: "pending",
+        };
+
+        // SAVE GAME HISTORY
+        newHistory(new_casual_history);
+
+        // SAVE CHALLENGE
+        newChallenge({
+          challenger: user._id,
+          // duration: gameDuration,
+          to_challenge: toChallenge._id,
+          game_mode: mode,
+          // game_id: data._id,
+          gain_loss: total_gain,
+          profit: final_profit.toFixed(2),
+        });
+
+        // await saveChallenge(
+        //   {
+        //     challenger: user._id,
+        //     duration: gameDuration,
+        //     to_challenge: toChallenge._id,
+        //     game_mode: mode,
+        //     game_id: data._id,
+        //     gain_loss: total_gain,
+        //     profit: final_profit.toFixed(2),
+        //   },
+        //   cookies.sessID
+        // );
+      } else if (mode === "casual" && challenge) {
+        // casual - accept challenge
+        // const accept_casual_history = {
+        //   user_2: toChallenge,
+        //   gain_loss: total_gain,
+        //   profit: final_profit.toFixed(2),
+        //   game_mode: mode,
+        //   owner: user._id,
+        //   status: "done",
+        // };
+        // await updateAcceptedHistory(
+        //   {
+        //     _id: currentGame.game_id,
+        //     status: "done",
+        //     user_2: {
+        //       _id: user._id,
+        //       username: user.username,
+        //       name: user?.name,
+        //       mmr: user.mmr,
+        //       profit: final_profit.toFixed(2),
+        //       profilepic: user?.profilepic?.key,
+        //       gain_loss: total_gain,
+        //     },
+        //   },
+        //   cookies.sessID
+        // );
+        // await saveHistory(accept_casual_history, cookies.sessID);
+        // await removeChallenge(currentGame._id, cookies.sessID);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const showNextDay = () => {

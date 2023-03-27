@@ -104,7 +104,7 @@ const GameResultModal = ({
                 ? "+25"
                 : "0"}
             </h2>
-            <h6 className="new-mmr">MMR: {user.mmr}</h6>
+            <h6 className="new-mmr">MMR: {user?.mmr}</h6>
           </div>
         )}
 

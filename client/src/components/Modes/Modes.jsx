@@ -10,9 +10,10 @@ import Leaderboard from "../Leaderboards/Leaderboards";
 import PvPModal from "../../pages/Game/Modals/PvPModal";
 import RankModal from "../../pages/Game/Modals/RankModal";
 import PracticeModal from "../../pages/Game/Modals/PracticeModal";
+import FindModal from "../../pages/Game/Modals/FindModal";
 
 const Modes = () => {
-  const { handlePvPModal, handlePracticeModal, handleRankModal } =
+  const { handlePracticeModal, handleRankModal, handleFindModal } =
     useAppContext();
 
   return (
@@ -39,7 +40,7 @@ const Modes = () => {
               </div>
             </Col>
             <Col md={3} sm={6}>
-              <div className="box2" onClick={handlePvPModal}>
+              <div className="box2" onClick={handleFindModal}>
                 <Image src={PvP} alt="PvP mode" fluid />
                 <h3>PvP</h3>
               </div>

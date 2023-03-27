@@ -25,6 +25,11 @@ import {
   SHOW_RANK_MODAL,
   SET_GAME_MODE,
   SHOW_GAME_RESULT_MODAL,
+  GET_ALL_HISTORY,
+  ADD_NEW_HISTORY,
+  SHOW_FIND_MODAL,
+  SET_TO_CHALLENGE,
+  GET_ALL_CHALLENGES,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -44,6 +49,9 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   mode: "",
+  history: [],
+  toChallenge: null,
+  challenges: [],
 };
 
 const AppContext = createContext();
@@ -162,10 +170,58 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SHOW_GAME_RESULT_MODAL });
   };
 
+  const handleSetToChallenge = (user) => {
+    dispatch({ type: SET_TO_CHALLENGE, payload: { user } });
+  };
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
   };
+
+  const getAllHistory = async () => {
+    try {
+      const { data } = await authFetch.get("/history");
+      console.log(data);
+      dispatch({ type: GET_ALL_HISTORY, payload: { history: data } });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const newHistory = useCallback(
+    async (history) => {
+      try {
+        const { data } = await authFetch.post("/history/new", history);
+        dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [dispatch, authFetch]
+  );
+
+  // GET ALL CHALLENGES OF LOGGED IN USER
+  const getAllChallenges = async (id) => {
+    try {
+      const { data } = await authFetch.get(`/challenge/${id}`);
+
+      dispatch({ type: GET_ALL_CHALLENGES, payload: { challenges: data } });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const newChallenge = useCallback(
+    async (challenge) => {
+      try {
+        await authFetch.post("/challenge/new", challenge);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch]
+  );
 
   const updateUser = useCallback(
     async (currentUser) => {
@@ -193,6 +249,7 @@ const AppProvider = ({ children }) => {
     },
     [dispatch, authFetch, addUserToLocalStorage, clearAlert]
   );
+
   return (
     <AppContext.Provider
       value={{
@@ -207,6 +264,11 @@ const AppProvider = ({ children }) => {
         handleRankModal,
         handleSetMode,
         handleGameResultModal,
+        handleSetToChallenge,
+        getAllHistory,
+        newHistory,
+        getAllChallenges,
+        newChallenge,
       }}
     >
       {children}

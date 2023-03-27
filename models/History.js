@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const historySchema = new mongoose.Schema(
   {
-    user: {
+    user_2: {
       type: Object,
     },
     gain_loss: {

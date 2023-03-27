@@ -16,6 +16,10 @@
     }
   }
 
+  .modal-title {
+    color: #fff;
+  }
+
   &.crop-img {
     .cropper-container {
       position: relative;
@@ -290,6 +294,7 @@
         .btn {
           width: 48%;
           border-radius: 8px;
+          border: none;
 
           &.sub-btn {
             background: linear-gradient(180deg, #991bf9 0%, #6400b0 100%);
