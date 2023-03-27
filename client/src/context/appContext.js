@@ -23,6 +23,8 @@ import {
   SHOW_PVP_MODAL,
   SHOW_PRACTICE_MODAL,
   SHOW_RANK_MODAL,
+  SET_GAME_MODE,
+  SHOW_GAME_RESULT_MODAL,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -36,10 +38,12 @@ const initialState = {
   showPvPModal: false,
   showRankModal: false,
   showPractice: false,
+  showGameResult: false,
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  mode: "",
 };
 
 const AppContext = createContext();
@@ -138,6 +142,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SHOW_POPUP });
   };
 
+  const handleSetMode = (mode) => {
+    dispatch({ type: SET_GAME_MODE, mode });
+  };
+
   const handlePvPModal = () => {
     dispatch({ type: SHOW_PVP_MODAL });
   };
@@ -148,6 +156,10 @@ const AppProvider = ({ children }) => {
 
   const handleRankModal = () => {
     dispatch({ type: SHOW_RANK_MODAL });
+  };
+
+  const handleGameResultModal = () => {
+    dispatch({ type: SHOW_GAME_RESULT_MODAL });
   };
 
   const logoutUser = () => {
@@ -193,6 +205,8 @@ const AppProvider = ({ children }) => {
         handlePvPModal,
         handlePracticeModal,
         handleRankModal,
+        handleSetMode,
+        handleGameResultModal,
       }}
     >
       {children}

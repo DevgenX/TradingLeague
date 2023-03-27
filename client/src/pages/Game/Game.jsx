@@ -11,14 +11,18 @@ import Datafeed from "../../datafeed/datafeed";
 import { _lastbar, nextDay } from "../../datafeed/stream";
 import { next_feed, c_name } from "../../datafeed/historyProvider";
 import { widget } from "../../charting_library";
+import { useAppContext } from "../../context/appContext";
+import GameResultModal from "./Modals/GameResultModal";
+import { getCrypto } from "../../services/crypto";
 
-export const rand_om = Math.floor(Math.random() * 268);
+export let rand_om = Math.floor(Math.random() * 268);
 export let crypto_name = null;
 
 let tvWidget;
 export let token_name = null;
 
-const Game = ({ mode = "practice", Challenge }) => {
+const Game = ({ mode, Challenge }) => {
+  const { showGameResult, handleGameResultModal } = useAppContext();
   const [currentBar, setCurrentBar] = useState(null);
   const [counter, setCounter] = useState(0);
   const [tradeHistory, setTradeHistory] = useState([]);
@@ -33,6 +37,11 @@ const Game = ({ mode = "practice", Challenge }) => {
   const [positionDays, setPositionDays] = useState(0);
 
   const ref = useRef();
+
+  useEffect(() => {
+    rand_om = Math.floor(Math.random() * 268);
+    crypto_name = getCrypto(rand_om);
+  }, []);
 
   useEffect(() => {
     const getLanguageFromURL = () => {
@@ -79,7 +88,7 @@ const Game = ({ mode = "practice", Challenge }) => {
         "source_selection_markers",
         "scales_date_format",
       ],
-      custom_css_url: "../../assets/style.css",
+      // custom_css_url: "../../assets/style.css",
       overrides: {},
     };
 
@@ -99,20 +108,27 @@ const Game = ({ mode = "practice", Challenge }) => {
 
   const handleClosePosition = () => {
     if (position.profit && position.gain_loss) {
-      tvWidget
-        .activeChart()
-        .createExecutionShape()
-        .setDirection("sell")
-        .setText("Sell at " + _lastbar.close)
-        .setTextColor("#F00")
-        .setArrowColor("#F00")
-        .setArrowHeight(40)
-        .setFont("12pt Verdan")
-        .setTime(_lastbar.time / 1000)
-        .setPrice(_lastbar.close);
+      tvWidget.activeChart().createShape(
+        { time: _lastbar.time / 1000, price: _lastbar.close },
+        {
+          shape: "icon",
+          icon: "0xf00d",
+          lock: true,
+          disableSelection: true,
+          disableSave: true,
+          disableUndo: true,
+          zOrder: "bottom",
+          text: "Close",
+          overrides: {
+            text: "Close",
+            color: "#787878",
+            size: 32,
+            scale: 1,
+          },
+        }
+      );
 
       // push data to trading history
-
       const history = {
         entry: position.close,
         end: currentBar.close,
@@ -144,6 +160,7 @@ const Game = ({ mode = "practice", Challenge }) => {
   };
 
   const handleEndGame = () => {
+    handleGameResultModal();
     console.log("game ended");
   };
 
@@ -178,7 +195,7 @@ const Game = ({ mode = "practice", Challenge }) => {
       } else {
         handleEndGame();
       }
-    } else if (mode === "casual") {
+    } else if (mode === "pvp") {
       nextDay(next_feed[counter]);
       setCounter((prev) => prev + 1);
       setCurrentBar(next_feed[counter]);
@@ -230,64 +247,47 @@ const Game = ({ mode = "practice", Challenge }) => {
         }
         setPositionDays((prev) => prev + 1);
       }
-    } else if (mode === "tournament") {
-      nextDay(next_feed[counter]);
-      setCounter((prev) => prev + 1);
-      setCurrentBar(next_feed[counter]);
-      if (withPosition.status) {
-        if (withPosition.desc === "long") {
-          const long_gain_loss =
-            (_lastbar.close - position.close) / position.close;
-          const profit = positionSize * long_gain_loss * leverage;
-          setPosition({
-            ...position,
-            gain_loss: parseFloat(long_gain_loss).toFixed(2),
-            profit: profit.toFixed(2),
-          });
-        } else if (withPosition.desc === "short") {
-          const short_gain_loss =
-            ((_lastbar.close - position.close) / position.close) * -1;
-          const profit = positionSize * short_gain_loss * leverage;
-          setPosition({
-            ...position,
-            gain_loss: parseFloat(short_gain_loss).toFixed(2),
-            profit: profit.toFixed(2),
-          });
-        }
-        setPositionDays((prev) => prev + 1);
-      }
     }
   };
 
   const handleLongPosition = () => {
-    tvWidget
-      .activeChart()
-      .createExecutionShape()
-      .setDirection("buy")
-      .setText("Long at " + _lastbar.close)
-      .setTextColor("#5eff5b ")
-      .setArrowColor("#5eff5b ")
-      .setArrowHeight(40)
-      .setFont("12pt Verdan")
-      .setTime(_lastbar.time / 1000)
-      .setPrice(_lastbar.close);
-
+    tvWidget.activeChart().createShape(
+      { time: _lastbar.time / 1000, price: _lastbar.low },
+      {
+        shape: "arrow_up",
+        lock: true,
+        disableSelection: true,
+        disableSave: true,
+        disableUndo: true,
+        zOrder: "top",
+        overrides: {
+          text: "Long",
+          fontsize: 14,
+          font: "Arial",
+        },
+      }
+    );
     setPosition({ ...currentBar });
     setWithPosition({ status: true, desc: "long" });
   };
 
   const handleShortPosition = () => {
-    tvWidget
-      .activeChart()
-      .createExecutionShape()
-      .setDirection("sell")
-      .setText("Short at " + _lastbar.close)
-      .setTextColor("#5eff5b ")
-      .setArrowColor("#5eff5b ")
-      .setArrowHeight(40)
-      .setFont("12pt Verdan")
-      .setTime(_lastbar.time / 1000)
-      .setPrice(_lastbar.close);
+    tvWidget.activeChart().createShape(
+      { time: _lastbar.time / 1000, price: _lastbar.high },
+      {
+        shape: "arrow_down",
+        lock: true,
+        disableSelection: true,
+        disableSave: true,
+        disableUndo: true,
+        zOrder: "top",
+        overrides: {
+          text: "Short",
+          fontsize: 14,
+          font: "Arial",
+        },
+      }
+    );
 
     setPosition({ ...currentBar });
     setWithPosition({ status: true, desc: "short" });
@@ -296,6 +296,20 @@ const Game = ({ mode = "practice", Challenge }) => {
   return (
     <GameDiv>
       <TopNav />
+      <GameResultModal
+        c_name={crypto_name}
+        game_mode={mode}
+        tradeHistory={tradeHistory}
+        // gameDuration={gameDuration}
+        counter={counter}
+        setCounter={setCounter}
+        setTradeHistory={setTradeHistory}
+        // winRate={winRate}
+        // setWinRate={setWinRate}
+        // currentPlay={currentPlay}
+        positionSize={positionSize}
+        setPositionSize={setPositionSize}
+      />
       <Container>
         <ContainerDiv>
           <Row>
@@ -317,6 +331,7 @@ const Game = ({ mode = "practice", Challenge }) => {
                 handleLongPosition={handleLongPosition}
                 handleShortPosition={handleShortPosition}
                 handleClosePosition={handleClosePosition}
+                handleEndGame={handleEndGame}
               />
             </Col>
             <Col>

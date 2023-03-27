@@ -13,10 +13,8 @@ const GameButtons = ({
   handleLongPosition,
   handleShortPosition,
   handleClosePosition,
+  handleEndGame,
 }) => {
-  const handleEndGame = () => {
-    console.log("game ended");
-  };
   return (
     <GameDiv>
       <Row>

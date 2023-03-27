@@ -13,7 +13,9 @@ const App = () => {
         <Route path="register" element={<Register />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/history" element={<GameHistoryTable />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game/practice" element={<Game mode="practice" />} />
+        <Route path="/game/pvp" element={<Game mode="casual" />} />
+        <Route path="/game/ranked" element={<Game mode="pvp" />} />
         <Route path="*" element={<h1>Error page here</h1>} />
       </Routes>
     </BrowserRouter>

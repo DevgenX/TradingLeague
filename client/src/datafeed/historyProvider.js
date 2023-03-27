@@ -1,5 +1,4 @@
-import { crypto_name, rand_om } from "../pages/Game/Game";
-import { getCrypto } from "../services/crypto";
+import { rand_om } from "../pages/Game/Game";
 
 export let next_feed;
 export let c_name = null;

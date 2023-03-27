@@ -3,24 +3,21 @@ import { useContext } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
+import { handle } from "express/lib/router";
 // import GeneralContext from "../../context/GeneralContext";
 
 const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
-  const { user, setGameDuration, ShowPvP, handlePvPModal } = useAppContext();
+  const { user, setGameDuration, showPvPModal, handlePvPModal, handleSetMode } =
+    useAppContext();
   // const { toChallenge, setToChallenge } = useContext(GeneralContext);
 
   const navigate = useNavigate();
 
-  const handleClose = () => {
-    setToChallenge(null);
-    setShow(false);
-  };
-
-  const start60Day = () => {
-    setShow(false);
-    setGameDuration(60);
-    navigate("/");
-  };
+  // const start60Day = () => {
+  //   setShow(false);
+  //   setGameDuration(60);
+  //   navigate("/");
+  // };
 
   const start100Day = () => {
     setShow(false);
@@ -28,11 +25,17 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
     navigate("/");
   };
 
+  const redirect = () => {
+    handlePvPModal();
+    handleSetMode("casual");
+    navigate("/game/pvp");
+  };
+
   return (
     <Modal
       dialogClassName="modal-40w"
-      show={ShowPvP}
-      onHide={handleClose}
+      show={showPvPModal}
+      onHide={handlePvPModal}
       centered
       className="casual-modal"
     >
@@ -66,15 +69,12 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
                   {user?.name || "Unnamed"} <br />{" "}
                   <small className="username">
                     @
-                    {user?.username.length > 16
-                      ? `${user?.username.substring(
-                          0,
-                          8
-                        )}...${user?.username.substring(
-                          user?.username.length - 4,
-                          user?.username.length
+                    {user?.name.length > 16
+                      ? `${user?.name.substring(0, 8)}...${user?.name.substring(
+                          user?.name.length - 4,
+                          user?.name.length
                         )}`
-                      : user?.username}
+                      : user?.name}
                   </small>
                 </p>
                 <UserImage
@@ -124,7 +124,7 @@ const PvPModal = ({ show, setShow, toChallenge, setToChallenge }) => {
           <Button className="sub-btn" onClick={handlePvPModal}>
             Back to Lobby
           </Button>
-          <Button className="main-btn" onClick={start100Day}>
+          <Button className="main-btn" onClick={redirect}>
             Start Game
           </Button>
         </div>

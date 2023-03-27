@@ -17,6 +17,10 @@ const Modes = () => {
 
   return (
     <Row>
+      <PracticeModal />
+      <PvPModal />
+      <RankModal />
+
       <Col md={8}>
         <div className="modes-container">
           <Row className="d-flex text-center align-items-center justify-content-center">

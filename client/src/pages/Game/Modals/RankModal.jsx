@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
 
 const RankModal = ({ show, setShow }) => {
-  const { user, showRankModal, handleRankModal } = useAppContext();
+  const { user, showRankModal, handleRankModal, handleSetMode } =
+    useAppContext();
 
   const navigate = useNavigate();
 
   const redirect = () => {
-    setShow(false);
-    navigate("/");
+    handleRankModal();
+    handleSetMode("rank");
+    navigate("/game/ranked");
   };
 
   return (

@@ -1,6 +1,5 @@
 import historyProvider from "./historyProvider";
 import stream from "./stream";
-import { token_name } from "../pages/Game/Game";
 
 const configurationData = {
   supported_resolutions: ["240", "D", "1W"],

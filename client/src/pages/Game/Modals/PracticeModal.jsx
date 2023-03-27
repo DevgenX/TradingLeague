@@ -4,18 +4,20 @@ import { useNavigate } from "react-router-dom";
 import UserImage from "../../../components/common/UserImage";
 
 const PracticeModal = () => {
-  const { user, ShowPractice, handlePracticeModal } = useAppContext();
+  const { user, showPractice, handlePracticeModal, handleSetMode } =
+    useAppContext();
 
   const navigate = useNavigate();
 
   const redirect = () => {
     handlePracticeModal();
-    navigate("/");
+    handleSetMode("practice");
+    navigate("/game/practice");
   };
 
   return (
     <Modal
-      show={ShowPractice}
+      show={showPractice}
       onHide={handlePracticeModal}
       centered
       className="practice-modal"

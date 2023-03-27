@@ -14,6 +14,8 @@ import {
   SHOW_PRACTICE_MODAL,
   SHOW_PVP_MODAL,
   SHOW_RANK_MODAL,
+  SET_GAME_MODE,
+  SHOW_GAME_RESULT_MODAL,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -141,6 +143,20 @@ const reducer = (state, action) => {
     return {
       ...state,
       showPvPModal: !state.showPvPModal,
+    };
+  }
+
+  if (action.type === SET_GAME_MODE) {
+    return {
+      ...state,
+      mode: action.mode,
+    };
+  }
+
+  if (action.type === SHOW_GAME_RESULT_MODAL) {
+    return {
+      ...state,
+      showGameResult: !state.showGameResult,
     };
   }
 
