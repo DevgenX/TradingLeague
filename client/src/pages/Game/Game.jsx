@@ -24,9 +24,11 @@ export let token_name = null;
 const Game = ({ mode, challenge }) => {
   const {
     user,
+    currentGame,
     showGameResult,
     toChallenge,
     newHistory,
+    updateHistory,
     newChallenge,
     updateMMR,
     handleGameResultModal,
@@ -312,33 +314,32 @@ const Game = ({ mode, challenge }) => {
         // );
         await newHistory(new_casual_history, new_challenge);
       } else if (mode === "casual" && challenge) {
-        // casual - accept challenge
-        // const accept_casual_history = {
-        //   user_2: toChallenge,
-        //   gain_loss: total_gain,
-        //   profit: final_profit.toFixed(2),
-        //   game_mode: mode,
-        //   owner: user._id,
-        //   status: "done",
-        // };
-        // await updateAcceptedHistory(
-        //   {
-        //     _id: currentGame.game_id,
-        //     status: "done",
-        //     user_2: {
-        //       _id: user._id,
-        //       username: user.username,
-        //       name: user?.name,
-        //       mmr: user.mmr,
-        //       profit: final_profit.toFixed(2),
-        //       profilepic: user?.profilepic?.key,
-        //       gain_loss: total_gain,
-        //     },
-        //   },
-        //   cookies.sessID
-        // );
-        // await saveHistory(accept_casual_history, cookies.sessID);
-        // await removeChallenge(currentGame._id, cookies.sessID);
+        const accept_casual_history = {
+          user_2: toChallenge,
+          gain_loss: total_gain,
+          profit: final_profit.toFixed(2),
+          game_mode: mode,
+          owner: user._id,
+          status: "done",
+        };
+
+        const updated_challenge = {
+          _id: currentGame.history_id,
+          status: "done",
+          user_2: {
+            _id: user._id,
+            name: user?.name,
+            mmr: user.mmr,
+            profit: final_profit.toFixed(2),
+            gain_loss: total_gain,
+          },
+        };
+
+        // UPDATE GAME HISTORY OF CHALLENGE INITIATOR
+        updateHistory(updated_challenge, currentGame._id);
+
+        // SAVE HISTORY FOR CHALLENGED USER
+        newHistory(accept_casual_history);
       }
     } catch (e) {
       console.log(e);
@@ -514,6 +515,8 @@ const Game = ({ mode, challenge }) => {
                 handleShortPosition={handleShortPosition}
                 handleClosePosition={handleClosePosition}
                 handleEndGame={handleEndGame}
+                leverage={leverage}
+                setLeverage={setLeverage}
               />
             </Col>
             <Col>

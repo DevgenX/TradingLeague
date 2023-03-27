@@ -1,10 +1,12 @@
 import React from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
-// import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-// import { FacebookShareButton, TwitterShareButton } from "react-share";
+
 import { useAppContext } from "../../../context/appContext";
 import UserImage from "./../../../components/common/UserImage";
+import PracticeImage from "../../../assets/game_modes/practice.png";
+import PvpImage from "../../../assets/game_modes/casual.png";
+import RankedImage from "../../../assets/game_modes/rank.png";
 
 const GameResultModal = ({
   c_name,
@@ -37,19 +39,6 @@ const GameResultModal = ({
     handleGameResultModal();
   };
 
-  // const handleClose = () => {
-  //   setGameDuration(60);
-  //   setCounter(0);
-  //   setTradeHistory([]);
-  //   setWinRate(0);
-  //   setPositionSize(1000);
-  //   setShow(false);
-
-  //   if (game_mode === "tournament")
-  //     navigate(`/gamelobby/tournament/${currentPlay._id}`);
-  //   else navigate("/gamelobby");
-  // };
-
   return (
     <Modal
       show={showGameResult}
@@ -59,18 +48,16 @@ const GameResultModal = ({
       dialogClassName="modal-40w"
       className={`game-result-modal ${game_mode}`}
     >
-      <Modal.Header>
+      <Modal.Header className="justify-content-start">
         <div className="modal-head-img">
           <img
-            src={`/assets/img/game_modes/${
+            src={
               game_mode === "practice"
-                ? "practice"
+                ? PracticeImage
                 : game_mode === "casual"
-                ? "casual"
-                : game_mode === "rank"
-                ? "rank"
-                : "tournament"
-            }.png`}
+                ? PvpImage
+                : RankedImage
+            }
             alt=""
           />
         </div>
@@ -95,13 +82,13 @@ const GameResultModal = ({
           <div className="mmr-info mb-4">
             <h2 className="mmr m-0">
               {positionSize < 1000
-                ? "-15"
+                ? "-15 MMR"
                 : positionSize > 1000 && positionSize < 1100
-                ? "+10"
+                ? "+10 MMR"
                 : positionSize >= 1100 && positionSize < 1200
-                ? "+15"
+                ? "+15 MMR"
                 : positionSize >= 1200
-                ? "+25"
+                ? "+25 MMR"
                 : "0"}
             </h2>
             <h6 className="new-mmr">MMR: {user?.mmr}</h6>
@@ -125,9 +112,9 @@ const GameResultModal = ({
                 >
                   {user?.name || "Unnamed"}
                 </p>
-                <p className="username m-0 text-left">
+                {/* <p className="username m-0 text-left">
                   {user && `@${user?.username}`}
-                </p>
+                </p> */}
               </div>
             </div>
 

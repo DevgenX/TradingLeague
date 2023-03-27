@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, unAuthenticatedError } from "../errors/index.js";
 import History from "../models/History.js";
+import Challenger from "../models/Challenger.js";
 
 const getAllHistory = async (req, res, next) => {
   const history = await History.find({ owner: req.user.userId });
@@ -20,4 +21,20 @@ const createHistory = async (req, res, next) => {
   res.status(StatusCodes.OK).send(new_history);
 };
 
-export { getAllHistory, createHistory };
+const updateHistory = async (req, res, next) => {
+  const history = req.body.history;
+  const challenge_id = req.body.challenge_id;
+
+  const to_update_history = await History.findOne({ _id: history_id });
+  to_update_history.user_2 = history.user_2;
+  to_update_history.status = history.status;
+
+  await to_update_history.save();
+
+  // REMOVE CHALLENGE FROM DB
+  await Challenger.findOneAndDelete({ _id: challenge_id });
+
+  res.status(StatusCodes.OK).send("OK");
+};
+
+export { getAllHistory, createHistory, updateHistory };

@@ -2,13 +2,8 @@ import { useAppContext } from "../../../context/appContext";
 import { useContext } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserImage from "../../../components/common/UserImage";
-import { handle } from "express/lib/router";
-import PvpImage from "../../../assets/game_modes/casual.png";
-import { SET_TO_CHALLENGE } from "./../../../context/actions";
 
-import "./modals.scss";
-// import GeneralContext from "../../context/GeneralContext";
+import PvpImage from "../../../assets/game_modes/casual.png";
 
 const PvPModal = () => {
   const {
@@ -19,15 +14,8 @@ const PvPModal = () => {
     handleSetMode,
     handleSetToChallenge,
   } = useAppContext();
-  // const { toChallenge, setToChallenge } = useContext(GeneralContext);
 
   const navigate = useNavigate();
-
-  // const start60Day = () => {
-  //   setShow(false);
-  //   setGameDuration(60);
-  //   navigate("/");
-  // };
 
   const handleClose = () => {
     // Clear to challenge user
@@ -78,15 +66,18 @@ const PvPModal = () => {
                     user?.name?.includes(".") ? "ens" : ""
                   }`}
                 >
-                  {user?.name || "Unnamed"} <br />
+                  {user?.name || "Unnamed"} <br />{" "}
                   {/* <small className="username">
                     @
-                    {user?.name.length > 16
-                      ? `${user?.name.substring(0, 8)}...${user?.name.substring(
-                          user?.name.length - 4,
-                          user?.name.length
+                    {user?.username?.length > 16
+                      ? `${user?.username.substring(
+                          0,
+                          8
+                        )}...${user?.username.substring(
+                          user?.username?.length - 4,
+                          user?.username?.length
                         )}`
-                      : user?.name}
+                      : user?.username}
                   </small> */}
                 </p>
                 {/* <UserImage

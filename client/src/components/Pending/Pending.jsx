@@ -4,16 +4,28 @@ import "./pending.scss";
 import UserImage from "../common/UserImage";
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 const Pending = () => {
-  const { declinePvp, user, challenges, getAllChallenges } = useAppContext();
+  const { acceptPvp, declinePvp, user, challenges, getAllChallenges } =
+    useAppContext();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllChallenges(user?._id);
   }, [user]);
 
-  const handleAccept = () => {
-    console.log("Accepted");
+  const handleAccept = (to_challenge) => {
+    acceptPvp(
+      {
+        ...to_challenge.challenger,
+        gain_loss: to_challenge.gain_loss,
+        profit: to_challenge.profit,
+      },
+      to_challenge
+    );
+    navigate("/game/pvp/challenger");
   };
 
   const handleDecline = (id, history_id) => {

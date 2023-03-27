@@ -29,7 +29,7 @@ const RankModal = ({ show, setShow }) => {
           <img src={RankedImage} alt="" />
         </div>
 
-        <Modal.Title>Trading Floor</Modal.Title>
+        <Modal.Title>Ranked Game</Modal.Title>
 
         <div className="btn-close" aria-label="Close" onClick={handleRankModal}>
           <i className="fa-solid fa-xmark"></i>

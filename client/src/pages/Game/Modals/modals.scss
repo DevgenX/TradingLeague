@@ -713,8 +713,8 @@
         }
 
         .new-mmr {
-          // font-weight: 700;
-          // color: #6a6ba0;
+          font-weight: 700;
+          color: #fff;
         }
       }
 
@@ -773,12 +773,16 @@
         .summary {
           .title {
             color: #6a6ba0;
+            background: transparent;
+            box-shadow: none;
           }
         }
 
         .trade-history {
           .title {
             color: #6a6ba0;
+            background: transparent;
+            box-shadow: none;
           }
 
           .history-list {

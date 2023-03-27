@@ -21,7 +21,7 @@ const Navbar = () => {
           <img className="profile" src={Profile} alt="profile" />
           <div className="name">
             <h1>{user?.name}</h1>
-            <small>{`@${user?.name}`}</small>
+            {/* <small>{`@${user?.name}`}</small> */}
           </div>
         </div>
         <div className="badge">

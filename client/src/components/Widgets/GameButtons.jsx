@@ -1,6 +1,7 @@
 import { Col, Row, Button } from "react-bootstrap";
 import styled from "styled-components";
 import Timer from "../Timer/Timer";
+import Leverage from "../Leverage/Leverage";
 
 const GameButtons = ({
   mode,
@@ -16,6 +17,8 @@ const GameButtons = ({
   handleShortPosition,
   handleClosePosition,
   handleEndGame,
+  leverage,
+  setLeverage,
 }) => {
   return (
     <GameDiv>
@@ -40,9 +43,7 @@ const GameButtons = ({
                       ? "practice"
                       : mode === "casual"
                       ? "casual"
-                      : mode === "rank"
-                      ? "rank"
-                      : "tournament"
+                      : "rank"
                   }.png`)}
                   alt=""
                   className="icon"
@@ -51,12 +52,10 @@ const GameButtons = ({
 
               <p className="game-mode m-0 ms-2">
                 {mode === "practice"
-                  ? "Battle Test"
+                  ? "Practice"
                   : mode === "casual"
                   ? "Battle Arena"
-                  : mode === "rank"
-                  ? "Trading Floor"
-                  : "Tournament"}
+                  : "Ranked"}
               </p>
             </div>
 
@@ -91,11 +90,11 @@ const GameButtons = ({
           </Col>
           <Col>
             <div className="options-container">
-              {/* <Leverage
-              leverage={leverage}
-              setLeverage={setLeverage}
-              withPosition={withPosition} />*/}
-              <p>Leverage</p>
+              <Leverage
+                leverage={leverage}
+                setLeverage={setLeverage}
+                withPosition={withPosition}
+              />
             </div>
           </Col>
           <Col>
@@ -321,7 +320,7 @@ const HeaderDiv = styled.div`
 
 const BodyDiv = styled.div`
   .position-container {
-    font-size: 13px;
+    font-size: 0.875em;
     color: #6a6ba0;
 
     .amount {

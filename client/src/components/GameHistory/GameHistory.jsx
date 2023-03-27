@@ -69,13 +69,15 @@ const GameHistoryTable = () => {
                       <tr key={index}>
                         <td>{game.user_2?.mmr && getRank(game.user_2?.mmr)}</td>
                         <td>{game.user_2?.name || "Unnamed"}</td>
-                        <td>{game.game_mode}</td>
+                        <td>{game.game_mode === "casual" && "PvP"}</td>
                         <td>
                           {game.status === "done"
                             ? getResult(
                                 game.profit,
                                 game.user_2?.profit || null
                               )
+                            : game.status === "declined"
+                            ? "Declined"
                             : "Pending"}
                         </td>
                       </tr>

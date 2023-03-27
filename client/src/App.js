@@ -22,7 +22,7 @@ const App = () => {
           path="/game/pvp/challenger"
           element={<Game mode="casual" challenge={true} />}
         />
-        <Route path="/game/ranked" element={<Game mode="pvp" />} />
+        <Route path="/game/ranked" element={<Game mode="rank" />} />
         <Route path="*" element={<h1>Error page here</h1>} />
       </Routes>
     </BrowserRouter>

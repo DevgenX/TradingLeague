@@ -32,6 +32,7 @@ import {
   GET_ALL_CHALLENGES,
   UPDATE_USER_MMR,
   DECLINE_CHALLENGE,
+  ACCEPT_CHALLENGE,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -54,6 +55,7 @@ const initialState = {
   history: [],
   toChallenge: null,
   challenges: [],
+  currentGame: null,
 };
 
 const AppContext = createContext();
@@ -207,9 +209,21 @@ const AppProvider = ({ children }) => {
       const { data } = await authFetch.post("/history/new", history);
       dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
 
-      new_challenge.history_id = data._id;
+      if (new_challenge) {
+        new_challenge.history_id = data._id;
+        newChallenge(new_challenge);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-      newChallenge(new_challenge);
+  const updateHistory = async (history, challenge_id) => {
+    try {
+      const { data } = await authFetch.patch("history/update", {
+        history,
+        challenge_id,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -288,6 +302,13 @@ const AppProvider = ({ children }) => {
     [dispatch, authFetch, addUserToLocalStorage, clearAlert]
   );
 
+  const acceptPvp = (to_challenge, curGame) => {
+    dispatch({
+      type: "ACCEPT_CHALLENGE",
+      payload: { user: to_challenge, currentGame: curGame },
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -307,10 +328,12 @@ const AppProvider = ({ children }) => {
         getUsers,
         getAllHistory,
         newHistory,
+        updateHistory,
         getAllChallenges,
         newChallenge,
         handleFindModal,
         declinePvp,
+        acceptPvp,
       }}
     >
       {children}

@@ -1,9 +1,12 @@
+import React from "react";
 import { Form } from "react-bootstrap";
 
 const Leverage = ({ leverage, setLeverage, withPosition }) => {
   return (
-    <div className="leverage-container">
-      <small className="me-1">Leverage:</small>
+    <div className="leverage-container d-flex">
+      <small className="me-1" style={{ color: "#fff" }}>
+        Leverage:
+      </small>
 
       <Form.Select
         aria-label="leverage"

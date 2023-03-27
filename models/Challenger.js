@@ -19,7 +19,7 @@ const challengerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    game_id: {
+    history_id: {
       type: String,
       // required: true,
     },

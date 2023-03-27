@@ -23,6 +23,7 @@ import {
   GET_ALL_CHALLENGES,
   UPDATE_USER_MMR,
   DECLINE_CHALLENGE,
+  ACCEPT_CHALLENGE,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -230,6 +231,17 @@ const reducer = (state, action) => {
       ...state,
       challenges: state.challenges.filter(
         (c) => c._id !== action.payload.declined_id
+      ),
+    };
+  }
+
+  if (action.type === ACCEPT_CHALLENGE) {
+    return {
+      ...state,
+      toChallenge: action.payload.user,
+      currentGame: action.payload.currentGame,
+      challenges: state.challenges.filter(
+        (c) => c._id !== action.payload.currentGame._id
       ),
     };
   }

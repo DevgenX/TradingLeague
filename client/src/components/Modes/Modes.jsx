@@ -21,6 +21,7 @@ const Modes = () => {
       <PracticeModal />
       <PvPModal />
       <RankModal />
+      <FindModal />
 
       <Col md={8}>
         <div className="modes-container">
@@ -33,12 +34,13 @@ const Modes = () => {
             </Col>
           </Row>
           <Row className="d-flex text-center align-items-center justify-content-center">
-            <Col md={3} sm={6}>
+            <Col md={user ? 3 : 12} sm={user ? 6 : 12}>
               <div className="box1" onClick={handlePracticeModal}>
                 <Image src={Practice} alt="Practice mode" fluid />
                 <h3>Practice</h3>
               </div>
             </Col>
+
             {user && (
               <Col md={user ? 3 : 12} sm={user ? 6 : 12}>
                 <div className="box2" onClick={handleFindModal}>

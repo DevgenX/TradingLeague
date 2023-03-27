@@ -1,7 +1,6 @@
 import { useAppContext } from "../../../context/appContext";
 import { Button, Form, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import UserImage from "../../../components/common/UserImage";
+
 import PvpImage from "../../../assets/game_modes/casual.png";
 
 import "./modals.scss";
@@ -24,22 +23,32 @@ const FindModal = () => {
   }, []);
 
   const handleInputChange = (id) => {
-    // SET TO CHALLENGE
-    const selected_user = users.find((u) => u._id === id);
+    if (id !== 0) {
+      // SET TO CHALLENGE
+      const selected_user = users.find((u) => u._id === id);
 
-    handleSetToChallenge(selected_user);
+      handleSetToChallenge(selected_user);
+    }
   };
 
   const handleSetMatch = async () => {
     try {
-      // Close find modal
-      handleFindModal();
+      if (toChallenge) {
+        // Close find modal
+        handleFindModal();
 
-      // Show PVP modal with selected to challenge user
-      handlePvPModal();
+        // Show PVP modal with selected to challenge user
+        handlePvPModal();
+      }
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const players = (users) => {
+    return users
+      .filter((u) => u?._id !== user?._id)
+      .map((user) => <option value={user?._id}>{user?.name}</option>);
   };
 
   return (
@@ -75,9 +84,10 @@ const FindModal = () => {
             {users.filter((u) => u?._id !== user?._id).length === 0 ? (
               <option disabled>No data available</option>
             ) : (
-              users
-                .filter((u) => u?._id !== user?._id)
-                .map((user) => <option value={user?._id}>{user?.name}</option>)
+              <>
+                <option value={0}>Select player</option>
+                {players(users)}
+              </>
             )}
           </Form.Select>
         </div>
