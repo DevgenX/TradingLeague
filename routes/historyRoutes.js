@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.route("/").get(getAllHistory);
+router.route("/").get(authenticateUser, getAllHistory);
 router.route("/new").post(createHistory);
 
 export default router;

@@ -13,7 +13,7 @@ import PracticeModal from "../../pages/Game/Modals/PracticeModal";
 import FindModal from "../../pages/Game/Modals/FindModal";
 
 const Modes = () => {
-  const { handlePracticeModal, handleRankModal, handleFindModal } =
+  const { user, handlePracticeModal, handleRankModal, handleFindModal } =
     useAppContext();
 
   return (
@@ -39,18 +39,23 @@ const Modes = () => {
                 <h3>Practice</h3>
               </div>
             </Col>
-            <Col md={3} sm={6}>
-              <div className="box2" onClick={handleFindModal}>
-                <Image src={PvP} alt="PvP mode" fluid />
-                <h3>PvP</h3>
-              </div>
-            </Col>
-            <Col md={3} sm={6}>
-              <div className="box3" onClick={handleRankModal}>
-                <Image src={Ranked} alt="Ranked mode" fluid />
-                <h3>Ranked</h3>
-              </div>
-            </Col>
+            {user && (
+              <Col md={user ? 3 : 12} sm={user ? 6 : 12}>
+                <div className="box2" onClick={handleFindModal}>
+                  <Image src={PvP} alt="PvP mode" fluid />
+                  <h3>PvP</h3>
+                </div>
+              </Col>
+            )}
+
+            {user && (
+              <Col md={user ? 3 : 12} sm={user ? 6 : 12}>
+                <div className="box3" onClick={handleRankModal}>
+                  <Image src={Ranked} alt="Ranked mode" fluid />
+                  <h3>Ranked</h3>
+                </div>
+              </Col>
+            )}
           </Row>
         </div>
       </Col>

@@ -38,7 +38,7 @@ const RankModal = ({ show, setShow }) => {
 
       <Modal.Body>
         <div className="box practice">
-          <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} />
+          {/* <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} /> */}
 
           <p className="my-3">Your game is about to begin. </p>
           <p>You have a minute to beat the clock. Good luck!</p>

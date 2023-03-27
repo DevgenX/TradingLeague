@@ -14,6 +14,6 @@ router.route("/users").get(getAllUsers);
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/updateUser").patch(authenticateUser, updateUser);
-router.route("/updateMMR").patch(updateMMR);
+router.route("/updateMMR").patch(authenticateUser, updateMMR);
 
 export default router;

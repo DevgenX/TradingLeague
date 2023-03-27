@@ -28,31 +28,48 @@ const TopNav = () => {
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="btn-container ms-auto">
-            <button type="button" className="btn" onClick={handleDropdown}>
-              <img src={defaultUser} alt="default-user" className="user-tab" />
-              {user?.name}
-              <FaCaretDown />
-            </button>
-            <div className="dropdown show-dropdown">
-              {showDropdown && (
-                <>
-                  <PopUps>
-                    <button type="button" onClick={showModal}>
-                      Profile
-                    </button>
-                  </PopUps>
-                  <PopUps>
-                    <button type="button" onClick={logoutUser}>
-                      Logout
-                    </button>
-                  </PopUps>
-                </>
-              )}
-            </div>
-          </Nav>
-        </Navbar.Collapse>
+        {!user && (
+          <Link
+            to="/register"
+            className="login ms-auto"
+            style={{ color: "#fff", textDecoration: "none" }}
+          >
+            Login
+          </Link>
+        )}
+
+        {user && (
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="btn-container ms-auto">
+              <button type="button" className="btn" onClick={handleDropdown}>
+                <img
+                  src={defaultUser}
+                  alt="default-user"
+                  className="user-tab"
+                />
+                {user?.name}
+                <FaCaretDown />
+              </button>
+              <div className="dropdown show-dropdown">
+                {showDropdown && (
+                  <>
+                    <PopUps>
+                      <button type="button" onClick={showModal}>
+                        Profile
+                      </button>
+                    </PopUps>
+                    <PopUps>
+                      <button type="button" onClick={logoutUser}>
+                        Logout
+                      </button>
+                    </PopUps>
+                  </>
+                )}
+              </div>
+            </Nav>
+          </Navbar.Collapse>
+        )}
+
         {showPopup && <PopupForm />}
       </Container>
     </Navbar>

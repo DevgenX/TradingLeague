@@ -75,8 +75,18 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-const updateMMR = (req, res) => {
-  res.send("update MMR");
+const updateMMR = async (req, res) => {
+  const new_mmr = req.body.new_mmr;
+
+  const user = await FindOne({ _id: req.user.userId });
+
+  if (!user) {
+    throw new BadRequestError("Failed to fetch user information");
+  }
+
+  await user.save();
+
+  res.status(StatusCodes.OK).json(user);
 };
 
 export { getAllUsers, register, login, updateUser, updateMMR };

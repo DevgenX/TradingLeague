@@ -28,6 +28,7 @@ const Game = ({ mode, challenge }) => {
     toChallenge,
     newHistory,
     newChallenge,
+    updateMMR,
     handleGameResultModal,
   } = useAppContext();
   const [currentBar, setCurrentBar] = useState(null);
@@ -46,7 +47,7 @@ const Game = ({ mode, challenge }) => {
 
   const ref = useRef();
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 60);
+  time.setSeconds(time.getSeconds() - 30); // 60 seconds
 
   useEffect(() => {
     rand_om = Math.floor(Math.random() * 268);
@@ -270,6 +271,7 @@ const Game = ({ mode, challenge }) => {
         // newHistory(rank_history);
 
         // Update user's MMR
+        updateMMR(new_mmr);
       } else if (mode === "casual" && !challenge) {
         // casual - new challenge
         const new_casual_history = {
@@ -281,19 +283,20 @@ const Game = ({ mode, challenge }) => {
           status: "pending",
         };
 
-        // SAVE GAME HISTORY
-        newHistory(new_casual_history);
+        // // SAVE GAME HISTORY
+        // newHistory(new_casual_history);
 
         // SAVE CHALLENGE
-        newChallenge({
+        const new_challenge = {
           challenger: user._id,
           // duration: gameDuration,
           to_challenge: toChallenge._id,
           game_mode: mode,
-          // game_id: data._id,
+
+          history_id: null,
           gain_loss: total_gain,
           profit: final_profit.toFixed(2),
-        });
+        };
 
         // await saveChallenge(
         //   {
@@ -307,6 +310,7 @@ const Game = ({ mode, challenge }) => {
         //   },
         //   cookies.sessID
         // );
+        await newHistory(new_casual_history, new_challenge);
       } else if (mode === "casual" && challenge) {
         // casual - accept challenge
         // const accept_casual_history = {
@@ -505,6 +509,7 @@ const Game = ({ mode, challenge }) => {
                 positionSize={positionSize}
                 positionDays={positionDays}
                 showNextDay={showNextDay}
+                time={time}
                 handleLongPosition={handleLongPosition}
                 handleShortPosition={handleShortPosition}
                 handleClosePosition={handleClosePosition}

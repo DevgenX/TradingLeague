@@ -1,5 +1,6 @@
 import { Col, Row, Button } from "react-bootstrap";
 import styled from "styled-components";
+import Timer from "../Timer/Timer";
 
 const GameButtons = ({
   mode,
@@ -10,6 +11,7 @@ const GameButtons = ({
   positionSize,
   totalProfit,
   showNextDay,
+  time,
   handleLongPosition,
   handleShortPosition,
   handleClosePosition,
@@ -58,16 +60,21 @@ const GameButtons = ({
               </p>
             </div>
 
-            <span className="end-game-btn" onClick={handleEndGame}>
+            {/* <span className="end-game-btn" onClick={handleEndGame}>
               Quit Game
-            </span>
+            </span> */}
 
-            {/* {mode !== "practice" && (
-                  <Timer
-                    expiryTimestamp={time.setSeconds(time.getSeconds() + 20)}
-                    handleEndGame={handleEndGame}
-                  />
-                )} */}
+            {mode === "practice" && (
+              <span className="end-game-btn" onClick={handleEndGame}>
+                Quit Game
+              </span>
+            )}
+            {mode !== "practice" && (
+              <Timer
+                expiryTimestamp={time.setSeconds(time.getSeconds() + 20)}
+                handleEndGame={handleEndGame}
+              />
+            )}
           </HeaderDiv>
         </Col>
       </Row>

@@ -21,6 +21,8 @@ import {
   SHOW_FIND_MODAL,
   SET_TO_CHALLENGE,
   GET_ALL_CHALLENGES,
+  UPDATE_USER_MMR,
+  DECLINE_CHALLENGE,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -130,6 +132,28 @@ const reducer = (state, action) => {
     };
   }
 
+  if (action.type === UPDATE_USER_MMR) {
+    const updated_users = state.users.map((u) =>
+      u?.id === action.payload.id
+        ? {
+            ...u,
+            mmr: action.payload.mmr,
+          }
+        : u
+    );
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ ...state.user, mmr: action.payload.mmr })
+    );
+
+    return {
+      ...state,
+      user: { ...state.user, mmr: action.payload.mmr },
+      users: updated_users,
+    };
+  }
+
   if (action.type === SHOW_PRACTICE_MODAL) {
     return {
       ...state,
@@ -198,6 +222,15 @@ const reducer = (state, action) => {
     return {
       ...state,
       challenges: action.payload.challenges,
+    };
+  }
+
+  if (action.type === DECLINE_CHALLENGE) {
+    return {
+      ...state,
+      challenges: state.challenges.filter(
+        (c) => c._id !== action.payload.declined_id
+      ),
     };
   }
 

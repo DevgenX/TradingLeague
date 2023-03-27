@@ -3,7 +3,7 @@ import { BadRequestError, unAuthenticatedError } from "../errors/index.js";
 import History from "../models/History.js";
 
 const getAllHistory = async (req, res, next) => {
-  const history = await History.find({});
+  const history = await History.find({ owner: req.user.userId });
 
   if (!history) {
     throw new BadRequestError("failed to fetch history");

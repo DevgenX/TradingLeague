@@ -1,17 +1,25 @@
-import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import { Row, Col, Table, Button } from "react-bootstrap";
 import "./pending.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 import UserImage from "../common/UserImage";
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
 
 const Pending = () => {
-  const { user, challenges, getAllChallenges } = useAppContext();
+  const { declinePvp, user, challenges, getAllChallenges } = useAppContext();
 
   useEffect(() => {
-    getAllChallenges(user._id);
+    getAllChallenges(user?._id);
   }, [user]);
+
+  const handleAccept = () => {
+    console.log("Accepted");
+  };
+
+  const handleDecline = (id, history_id) => {
+    // update history status when the invitation was declined
+    declinePvp(id, history_id);
+  };
 
   return (
     <div>
@@ -42,8 +50,12 @@ const Pending = () => {
                     <td>{challenge.challenger.name}</td>
                     <td>PvP</td>
                     <td>
-                      <Button variant="success">Accept</Button>
-                      <Button variant="danger">Decline</Button>
+                      <Button variant="success" onClick={handleAccept}>
+                        Accept
+                      </Button>
+                      <Button variant="danger" onClick={handleDecline}>
+                        Decline
+                      </Button>
                     </td>
                   </tr>
                 ))

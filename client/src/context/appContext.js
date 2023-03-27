@@ -30,6 +30,8 @@ import {
   SHOW_FIND_MODAL,
   SET_TO_CHALLENGE,
   GET_ALL_CHALLENGES,
+  UPDATE_USER_MMR,
+  DECLINE_CHALLENGE,
 } from "./actions";
 
 const user = localStorage.getItem("user");
@@ -89,17 +91,17 @@ const AppProvider = ({ children }) => {
     }
   );
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("api/v1/auth/users");
-        dispatch({ type: GET_ALL_USERS, payload: response.data });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       const response = await axios.get("api/v1/auth/users");
+  //       dispatch({ type: GET_ALL_USERS, payload: response.data });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
   const clearAlert = useCallback(() => {
     setTimeout(() => {
@@ -146,6 +148,15 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getUsers = async () => {
+    try {
+      const response = await axios.get("api/v1/auth/users");
+      dispatch({ type: GET_ALL_USERS, payload: response.data });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const showModal = () => {
     dispatch({ type: SHOW_POPUP });
   };
@@ -158,6 +169,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SHOW_PVP_MODAL });
   };
 
+  const handleFindModal = () => {
+    dispatch({ type: SHOW_FIND_MODAL });
+  };
   const handlePracticeModal = () => {
     dispatch({ type: SHOW_PRACTICE_MODAL });
   };
@@ -182,24 +196,24 @@ const AppProvider = ({ children }) => {
   const getAllHistory = async () => {
     try {
       const { data } = await authFetch.get("/history");
-      console.log(data);
       dispatch({ type: GET_ALL_HISTORY, payload: { history: data } });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const newHistory = useCallback(
-    async (history) => {
-      try {
-        const { data } = await authFetch.post("/history/new", history);
-        dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    [dispatch, authFetch]
-  );
+  const newHistory = async (history, new_challenge) => {
+    try {
+      const { data } = await authFetch.post("/history/new", history);
+      dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
+
+      new_challenge.history_id = data._id;
+
+      newChallenge(new_challenge);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // GET ALL CHALLENGES OF LOGGED IN USER
   const getAllChallenges = async (id) => {
@@ -207,6 +221,30 @@ const AppProvider = ({ children }) => {
       const { data } = await authFetch.get(`/challenge/${id}`);
 
       dispatch({ type: GET_ALL_CHALLENGES, payload: { challenges: data } });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const declinePvp = async (declined_id, history_id) => {
+    try {
+      // UPDATE GAME HISTORY STATUS AND REMOVE TO CHALLENGE DB
+      await authFetch.patch(`/challenge/decline/${declined_id}`, {
+        status: "declined",
+        history_id,
+      });
+
+      dispatch({ type: DECLINE_CHALLENGE, payload: { declined_id } });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const updateMMR = async (new_mmr) => {
+    try {
+      const { data } = await authFetch.patch(`/auth/updateMMR`, { new_mmr });
+
+      dispatch({ type: UPDATE_USER_MMR, payload: { mmr: data.mmr } });
     } catch (e) {
       console.log(e);
     }
@@ -258,6 +296,7 @@ const AppProvider = ({ children }) => {
         setupUser,
         logoutUser,
         updateUser,
+        updateMMR,
         showModal,
         handlePvPModal,
         handlePracticeModal,
@@ -265,17 +304,19 @@ const AppProvider = ({ children }) => {
         handleSetMode,
         handleGameResultModal,
         handleSetToChallenge,
+        getUsers,
         getAllHistory,
         newHistory,
         getAllChallenges,
         newChallenge,
+        handleFindModal,
+        declinePvp,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-
 export const useAppContext = () => {
   return useContext(AppContext);
 };

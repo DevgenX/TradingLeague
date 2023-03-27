@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./leaderboards.scss";
-import UserImage from "../../components/common/UserImage";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import UserImage from "../common/UserImage";
+// import UserImage from "../common/UserImage";
+
 import { useAppContext } from "../../context/appContext";
 
 const Leaderboard = () => {
-  const { users } = useAppContext();
+  const { getUsers, user, users } = useAppContext();
+
+  useEffect(() => {
+    getUsers();
+  }, [user]);
 
   return (
     <div>

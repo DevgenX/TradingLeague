@@ -9,8 +9,6 @@ import { useAppContext } from "../../context/appContext";
 const GameHistoryTable = () => {
   const { history, getAllHistory } = useAppContext();
 
-  const [gameHistory, setGameHistory] = useState([]);
-
   const gameHistoryData = [
     { rank: "Ape", opponent: "Player 1", match: "PvP", result: "Win" },
     { rank: "Degen", opponent: "Player 2", match: "PvP", result: "Lose" },
@@ -20,6 +18,20 @@ const GameHistoryTable = () => {
   useEffect(() => {
     getAllHistory();
   }, []);
+
+  const getRank = (mmr) => {
+    if (mmr > 2999) return "Quant";
+    else if (mmr > 1799 && mmr < 3000) return "Degen";
+    else if (mmr > 899 && mmr < 1800) return "Ape";
+    else if (mmr > 349 && mmr < 900) return "Scalper";
+    else return "Fomo";
+  };
+
+  // GET RESULT IF WIN OR LOSE
+  const getResult = (user_profit, challenger_profit) => {
+    if (user_profit > challenger_profit) return "Win";
+    else if (user_profit < challenger_profit) return "Lose";
+  };
 
   return (
     <>
@@ -48,21 +60,31 @@ const GameHistoryTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {history.map((game, index) => (
-                    <tr key={index}>
-                      <td>{game.game_mode}</td>
-                      <td>{game.game_mode}</td>
-                      <td>{game.game_mode}</td>
-                      <td>{game.game_mode}</td>
+                  {history.length === 0 ? (
+                    <tr>
+                      <td colSpan={4}>No data available</td>
                     </tr>
-                  ))}
+                  ) : (
+                    history.map((game, index) => (
+                      <tr key={index}>
+                        <td>{game.user_2?.mmr && getRank(game.user_2?.mmr)}</td>
+                        <td>{game.user_2?.name || "Unnamed"}</td>
+                        <td>{game.game_mode}</td>
+                        <td>
+                          {game.status === "done"
+                            ? getResult(
+                                game.profit,
+                                game.user_2?.profit || null
+                              )
+                            : "Pending"}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </Table>
             </Col>
           </Row>
-          {gameHistoryData.length === 0 && (
-            <div className="empty-data">No game history data found.</div>
-          )}
         </div>
         <Link to="/" className="back-btn">
           <Button>Game Lobby</Button>

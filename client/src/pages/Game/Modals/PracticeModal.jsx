@@ -43,7 +43,7 @@ const PracticeModal = () => {
 
       <Modal.Body>
         <div className="box practice">
-          <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} />
+          {/* <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} /> */}
 
           <p className="my-3">Practice is about to begin. </p>
         </div>
