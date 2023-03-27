@@ -24,6 +24,7 @@ import {
   UPDATE_USER_MMR,
   DECLINE_CHALLENGE,
   ACCEPT_CHALLENGE,
+  UPDATE_HISTORY,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -133,9 +134,11 @@ const reducer = (state, action) => {
     };
   }
 
+  // UPDATE USER'S MMR
   if (action.type === UPDATE_USER_MMR) {
+    // UPDATE MMR IN USERS[] (TO UPDATE LEADERBOARDS)
     const updated_users = state.users.map((u) =>
-      u?.id === action.payload.id
+      u?._id == action.payload._id
         ? {
             ...u,
             mmr: action.payload.mmr,
@@ -176,10 +179,11 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === SET_GAME_MODE) {
+  // Show modal to find challenger
+  if (action.type === SHOW_FIND_MODAL) {
     return {
       ...state,
-      mode: action.mode,
+      showFindModal: !state.showFindModal,
     };
   }
 
@@ -190,12 +194,37 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === SHOW_FIND_MODAL) {
+  if (action.type === SET_GAME_MODE) {
     return {
       ...state,
-      showFindModal: !state.showFindModal,
+      mode: action.mode,
     };
   }
+
+  // DECLINE PVP
+  if (action.type === DECLINE_CHALLENGE) {
+    return {
+      ...state,
+      challenges: state.challenges.filter(
+        (c) => c._id !== action.payload.declined_id
+      ),
+    };
+  }
+
+  // ACCEPT PVP
+  if (action.type === ACCEPT_CHALLENGE) {
+    // SET TOCHALLENGE
+    return {
+      ...state,
+      toChallenge: action.payload.user,
+      currentGame: action.payload.currentGame,
+      challenges: state.challenges.filter(
+        (c) => c._id !== action.payload.currentGame._id
+      ),
+    };
+  }
+
+  // LOAD ALL GAME HISTORY
   if (action.type === GET_ALL_HISTORY) {
     return {
       ...state,
@@ -211,14 +240,15 @@ const reducer = (state, action) => {
     };
   }
 
-  // SET TO CHALLENGE USER
-  if (action.type === SET_TO_CHALLENGE) {
+  // UPDATE HISTORY
+  if (action.type === UPDATE_HISTORY) {
     return {
       ...state,
-      toChallenge: action.payload.user,
+      history: [action.payload.history, ...state.history],
     };
   }
 
+  // SET CHALLENGES OF USER
   if (action.type === GET_ALL_CHALLENGES) {
     return {
       ...state,
@@ -226,23 +256,11 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === DECLINE_CHALLENGE) {
-    return {
-      ...state,
-      challenges: state.challenges.filter(
-        (c) => c._id !== action.payload.declined_id
-      ),
-    };
-  }
-
-  if (action.type === ACCEPT_CHALLENGE) {
+  // SET TO CHALLENGE USER
+  if (action.type === SET_TO_CHALLENGE) {
     return {
       ...state,
       toChallenge: action.payload.user,
-      currentGame: action.payload.currentGame,
-      challenges: state.challenges.filter(
-        (c) => c._id !== action.payload.currentGame._id
-      ),
     };
   }
 

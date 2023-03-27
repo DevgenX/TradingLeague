@@ -43,7 +43,9 @@ const GameButtons = ({
                       ? "practice"
                       : mode === "casual"
                       ? "casual"
-                      : "rank"
+                      : mode === "rank"
+                      ? "rank"
+                      : "tournament"
                   }.png`)}
                   alt=""
                   className="icon"
@@ -52,10 +54,12 @@ const GameButtons = ({
 
               <p className="game-mode m-0 ms-2">
                 {mode === "practice"
-                  ? "Practice"
+                  ? "Battle Test"
                   : mode === "casual"
                   ? "Battle Arena"
-                  : "Ranked"}
+                  : mode === "rank"
+                  ? "Trading Floor"
+                  : "Tournament"}
               </p>
             </div>
 
@@ -68,6 +72,7 @@ const GameButtons = ({
                 Quit Game
               </span>
             )}
+
             {mode !== "practice" && (
               <Timer
                 expiryTimestamp={time.setSeconds(time.getSeconds() + 20)}
@@ -210,25 +215,20 @@ const GameBody = styled.div`
     rgba(125, 64, 255, 0.1) 100%
   );
   border-radius: 14px;
-
   .categ {
     text-align: center;
-
     .body-title {
       color: #6a6ba0;
       font-size: 14px;
     }
-
     .value {
       .gain-loss-icon {
         margin-right: 4px;
         width: 32px;
       }
-
       &.plus {
         color: #5eff5b;
       }
-
       &.minus {
         color: #ff2d2e;
       }
@@ -241,20 +241,16 @@ const ButtonContainer = styled.div`
     padding: 8px;
     font-weight: 700;
     border: none;
-
     &.long {
       color: #1d385a;
       background: linear-gradient(180deg, #5eff5b 0%, #30cf2d 100%);
     }
-
     &.short {
       background: linear-gradient(180deg, #ff2d2e 0%, #8f0001 100%);
     }
-
     &.close-btn {
       background: linear-gradient(180deg, #991bf9 0%, #6400b0 100%);
     }
-
     &.next-day {
       background: linear-gradient(180deg, #02a3fe 0%, #7d40ff 100%);
     }
@@ -270,48 +266,38 @@ const HeaderDiv = styled.div`
   background: $bg-color;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
-
   .header-title {
     display: flex;
     align-items: center;
-
     .img-container {
       padding: 4px;
       border-radius: 12px;
-
       &.practice {
         background: linear-gradient(180deg, #991bf9 0%, #6400b0 100%);
       }
-
       &.rank {
         background: linear-gradient(180deg, #ff2d2e 0%, #8f0001 100%);
       }
-
       &.casual {
         background: linear-gradient(180deg, #56ccf2 0%, #0081ab 100%);
       }
-
       &.tournament {
         background: linear-gradient(180deg, #ffa640 0%, #ea7d00 100%);
       }
-
       .icon {
         width: 30px;
       }
     }
-
     .game-mode {
       font-weight: 700;
       text-transform: capitalize;
     }
   }
-
   .end-game-btn {
     color: #6a6ba0;
     cursor: pointer;
     text-decoration: underline;
     transition: 0.35s;
-
     /* @include on-event() {
       color: #fff;
     } */
@@ -322,57 +308,46 @@ const BodyDiv = styled.div`
   .position-container {
     font-size: 0.875em;
     color: #6a6ba0;
-
     .amount {
       color: #fff;
       font-weight: 600;
     }
   }
-
   .options-container {
     display: flex;
     align-items: center;
-
     @include respond-to("screen-xs") {
       flex-direction: column;
     }
-
     @include respond-to("screen-sm") {
       flex-direction: column;
     }
-
     @include respond-to("screen-md") {
       flex-direction: column;
     }
   }
-
   .leverage-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     &.stoploss {
       margin-left: 8px;
-
       /* @include respond-to("screen-xs") {
         margin-left: 0;
         margin-top: 8px;
       }
-
       @include respond-to("screen-sm") {
         margin-left: 0;
         margin-top: 8px;
       }
-
       @include respond-to("screen-md") {
         margin-left: 0;
         margin-top: 8px;
       } */
     }
-
     small {
       color: #6a6ba0;
     }
-
     select {
       padding: 8px;
       // margin-left: auto;
@@ -383,19 +358,15 @@ const BodyDiv = styled.div`
       font-size: 12px;
       text-align: center;
       cursor: pointer;
-
       &:disabled {
         cursor: not-allowed;
       }
-
       &::after {
         display: none;
       }
-
       &:focus {
         box-shadow: none;
       }
-
       /* option {
         @include on-event() {
           background-color: #161c29 !important;

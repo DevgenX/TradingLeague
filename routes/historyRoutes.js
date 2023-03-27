@@ -5,6 +5,7 @@ import {
   updateHistory,
 } from "../controllers/historyController.js";
 import authenticateUser from "../middleware/auth.js";
+
 const router = express.Router();
 
 router.route("/").get(authenticateUser, getAllHistory);

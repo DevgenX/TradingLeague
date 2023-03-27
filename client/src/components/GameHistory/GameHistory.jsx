@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "./gamehistory.scss";
 import TopNav from "../TopNav/TopNav";
@@ -8,12 +8,6 @@ import { useAppContext } from "../../context/appContext";
 
 const GameHistoryTable = () => {
   const { history, getAllHistory } = useAppContext();
-
-  const gameHistoryData = [
-    { rank: "Ape", opponent: "Player 1", match: "PvP", result: "Win" },
-    { rank: "Degen", opponent: "Player 2", match: "PvP", result: "Lose" },
-    { rank: "Quant", opponent: "Player 3", match: "PvP", result: "Win" },
-  ];
 
   useEffect(() => {
     getAllHistory();

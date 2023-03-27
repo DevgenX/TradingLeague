@@ -11,7 +11,7 @@ import Datafeed from "../../datafeed/datafeed";
 import { _lastbar, nextDay } from "../../datafeed/stream";
 import { next_feed, c_name } from "../../datafeed/historyProvider";
 import { widget } from "../../charting_library";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "./../../context/appContext";
 import GameResultModal from "./Modals/GameResultModal";
 import { getCrypto } from "../../services/crypto";
 
@@ -33,6 +33,7 @@ const Game = ({ mode, challenge }) => {
     updateMMR,
     handleGameResultModal,
   } = useAppContext();
+
   const [currentBar, setCurrentBar] = useState(null);
   const [counter, setCounter] = useState(0);
   const [tradeHistory, setTradeHistory] = useState([]);
@@ -49,9 +50,10 @@ const Game = ({ mode, challenge }) => {
 
   const ref = useRef();
   const time = new Date();
-  time.setSeconds(time.getSeconds() - 30); // 60 seconds
+  time.setSeconds(time.getSeconds() - 20); // 60 seconds
 
   useEffect(() => {
+    // Get crypto name to be displayed on game result
     rand_om = Math.floor(Math.random() * 268);
     crypto_name = getCrypto(rand_om);
   }, []);
@@ -79,7 +81,7 @@ const Game = ({ mode, challenge }) => {
       autosize: true,
       theme: "Dark",
       timezone: "Asia/Singapore",
-      custom_css_url: "chart.css",
+      // custom_css_url: "chart.css",
       enabled_features: ["fix_left_edge"],
       disabled_features: [
         "use_localstorage_for_settings",
@@ -101,7 +103,7 @@ const Game = ({ mode, challenge }) => {
         "source_selection_markers",
         "scales_date_format",
       ],
-      // custom_css_url: "../../assets/style.css",
+      custom_css_url: "../../assets/style.css",
       overrides: {},
     };
 
@@ -142,6 +144,7 @@ const Game = ({ mode, challenge }) => {
       );
 
       // push data to trading history
+
       const history = {
         entry: position.close,
         end: currentBar.close,
@@ -232,7 +235,10 @@ const Game = ({ mode, challenge }) => {
       setPosition(null);
       setPositionDays(0);
     }
+
+    // Show modal
     handleGameResultModal();
+
     try {
       if (mode === "rank") {
         // rank
@@ -257,21 +263,6 @@ const Game = ({ mode, challenge }) => {
         else if (up_profit >= 200) new_mmr = 25;
         else if (up_profit === 0) new_mmr = 0;
 
-        // const leaderboard_up = leaderboard.map((l) =>
-        //   l?._id == user?._id
-        //     ? {
-        //         ...l,
-        //         mmr: l.mmr + new_mmr,
-        //       }
-        //     : l
-        // );
-
-        // setUser({ ...user, mmr: user.mmr + new_mmr });
-        // setLeaderboard(leaderboard_up);
-
-        // Save history to db
-        // newHistory(rank_history);
-
         // Update user's MMR
         updateMMR(new_mmr);
       } else if (mode === "casual" && !challenge) {
@@ -285,35 +276,19 @@ const Game = ({ mode, challenge }) => {
           status: "pending",
         };
 
-        // // SAVE GAME HISTORY
-        // newHistory(new_casual_history);
-
-        // SAVE CHALLENGE
         const new_challenge = {
           challenger: user._id,
-          // duration: gameDuration,
           to_challenge: toChallenge._id,
           game_mode: mode,
-
           history_id: null,
           gain_loss: total_gain,
           profit: final_profit.toFixed(2),
         };
 
-        // await saveChallenge(
-        //   {
-        //     challenger: user._id,
-        //     duration: gameDuration,
-        //     to_challenge: toChallenge._id,
-        //     game_mode: mode,
-        //     game_id: data._id,
-        //     gain_loss: total_gain,
-        //     profit: final_profit.toFixed(2),
-        //   },
-        //   cookies.sessID
-        // );
+        // SAVE GAME HISTORY AND CHALLENGE
         await newHistory(new_casual_history, new_challenge);
       } else if (mode === "casual" && challenge) {
+        // casual - accept challenge
         const accept_casual_history = {
           user_2: toChallenge,
           gain_loss: total_gain,
@@ -377,7 +352,7 @@ const Game = ({ mode, challenge }) => {
       } else {
         handleEndGame();
       }
-    } else if (mode === "pvp") {
+    } else if (mode === "casual") {
       nextDay(next_feed[counter]);
       setCounter((prev) => prev + 1);
       setCurrentBar(next_feed[counter]);
@@ -449,6 +424,7 @@ const Game = ({ mode, challenge }) => {
         },
       }
     );
+
     setPosition({ ...currentBar });
     setWithPosition({ status: true, desc: "long" });
   };
@@ -478,6 +454,7 @@ const Game = ({ mode, challenge }) => {
   return (
     <GameDiv>
       <TopNav />
+
       <GameResultModal
         c_name={crypto_name}
         game_mode={mode}
@@ -492,6 +469,7 @@ const Game = ({ mode, challenge }) => {
         positionSize={positionSize}
         setPositionSize={setPositionSize}
       />
+
       <Container>
         <ContainerDiv>
           <Row>

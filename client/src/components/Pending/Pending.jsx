@@ -3,7 +3,7 @@ import "./pending.scss";
 
 import UserImage from "../common/UserImage";
 import { useEffect } from "react";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "./../../context/appContext";
 import { useNavigate } from "react-router-dom";
 
 const Pending = () => {
@@ -25,11 +25,12 @@ const Pending = () => {
       },
       to_challenge
     );
+
     navigate("/game/pvp/challenger");
   };
 
   const handleDecline = (id, history_id) => {
-    // update history status when the invitation was declined
+    // Update game history status to declined and Remove declined match to table
     declinePvp(id, history_id);
   };
 
@@ -62,10 +63,18 @@ const Pending = () => {
                     <td>{challenge.challenger.name}</td>
                     <td>PvP</td>
                     <td>
-                      <Button variant="success" onClick={handleAccept}>
+                      <Button
+                        variant="success"
+                        onClick={() => handleAccept(challenge)}
+                      >
                         Accept
                       </Button>
-                      <Button variant="danger" onClick={handleDecline}>
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          handleDecline(challenge._id, challenge.history_id)
+                        }
+                      >
                         Decline
                       </Button>
                     </td>

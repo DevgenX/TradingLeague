@@ -25,7 +25,8 @@ const updateHistory = async (req, res, next) => {
   const history = req.body.history;
   const challenge_id = req.body.challenge_id;
 
-  const to_update_history = await History.findOne({ _id: history_id });
+  const to_update_history = await History.findOne({ _id: history._id });
+
   to_update_history.user_2 = history.user_2;
   to_update_history.status = history.status;
 

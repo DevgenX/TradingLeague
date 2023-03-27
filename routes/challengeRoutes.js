@@ -1,8 +1,8 @@
 import express from "express";
 import {
   createChallenge,
-  getAllChallenges,
   declineChallenge,
+  getAllChallenges,
 } from "../controllers/challengeController.js";
 
 const router = express.Router();

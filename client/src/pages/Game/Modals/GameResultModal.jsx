@@ -82,13 +82,13 @@ const GameResultModal = ({
           <div className="mmr-info mb-4">
             <h2 className="mmr m-0">
               {positionSize < 1000
-                ? "-15 MMR"
+                ? "-15"
                 : positionSize > 1000 && positionSize < 1100
-                ? "+10 MMR"
+                ? "+10"
                 : positionSize >= 1100 && positionSize < 1200
-                ? "+15 MMR"
+                ? "+15"
                 : positionSize >= 1200
-                ? "+25 MMR"
+                ? "+25"
                 : "0"}
             </h2>
             <h6 className="new-mmr">MMR: {user?.mmr}</h6>
