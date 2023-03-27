@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import "./gamehistory.scss";
 import TopNav from "../TopNav/TopNav";

@@ -4,6 +4,7 @@ import Ranking from "./components/Ranking/Ranking";
 import GameHistoryTable from "./components/GameHistory/GameHistory";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Game from "./pages/Game/Game";
+import NotFound from "./components/Error/NotFound";
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
           element={<Game mode="casual" challenge={true} />}
         />
         <Route path="/game/ranked" element={<Game mode="rank" />} />
-        <Route path="*" element={<h1>Error page here</h1>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
