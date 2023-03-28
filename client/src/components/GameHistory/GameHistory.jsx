@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "./gamehistory.scss";
 import TopNav from "../TopNav/TopNav";
@@ -8,70 +8,19 @@ import { useAppContext } from "../../context/appContext";
 import UserImage from "../common/UserImage";
 
 const GameHistoryTable = () => {
-  const testHistory = [
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "Win",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "Lose",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "declined",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "Win",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "declined",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "declined",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "declined",
-      profit: 100,
-    },
-    {
-      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
-      game_mode: "casual",
-      status: "declined",
-      profit: 100,
-    },
-  ];
-
   const { history, getAllHistory } = useAppContext();
 
   useEffect(() => {
     getAllHistory();
   }, []);
 
-  const getRank = (mmr) => {
-    if (mmr > 2999) return "Quant";
-    else if (mmr > 1799 && mmr < 3000) return "Degen";
-    else if (mmr > 899 && mmr < 1800) return "Ape";
-    else if (mmr > 349 && mmr < 900) return "Scalper";
-    else return "Fomo";
-  };
+  // const getRank = (mmr) => {
+  //   if (mmr > 2999) return "Quant";
+  //   else if (mmr > 1799 && mmr < 3000) return "Degen";
+  //   else if (mmr > 899 && mmr < 1800) return "Ape";
+  //   else if (mmr > 349 && mmr < 900) return "Scalper";
+  //   else return "Fomo";
+  // };
 
   // GET RESULT IF WIN OR LOSE
   const getResult = (user_profit, challenger_profit) => {
@@ -84,14 +33,7 @@ const GameHistoryTable = () => {
 
     if (profit > user_2.profit) return "win-result";
     else if (profit < user_2.profit) return "lose-result";
-
-    // if (result?.toLowerCase() === "declined") {
-    //   return "declined-result";
-    // } else if (result?.toLowerCase() === "win") {
-    //   return "win-result";
-    // } else {
-    //   return "lose-result";
-    // }
+    else return "declined-result";
   };
 
   return (

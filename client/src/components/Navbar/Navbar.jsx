@@ -1,24 +1,36 @@
 import "./navbar.scss";
 import Profile from "../../assets/default-user.png";
-
 import { Link } from "react-router-dom";
 
 import { useAppContext } from "../../context/appContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserImage from "../common/UserImage";
 import Challenger from "../../assets/ledgers/challengers.png";
 import Ranking from "../../assets/ledgers/ranking.png";
 import History from "../../assets/ledgers/history.png";
 
+import { useEffect, useState } from "react";
+
 const Navbar = () => {
   const { user } = useAppContext();
+
+  const [pic, setPic] = useState(null);
+
+  useEffect(() => {
+    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user._id}`);
+  }, [pic, user._id]);
 
   return (
     <Row className="navbar-container d-flex justify-content-between">
       <Col md="8" className="d-flex flex-row profile-container">
         <div className="profile-wrapper">
-          <img className="profile" src={Profile} alt="profile" />
+          <img
+            className="profile"
+            src={pic !== null ? pic : Profile}
+            alt="profile"
+          />
           <div className="name">
             <h1>{user?.name}</h1>
             {/* <small>{`@${user?.name}`}</small> */}

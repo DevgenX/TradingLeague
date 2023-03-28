@@ -68,7 +68,7 @@ const Game = ({ mode, challenge }) => {
     };
 
     const widgetOptions = {
-      symbol: mode === "practice" ? "BTC" : "TradingLeague",
+      symbol: mode === "practice" ? crypto_name : "TradingLeague",
       datafeed: Datafeed,
       interval: "240",
       container: "tv",

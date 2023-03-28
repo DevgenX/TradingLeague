@@ -16,6 +16,7 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-image-file-resizer": "^0.4.8",
     "react-scripts": "5.0.1",
     "react-svg": "^16.1.6",
     "react-timer-hook": "^3.0.5",

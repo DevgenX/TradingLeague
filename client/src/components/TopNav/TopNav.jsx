@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,6 +13,12 @@ import PopupForm from "../common/Editprofile";
 const TopNav = () => {
   const { user, logoutUser, showModal, showPopup } = useAppContext();
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const [pic, setPic] = useState(null);
+
+  useEffect(() => {
+    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user?._id}`);
+  }, [pic, user?._id]);
 
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -43,9 +49,9 @@ const TopNav = () => {
             <Nav className="btn-container ms-auto">
               <button type="button" className="btn" onClick={handleDropdown}>
                 <img
-                  src={defaultUser}
+                  src={pic !== null ? pic : defaultUser}
                   alt="default-user"
-                  className="user-tab"
+                  className="user-tab me-2"
                 />
                 {user?.name}
                 <FaCaretDown />

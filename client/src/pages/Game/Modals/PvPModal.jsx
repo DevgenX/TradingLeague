@@ -100,12 +100,6 @@ const PvPModal = () => {
             Start Game
           </Button>
         </div>
-
-        {/* <div className="btn-container">
-          <Button className="cancel-btn" onClick={handleClose}>
-            Decline Match
-          </Button>
-        </div> */}
       </Modal.Body>
     </Modal>
   );

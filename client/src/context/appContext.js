@@ -242,8 +242,7 @@ const AppProvider = ({ children }) => {
           history,
           challenge_id,
         });
-
-        // dispatch({ type: UPDATE_HISTORY, payload: { history: data } });
+        dispatch({ type: UPDATE_HISTORY, payload: { history: data } });
       } catch (e) {
         console.log(e);
       }
@@ -332,6 +331,17 @@ const AppProvider = ({ children }) => {
     [dispatch]
   );
 
+  const uploadPic = useCallback(
+    async (formData) => {
+      try {
+        await authFetch.patch("auth/upload", formData);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch]
+  );
+
   const memoizedValues = useMemo(
     () => ({
       getUsers,
@@ -355,6 +365,7 @@ const AppProvider = ({ children }) => {
       handleSetToChallenge,
       acceptPvp,
       declinePvp,
+      uploadPic,
     }),
     [
       getUsers,
@@ -378,6 +389,7 @@ const AppProvider = ({ children }) => {
       handleSetToChallenge,
       acceptPvp,
       declinePvp,
+      uploadPic,
     ]
   );
 

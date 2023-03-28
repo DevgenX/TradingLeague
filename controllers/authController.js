@@ -91,4 +91,30 @@ const updateMMR = async (req, res) => {
   res.status(StatusCodes.OK).send(user);
 };
 
-export { getAllUsers, register, login, updateUser, updateMMR };
+const uploadProfilePic = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId });
+
+  user.profile_pic = req.file.buffer;
+
+  await user.save();
+
+  res.status(StatusCodes.OK).send(user);
+};
+
+const getProfilePic = async (req, res) => {
+  const _id = req.params.id;
+  const user = await User.findOne({ _id });
+
+  res.set("Content-Type", "image/jpg");
+  res.status(StatusCodes.OK).send(user.profile_pic);
+};
+
+export {
+  getAllUsers,
+  register,
+  login,
+  updateUser,
+  updateMMR,
+  uploadProfilePic,
+  getProfilePic,
+};

@@ -1,13 +1,12 @@
 import { useAppContext } from "../../../context/appContext";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserImage from "../../../components/common/UserImage";
+
 import RankedImage from "../../../assets/game_modes/rank.png";
 import "./modals.scss";
 
 const RankModal = () => {
-  const { user, showRankModal, handleRankModal, handleSetMode } =
-    useAppContext();
+  const { showRankModal, handleRankModal, handleSetMode } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -38,8 +37,6 @@ const RankModal = () => {
 
       <Modal.Body>
         <div className="box practice">
-          {/* <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} /> */}
-
           <p className="my-3">Your game is about to begin. </p>
           <p>You have a minute to beat the clock. Good luck!</p>
         </div>
