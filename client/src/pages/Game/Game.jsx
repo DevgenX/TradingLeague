@@ -102,9 +102,19 @@ const Game = ({ mode, challenge }) => {
         "timeframes_toolbar",
         "source_selection_markers",
         "scales_date_format",
+        "create_volume_indicator_by_default",
+        "chart_scroll",
+        "chart_zoom",
+        "header_settings",
+        "header_chart_type",
+        "control_bar",
+        "header_fullscreen_button",
       ],
       custom_css_url: "../../assets/style.css",
-      overrides: {},
+      overrides: {
+        "paneProperties.horzGridProperties.color": "rgba(0, 0, 0, 0)",
+        "paneProperties.vertGridProperties.color": "rgba(0, 0, 0, 0)",
+      },
     };
 
     tvWidget = new widget(widgetOptions);
