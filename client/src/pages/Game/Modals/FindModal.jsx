@@ -1,7 +1,7 @@
 import { useAppContext } from "../../../context/appContext";
 import { Button, Form, Modal } from "react-bootstrap";
-
 import PvpImage from "../../../assets/game_modes/casual.png";
+import { useCallback } from "react";
 
 import "./modals.scss";
 import { useEffect } from "react";
@@ -22,14 +22,17 @@ const FindModal = () => {
     getUsers();
   }, []);
 
-  const handleInputChange = (id) => {
-    if (id !== 0) {
-      // SET TO CHALLENGE
-      const selected_user = users.find((u) => u._id === id);
+  const handleInputChange = useCallback(
+    (id) => {
+      if (id !== 0) {
+        // SET TO CHALLENGE
+        const selected_user = users.find((u) => u._id === id);
 
-      handleSetToChallenge(selected_user);
-    }
-  };
+        handleSetToChallenge(selected_user);
+      }
+    },
+    [handleSetToChallenge, users]
+  );
 
   const handleSetMatch = async () => {
     try {
@@ -48,7 +51,11 @@ const FindModal = () => {
   const players = (users) => {
     return users
       .filter((u) => u?._id !== user?._id)
-      .map((user) => <option value={user?._id}>{user?.name}</option>);
+      .map((user, index) => (
+        <option key={index} value={user?._id}>
+          {user?.name}
+        </option>
+      ));
   };
 
   return (
@@ -72,8 +79,6 @@ const FindModal = () => {
 
       <Modal.Body>
         <div className="box practice">
-          {/* <UserImage name="modal-img" user={user} pic={user?.profilepic?.key} /> */}
-
           <p className="my-3">Select a player to challenge.</p>
 
           {/* DISPLAY ALL USERS EXCEPT CURRENT USER */}

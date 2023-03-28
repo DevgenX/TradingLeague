@@ -3,7 +3,6 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./leaderboards.scss";
 import UserImage from "../common/UserImage";
-// import UserImage from "../common/UserImage";
 
 import { useAppContext } from "../../context/appContext";
 

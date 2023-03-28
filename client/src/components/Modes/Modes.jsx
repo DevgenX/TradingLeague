@@ -13,15 +13,23 @@ import PracticeModal from "../../pages/Game/Modals/PracticeModal";
 import FindModal from "../../pages/Game/Modals/FindModal";
 
 const Modes = () => {
-  const { user, handlePracticeModal, handleRankModal, handleFindModal } =
-    useAppContext();
+  const {
+    user,
+    handlePracticeModal,
+    handleRankModal,
+    handleFindModal,
+    showPvPModal,
+    showRankModal,
+    showPractice,
+    showFindModal,
+  } = useAppContext();
 
   return (
     <Row>
-      <PracticeModal />
-      <PvPModal />
-      <RankModal />
-      <FindModal />
+      {showPractice && <PracticeModal />}
+      {showPvPModal && <PvPModal />}
+      {showRankModal && <RankModal />}
+      {showFindModal && <FindModal />}
 
       <Col md={8}>
         <div className="modes-container">

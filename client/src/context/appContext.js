@@ -1,4 +1,10 @@
-import { useReducer, useContext, createContext, useCallback } from "react";
+import {
+  useReducer,
+  useContext,
+  createContext,
+  useCallback,
+  useMemo,
+} from "react";
 import reducer from "./reducers";
 import axios from "axios";
 
@@ -29,7 +35,6 @@ import {
   ACCEPT_CHALLENGE,
   UPDATE_HISTORY,
 } from "./actions";
-import { redirect } from "react-router-dom";
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -111,77 +116,85 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("token");
   }, []);
 
-  const setupUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN });
-    try {
-      const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
-        currentUser
-      );
-      const { user, token } = data;
-      dispatch({
-        type: SETUP_USER_SUCCESS,
-        payload: { user, token, alertText },
-      });
-      addUserToLocalStorage({ user, token, alertText });
-    } catch (error) {
-      dispatch({
-        type: SETUP_USER_ERROR,
-        payload: {
-          msg: error.response.data.msg,
-        },
-      });
-    }
-    clearAlert();
-  };
+  const setupUser = useCallback(
+    async ({ currentUser, endPoint, alertText }) => {
+      dispatch({ type: SETUP_USER_BEGIN });
+      try {
+        const { data } = await axios.post(
+          `/api/v1/auth/${endPoint}`,
+          currentUser
+        );
+        const { user, token } = data;
+        dispatch({
+          type: SETUP_USER_SUCCESS,
+          payload: { user, token, alertText },
+        });
+        addUserToLocalStorage({ user, token, alertText });
+      } catch (error) {
+        dispatch({
+          type: SETUP_USER_ERROR,
+          payload: {
+            msg: error.response.data.msg,
+          },
+        });
+      }
+      clearAlert();
+    },
+    [addUserToLocalStorage, clearAlert]
+  );
 
-  const getUsers = async () => {
+  const getUsers = useCallback(async () => {
     try {
       const response = await axios.get("api/v1/auth/users");
       dispatch({ type: GET_ALL_USERS, payload: response.data });
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const showModal = () => {
+  }, [dispatch]);
+  const showModal = useCallback(() => {
     dispatch({ type: SHOW_POPUP });
-  };
+  }, [dispatch]);
 
-  const handleSetMode = (mode) => {
-    dispatch({ type: SET_GAME_MODE, mode });
-  };
+  const handleSetMode = useCallback(
+    (mode) => {
+      dispatch({ type: SET_GAME_MODE, mode });
+    },
+    [dispatch]
+  );
 
-  const handlePvPModal = () => {
+  const handlePvPModal = useCallback(() => {
     dispatch({ type: SHOW_PVP_MODAL });
-  };
+  }, [dispatch]);
 
-  const handleFindModal = () => {
+  const handleFindModal = useCallback(() => {
     dispatch({ type: SHOW_FIND_MODAL });
-  };
+  }, [dispatch]);
 
-  const handlePracticeModal = () => {
+  const handlePracticeModal = useCallback(() => {
     dispatch({ type: SHOW_PRACTICE_MODAL });
-  };
+  }, [dispatch]);
 
-  const handleRankModal = () => {
+  const handleRankModal = useCallback(() => {
     dispatch({ type: SHOW_RANK_MODAL });
-  };
+  }, [dispatch]);
 
-  const handleGameResultModal = () => {
+  const handleGameResultModal = useCallback(() => {
     dispatch({ type: SHOW_GAME_RESULT_MODAL });
-  };
+  }, [dispatch]);
 
-  const handleSetToChallenge = (user) => {
-    dispatch({ type: SET_TO_CHALLENGE, payload: { user } });
-  };
+  const handleSetToChallenge = useCallback(
+    (user) => {
+      dispatch({ type: SET_TO_CHALLENGE, payload: { user } });
+    },
+    [dispatch]
+  );
 
-  const logoutUser = () => {
+  const logoutUser = useCallback(() => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
-  };
+  }, [dispatch, removeUserFromLocalStorage]);
 
-  const getAllHistory = async () => {
+  const getAllHistory = useCallback(async () => {
     try {
       const { data } = await authFetch.get("/history");
 
@@ -189,59 +202,7 @@ const AppProvider = ({ children }) => {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const newHistory = async (history, new_challenge) => {
-    try {
-      const { data } = await authFetch.post("/history/new", history);
-
-      dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
-
-      if (new_challenge) {
-        new_challenge.history_id = data._id;
-
-        newChallenge(new_challenge);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // UPDATE HISTORY
-  const updateHistory = async (history, challenge_id) => {
-    try {
-      const { data } = await authFetch.patch("/history/update", {
-        history,
-        challenge_id,
-      });
-
-      // dispatch({ type: UPDATE_HISTORY, payload: { history: data } });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // GET ALL CHALLENGES OF LOGGED IN USER
-  const getAllChallenges = async (id) => {
-    try {
-      const { data } = await authFetch.get(`/challenge/${id}`);
-
-      dispatch({ type: GET_ALL_CHALLENGES, payload: { challenges: data } });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // UPDATE USER'S MMR - RANKED GAME
-  const updateMMR = async (new_mmr) => {
-    try {
-      const { data } = await authFetch.patch(`/auth/updateMMR`, { new_mmr });
-
-      dispatch({ type: UPDATE_USER_MMR, payload: { mmr: data.mmr } });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  }, [authFetch, dispatch]);
 
   const newChallenge = useCallback(
     async (challenge) => {
@@ -251,7 +212,71 @@ const AppProvider = ({ children }) => {
         console.log(e);
       }
     },
-    [dispatch, authFetch]
+    [authFetch]
+  );
+
+  const newHistory = useCallback(
+    async (history, new_challenge) => {
+      try {
+        const { data } = await authFetch.post("/history/new", history);
+
+        dispatch({ type: ADD_NEW_HISTORY, payload: { history: data } });
+
+        if (new_challenge) {
+          new_challenge.history_id = data._id;
+
+          newChallenge(new_challenge);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch, dispatch, newChallenge]
+  );
+
+  // UPDATE HISTORY
+  const updateHistory = useCallback(
+    async (history, challenge_id) => {
+      try {
+        const { data } = await authFetch.patch("/history/update", {
+          history,
+          challenge_id,
+        });
+
+        // dispatch({ type: UPDATE_HISTORY, payload: { history: data } });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch]
+  );
+
+  // GET ALL CHALLENGES OF LOGGED IN USER
+  const getAllChallenges = useCallback(
+    async (id) => {
+      try {
+        const { data } = await authFetch.get(`/challenge/${id}`);
+
+        dispatch({ type: GET_ALL_CHALLENGES, payload: { challenges: data } });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch, dispatch]
+  );
+
+  // UPDATE USER'S MMR - RANKED GAME
+  const updateMMR = useCallback(
+    async (new_mmr) => {
+      try {
+        const { data } = await authFetch.patch(`/auth/updateMMR`, { new_mmr });
+
+        dispatch({ type: UPDATE_USER_MMR, payload: { mmr: data.mmr } });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch, dispatch]
   );
 
   const updateUser = useCallback(
@@ -281,61 +306,86 @@ const AppProvider = ({ children }) => {
     [dispatch, authFetch, addUserToLocalStorage, clearAlert]
   );
 
-  const declinePvp = async (declined_id, history_id) => {
-    try {
-      // UPDATE GAME HISTORY STATUS AND REMOVE TO CHALLENGE DB
-      await authFetch.patch(`/challenge/decline/${declined_id}`, {
-        status: "declined",
-        history_id,
+  const declinePvp = useCallback(
+    async (declined_id, history_id) => {
+      try {
+        await authFetch.patch(`/challenge/decline/${declined_id}`, {
+          status: "declined",
+          history_id,
+        });
+
+        dispatch({ type: DECLINE_CHALLENGE, payload: { declined_id } });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [authFetch, dispatch]
+  );
+
+  const acceptPvp = useCallback(
+    (to_challenge, curGame) => {
+      dispatch({
+        type: ACCEPT_CHALLENGE,
+        payload: { user: to_challenge, currentGame: curGame },
       });
+    },
+    [dispatch]
+  );
 
-      dispatch({ type: DECLINE_CHALLENGE, payload: { declined_id } });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const acceptPvp = (to_challenge, curGame) => {
-    dispatch({
-      type: ACCEPT_CHALLENGE,
-      payload: { user: to_challenge, currentGame: curGame },
-    });
-  };
-
-  const updateAcceptedPvp = async () => {
-    try {
-      // UPDATE GAME HISTORY STATUS AND UPDATE TO CHALLENGE DB
-    } catch (e) {
-      console.log(e);
-    }
-    // dispatch({ type: ACCEPT_CHALLENGE, payload: { user: to_challenge_user } });
-  };
+  const memoizedValues = useMemo(
+    () => ({
+      getUsers,
+      displayAlert,
+      setupUser,
+      logoutUser,
+      updateUser,
+      updateMMR,
+      showModal,
+      getAllHistory,
+      newHistory,
+      updateHistory,
+      getAllChallenges,
+      newChallenge,
+      handlePvPModal,
+      handleFindModal,
+      handlePracticeModal,
+      handleRankModal,
+      handleSetMode,
+      handleGameResultModal,
+      handleSetToChallenge,
+      acceptPvp,
+      declinePvp,
+    }),
+    [
+      getUsers,
+      displayAlert,
+      setupUser,
+      logoutUser,
+      updateUser,
+      updateMMR,
+      showModal,
+      getAllHistory,
+      newHistory,
+      updateHistory,
+      getAllChallenges,
+      newChallenge,
+      handlePvPModal,
+      handleFindModal,
+      handlePracticeModal,
+      handleRankModal,
+      handleSetMode,
+      handleGameResultModal,
+      handleSetToChallenge,
+      acceptPvp,
+      declinePvp,
+    ]
+  );
 
   return (
     <AppContext.Provider
       value={{
         ...state,
-        getUsers,
-        displayAlert,
-        setupUser,
-        logoutUser,
-        updateUser,
-        updateMMR,
-        showModal,
-        getAllHistory,
-        newHistory,
-        updateHistory,
-        getAllChallenges,
-        newChallenge,
-        handlePvPModal,
-        handleFindModal,
-        handlePracticeModal,
-        handleRankModal,
-        handleSetMode,
-        handleGameResultModal,
-        handleSetToChallenge,
-        acceptPvp,
-        declinePvp,
+        ...memoizedValues,
       }}
     >
       {children}

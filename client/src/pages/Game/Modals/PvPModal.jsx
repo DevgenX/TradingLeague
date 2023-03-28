@@ -1,7 +1,8 @@
 import { useAppContext } from "../../../context/appContext";
-import { useContext } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import UserImage from "../../../components/common/UserImage";
+import { useCallback } from "react";
 
 import PvpImage from "../../../assets/game_modes/casual.png";
 
@@ -17,13 +18,13 @@ const PvPModal = () => {
 
   const navigate = useNavigate();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     // Clear to challenge user
     handleSetToChallenge(null);
 
     // setToChallenge(null);
     handlePvPModal();
-  };
+  }, [handlePvPModal, handleSetToChallenge]);
 
   const redirect = () => {
     handlePvPModal();
@@ -67,24 +68,8 @@ const PvPModal = () => {
                   }`}
                 >
                   {user?.name || "Unnamed"} <br />{" "}
-                  {/* <small className="username">
-                    @
-                    {user?.username?.length > 16
-                      ? `${user?.username.substring(
-                          0,
-                          8
-                        )}...${user?.username.substring(
-                          user?.username?.length - 4,
-                          user?.username?.length
-                        )}`
-                      : user?.username}
-                  </small> */}
                 </p>
-                {/* <UserImage
-                  name="modal-img"
-                  user={user}
-                  pic={user?.profilepic?.key}
-                /> */}
+                <UserImage name="modal-img" user={user} />
               </div>
             </Col>
 
@@ -94,29 +79,13 @@ const PvPModal = () => {
 
             <Col md="5">
               <div className="user d-flex align-items-center">
-                {/* <UserImage
-                  user={toChallenge}
-                  profilepic={toChallenge?.profilepic}
-                  name="modal-img"
-                /> */}
+                <UserImage user={toChallenge} name="modal-img" />
                 <p
                   className={`user-name ${
                     toChallenge?.name?.includes(".") ? "ens" : ""
                   }`}
                 >
                   {toChallenge?.name || "Unnamed"} <br />{" "}
-                  {/* <small className="username">
-                    @
-                    {toChallenge?.username?.length > 16
-                      ? `${toChallenge?.username?.substring(
-                          0,
-                          8
-                        )}...${toChallenge?.username?.substring(
-                          toChallenge?.username?.length - 4,
-                          toChallenge?.username?.length
-                        )}`
-                      : toChallenge?.username}
-                  </small> */}
                 </p>
               </div>
             </Col>

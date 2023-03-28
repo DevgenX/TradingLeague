@@ -5,7 +5,7 @@ import UserImage from "../../../components/common/UserImage";
 import RankedImage from "../../../assets/game_modes/rank.png";
 import "./modals.scss";
 
-const RankModal = ({ show, setShow }) => {
+const RankModal = () => {
   const { user, showRankModal, handleRankModal, handleSetMode } =
     useAppContext();
 

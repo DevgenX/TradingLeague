@@ -35,7 +35,7 @@ const Pending = () => {
   };
 
   return (
-    <div>
+    <>
       <Row className="justify-content-center">
         <Col md="8" className="mt-5 mb-1">
           <h1 className="pending-title">Pending Challengers</h1>
@@ -86,7 +86,7 @@ const Pending = () => {
         </Col>
         <Col md="4"></Col>
       </Row>
-    </div>
+    </>
   );
 };
 

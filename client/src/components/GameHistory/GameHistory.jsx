@@ -5,8 +5,60 @@ import TopNav from "../TopNav/TopNav";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
+import UserImage from "../common/UserImage";
 
 const GameHistoryTable = () => {
+  const testHistory = [
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "Win",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "Lose",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "declined",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "Win",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "declined",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "declined",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "declined",
+      profit: 100,
+    },
+    {
+      user_2: { mmr: 1000, name: "TEST123", profit: 999 },
+      game_mode: "casual",
+      status: "declined",
+      profit: 100,
+    },
+  ];
+
   const { history, getAllHistory } = useAppContext();
 
   useEffect(() => {
@@ -27,6 +79,21 @@ const GameHistoryTable = () => {
     else if (user_profit < challenger_profit) return "Lose";
   };
 
+  const getResultClassName = (gameInfo) => {
+    const { profit, user_2 } = gameInfo;
+
+    if (profit > user_2.profit) return "win-result";
+    else if (profit < user_2.profit) return "lose-result";
+
+    // if (result?.toLowerCase() === "declined") {
+    //   return "declined-result";
+    // } else if (result?.toLowerCase() === "win") {
+    //   return "win-result";
+    // } else {
+    //   return "lose-result";
+    // }
+  };
+
   return (
     <>
       <TopNav />
@@ -36,10 +103,9 @@ const GameHistoryTable = () => {
             <Col md="12">
               <h1 className="match-title">Match History</h1>
             </Col>
-            <Col md="4"></Col>
           </Row>
           <Row className="justify-content-around">
-            <Col md={8}>
+            <Col md={12}>
               <Table
                 hover
                 bordered
@@ -61,10 +127,13 @@ const GameHistoryTable = () => {
                   ) : (
                     history.map((game, index) => (
                       <tr key={index}>
-                        <td>{game.user_2?.mmr && getRank(game.user_2?.mmr)}</td>
+                        {/* <td>{game.user_2?.mmr && getRank(game.user_2?.mmr)}</td> */}
+                        <td className="game-history-badge">
+                          <UserImage user={game.user_2} />
+                        </td>
                         <td>{game.user_2?.name || "Unnamed"}</td>
                         <td>{game.game_mode === "casual" && "PvP"}</td>
-                        <td>
+                        <td className={` ${getResultClassName(game)}`}>
                           {game.status === "done"
                             ? getResult(
                                 game.profit,
