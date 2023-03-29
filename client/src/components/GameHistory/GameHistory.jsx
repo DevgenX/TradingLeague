@@ -31,8 +31,8 @@ const GameHistoryTable = () => {
   const getResultClassName = (gameInfo) => {
     const { profit, user_2 } = gameInfo;
 
-    if (profit > user_2.profit) return "win-result";
-    else if (profit < user_2.profit) return "lose-result";
+    if (profit && profit > user_2.profit) return "win-result";
+    else if (profit && profit < user_2.profit) return "lose-result";
     else return "declined-result";
   };
 

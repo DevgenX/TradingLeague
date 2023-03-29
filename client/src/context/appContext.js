@@ -70,7 +70,6 @@ const AppProvider = ({ children }) => {
   });
 
   // request
-
   authFetch.interceptors.request.use(
     (config) => {
       config.headers["Authorization"] = `Bearer ${state.token}`;
@@ -242,6 +241,7 @@ const AppProvider = ({ children }) => {
           history,
           challenge_id,
         });
+
         dispatch({ type: UPDATE_HISTORY, payload: { history: data } });
       } catch (e) {
         console.log(e);

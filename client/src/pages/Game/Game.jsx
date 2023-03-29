@@ -278,7 +278,7 @@ const Game = ({ mode, challenge }) => {
       } else if (mode === "casual" && !challenge) {
         // casual - new challenge
         const new_casual_history = {
-          user_2: toChallenge,
+          user_2: { ...toChallenge, profile_pic: null },
           gain_loss: total_gain,
           profit: final_profit.toFixed(2),
           game_mode: mode,
@@ -300,7 +300,7 @@ const Game = ({ mode, challenge }) => {
       } else if (mode === "casual" && challenge) {
         // casual - accept challenge
         const accept_casual_history = {
-          user_2: toChallenge,
+          user_2: { ...toChallenge, profile_pic: null },
           gain_loss: total_gain,
           profit: final_profit.toFixed(2),
           game_mode: mode,
@@ -312,9 +312,9 @@ const Game = ({ mode, challenge }) => {
           _id: currentGame.history_id,
           status: "done",
           user_2: {
-            _id: user._id,
+            _id: user?._id,
             name: user?.name,
-            mmr: user.mmr,
+            mmr: user?.mmr,
             profit: final_profit.toFixed(2),
             gain_loss: total_gain,
           },

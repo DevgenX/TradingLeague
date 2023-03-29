@@ -20,7 +20,7 @@ const FindModal = () => {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [getUsers]);
 
   const handleInputChange = useCallback(
     (id) => {
