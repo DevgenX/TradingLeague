@@ -145,6 +145,7 @@ const AppProvider = ({ children }) => {
   const getUsers = useCallback(async () => {
     try {
       const response = await axios.get("api/v1/auth/users");
+
       dispatch({ type: GET_ALL_USERS, payload: response.data });
     } catch (e) {
       console.log(e);

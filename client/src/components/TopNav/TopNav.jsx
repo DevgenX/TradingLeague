@@ -9,6 +9,7 @@ import { FaCaretDown } from "react-icons/fa";
 import "./topnav.scss";
 import styled from "styled-components";
 import PopupForm from "../common/Editprofile";
+import axios from "axios";
 
 const TopNav = () => {
   const { user, logoutUser, showModal, showPopup } = useAppContext();
@@ -17,8 +18,21 @@ const TopNav = () => {
   const [pic, setPic] = useState(null);
 
   useEffect(() => {
-    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user?._id}`);
+    getUserProfileImage(user?._id);
   }, [pic, user?._id]);
+
+  const getUserProfileImage = async (userId) => {
+    try {
+      const userImageLink = `http://localhost:4999/api/v1/auth/profilepic/${userId}`;
+      const { data } = await axios.get(userImageLink);
+
+      if (data !== "") {
+        setPic(userImageLink);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -49,7 +63,7 @@ const TopNav = () => {
             <Nav className="btn-container ms-auto">
               <button type="button" className="btn" onClick={handleDropdown}>
                 <img
-                  src={pic !== null ? pic : defaultUser}
+                  src={pic || defaultUser}
                   alt="default-user"
                   className="user-tab me-2"
                 />

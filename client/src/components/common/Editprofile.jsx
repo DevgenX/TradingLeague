@@ -43,13 +43,13 @@ const PopupForm = () => {
   const [preview, setPreview] = useState(null);
 
   useEffect(() => {
-    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user._id}`);
-  }, [pic]);
+    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user?._id}`);
+  }, [user?._id, pic]);
 
   const fileInput = useRef([]);
 
   const handleSubmit = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
 
       if (!name || !email) {
@@ -57,7 +57,7 @@ const PopupForm = () => {
         return;
       }
 
-      updateUser({ name, email });
+      await updateUser({ name, email });
     },
     [name, email, displayAlert, updateUser]
   );
@@ -147,14 +147,4 @@ const Popup = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const PopupInner = styled.div`
-  background: linear-gradient(326.9deg, #13132b 5.79%, #135e87 283.21%);
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 500px;
-  max-height: 500px;
-  overflow-y: auto;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 `;

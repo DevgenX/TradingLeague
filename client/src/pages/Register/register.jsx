@@ -100,6 +100,13 @@ const Register = () => {
         <button type="submit" className="btn btn-block" disabled={isLoading}>
           Submit
         </button>
+        <button
+          type="submit"
+          className="btn btn-block"
+          onClick={() => navigate("/")}
+        >
+          Visit
+        </button>
         <p>
           {values.isUser ? "Don't have an account?" : "Have an account?"}
           <button type="button" onClick={toggleUser} className="user-btn">
@@ -113,7 +120,7 @@ const Register = () => {
 
 const Wrapper = styled.section`
   /* background: url("../assets/login-bg.png"); */
-  background: radial-gradient(circle, #2a41c5 0%, #0d1b33 100%);
+  background-color: #101124;
   height: 100vh;
   width: 100%;
   background-size: cover;

@@ -12,6 +12,7 @@ import Ranking from "../../assets/ledgers/ranking.png";
 import History from "../../assets/ledgers/history.png";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
   const { user } = useAppContext();
@@ -19,18 +20,28 @@ const Navbar = () => {
   const [pic, setPic] = useState(null);
 
   useEffect(() => {
-    setPic(`http://localhost:4999/api/v1/auth/profilepic/${user._id}`);
-  }, [pic, user._id]);
+    getUserProfileImage(user?._id);
+    // setPic(`http://localhost:4999/api/v1/auth/profilepic/${user?._id}`);
+  }, [pic, user?._id]);
+
+  const getUserProfileImage = async (userId) => {
+    try {
+      const userImageLink = `http://localhost:4999/api/v1/auth/profilepic/${userId}`;
+      const { data } = await axios.get(userImageLink);
+
+      if (data !== "") {
+        setPic(userImageLink);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Row className="navbar-container d-flex justify-content-between">
       <Col md="8" className="d-flex flex-row profile-container">
         <div className="profile-wrapper">
-          <img
-            className="profile"
-            src={pic !== null ? pic : Profile}
-            alt="profile"
-          />
+          <img className="profile" src={pic || Profile} alt="profile" />
           <div className="name">
             <h1>{user?.name}</h1>
             {/* <small>{`@${user?.name}`}</small> */}

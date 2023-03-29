@@ -43,7 +43,10 @@ const Modes = () => {
           </Row>
           <Row className="d-flex text-center align-items-center justify-content-center">
             <Col md={user ? 3 : 12} sm={user ? 6 : 12}>
-              <div className="box1" onClick={handlePracticeModal}>
+              <div
+                className={user ? "box1" : "box1-logout"}
+                onClick={handlePracticeModal}
+              >
                 <Image src={Practice} alt="Practice mode" fluid />
                 <h3>Practice</h3>
               </div>
