@@ -72,7 +72,8 @@ const PopupForm = () => {
       const formData = new FormData();
       formData.append(`avatar`, image);
 
-      await uploadPic(formData);
+      await uploadPic(formData); //send image to server
+      await updateUser({ name, email }); //get image from server and save to app state
     } catch (e) {
       console.log(e);
     }

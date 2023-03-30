@@ -19,9 +19,15 @@ const TopNav = () => {
 
   useEffect(() => {
     getUserProfileImage(user?._id);
-  }, [pic, user?._id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?._id, user?.profile_pic]);
+
+  // useEffect(() => {
+  //   getUserProfileImage(user?._id);
+  // }, [pic, user?._id]);
 
   const getUserProfileImage = async (userId) => {
+    setPic(null);
     try {
       const userImageLink = `http://localhost:4999/api/v1/auth/profilepic/${userId}`;
       const { data } = await axios.get(userImageLink);
@@ -31,6 +37,7 @@ const TopNav = () => {
       }
     } catch (err) {
       console.log(err);
+      setPic(null);
     }
   };
 

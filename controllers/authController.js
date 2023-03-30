@@ -94,6 +94,10 @@ const updateMMR = async (req, res) => {
 const uploadProfilePic = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
 
+  if (!user) {
+    throw new BadRequestError("failed to fetch user");
+  }
+
   user.profile_pic = req.file.buffer;
 
   await user.save();

@@ -151,6 +151,7 @@ const AppProvider = ({ children }) => {
       console.log(e);
     }
   }, [dispatch]);
+
   const showModal = useCallback(() => {
     dispatch({ type: SHOW_POPUP });
   }, [dispatch]);
@@ -265,7 +266,6 @@ const AppProvider = ({ children }) => {
     [authFetch, dispatch]
   );
 
-  // UPDATE USER'S MMR - RANKED GAME
   const updateMMR = useCallback(
     async (new_mmr) => {
       try {

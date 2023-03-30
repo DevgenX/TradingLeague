@@ -22,9 +22,10 @@ const Navbar = () => {
   useEffect(() => {
     getUserProfileImage(user?._id);
     // setPic(`http://localhost:4999/api/v1/auth/profilepic/${user?._id}`);
-  }, [pic, user?._id]);
+  }, [user?._id, user?.profile_pic]);
 
   const getUserProfileImage = async (userId) => {
+    setPic(null);
     try {
       const userImageLink = `http://localhost:4999/api/v1/auth/profilepic/${userId}`;
       const { data } = await axios.get(userImageLink);
@@ -34,6 +35,7 @@ const Navbar = () => {
       }
     } catch (err) {
       console.log(err);
+      setPic(null);
     }
   };
 

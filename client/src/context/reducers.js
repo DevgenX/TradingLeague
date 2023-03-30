@@ -25,6 +25,7 @@ import {
   DECLINE_CHALLENGE,
   ACCEPT_CHALLENGE,
   UPDATE_HISTORY,
+  UPDATE_PROFILE_PIC,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -115,7 +116,7 @@ const reducer = (state, action) => {
   if (action.type === UPDATE_USER_SUCCESS) {
     return {
       ...state,
-      isLoading: true,
+      isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
       showAlert: true,
@@ -138,7 +139,7 @@ const reducer = (state, action) => {
   if (action.type === UPDATE_USER_MMR) {
     // UPDATE MMR IN USERS[] (TO UPDATE LEADERBOARDS)
     const updated_users = state.users.map((u) =>
-      u?._id == action.payload._id
+      u?._id === action.payload._id
         ? {
             ...u,
             mmr: action.payload.mmr,
@@ -261,6 +262,13 @@ const reducer = (state, action) => {
     return {
       ...state,
       toChallenge: action.payload.user,
+    };
+  }
+
+  if (action.type === UPDATE_PROFILE_PIC) {
+    return {
+      ...state,
+      user: { ...state.user, profile_pic: action.payload.profile_pic },
     };
   }
 
