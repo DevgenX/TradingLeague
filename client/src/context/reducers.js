@@ -25,7 +25,7 @@ import {
   DECLINE_CHALLENGE,
   ACCEPT_CHALLENGE,
   UPDATE_HISTORY,
-  UPDATE_PROFILE_PIC,
+  // UPDATE_PROFILE_PIC,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -262,13 +262,6 @@ const reducer = (state, action) => {
     return {
       ...state,
       toChallenge: action.payload.user,
-    };
-  }
-
-  if (action.type === UPDATE_PROFILE_PIC) {
-    return {
-      ...state,
-      user: { ...state.user, profile_pic: action.payload.profile_pic },
     };
   }
 
