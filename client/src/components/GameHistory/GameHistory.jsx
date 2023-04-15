@@ -22,7 +22,6 @@ const GameHistoryTable = () => {
   //   else return "Fomo";
   // };
 
-  // GET RESULT IF WIN OR LOSE
   const getResult = (user_profit, challenger_profit) => {
     if (user_profit > challenger_profit) return "Win";
     else if (user_profit < challenger_profit) return "Lose";

@@ -5,8 +5,6 @@ import multer from "multer";
 const storage = multer.memoryStorage({
   destination: "uploads/",
   filename: function (req, file, cb) {
-    console.log(req.body);
-    console.log(req.file);
     cb(null, req.body.id + ".jpg");
   },
 });
