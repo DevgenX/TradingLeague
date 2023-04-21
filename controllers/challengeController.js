@@ -22,8 +22,6 @@ const getAllChallenges = async (req, res, next) => {
   res.status(StatusCodes.OK).send(challenges);
 };
 
-
-
 const createChallenge = async (req, res, next) => {
   const challenge = req.body;
 

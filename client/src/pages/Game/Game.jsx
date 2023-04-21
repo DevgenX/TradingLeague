@@ -9,7 +9,7 @@ import TopNav from "../../components/TopNav/TopNav";
 
 import Datafeed from "../../datafeed/datafeed";
 import { _lastbar, nextDay } from "../../datafeed/stream";
-import { next_feed, c_name } from "../../datafeed/historyProvider";
+import { next_feed } from "../../datafeed/historyProvider";
 import { widget } from "../../charting_library";
 import { useAppContext } from "./../../context/appContext";
 import GameResultModal from "./Modals/GameResultModal";
@@ -25,11 +25,11 @@ const Game = ({ mode, challenge }) => {
   const {
     user,
     currentGame,
-    showGameResult,
+
     toChallenge,
     newHistory,
     updateHistory,
-    newChallenge,
+
     updateMMR,
     handleGameResultModal,
   } = useAppContext();
@@ -469,13 +469,9 @@ const Game = ({ mode, challenge }) => {
         c_name={crypto_name}
         game_mode={mode}
         tradeHistory={tradeHistory}
-        // gameDuration={gameDuration}
         counter={counter}
         setCounter={setCounter}
         setTradeHistory={setTradeHistory}
-        // winRate={winRate}
-        // setWinRate={setWinRate}
-        // currentPlay={currentPlay}
         positionSize={positionSize}
         setPositionSize={setPositionSize}
       />

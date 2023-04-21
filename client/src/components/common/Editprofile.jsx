@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-
 import styled from "styled-components";
 import { useAppContext } from "../../context/appContext";
 import { Button } from "react-bootstrap";
+
 import Resizer from "react-image-file-resizer";
 
 import Alert from "../Alert/Alert";

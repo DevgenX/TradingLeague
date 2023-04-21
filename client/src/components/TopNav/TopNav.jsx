@@ -36,7 +36,6 @@ const TopNav = () => {
         setPic(userImageLink);
       }
     } catch (err) {
-      console.log(err);
       setPic(null);
     }
   };
