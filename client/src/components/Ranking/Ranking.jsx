@@ -1,4 +1,4 @@
-import { Col, Container, Row, Button } from "react-bootstrap";
+import { Col, Row, Button } from "react-bootstrap";
 import TopNav from "../TopNav/TopNav";
 import { Link } from "react-router-dom";
 import "./ranking.scss";
