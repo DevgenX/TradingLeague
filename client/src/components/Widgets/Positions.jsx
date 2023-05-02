@@ -91,6 +91,10 @@ const PositionDiv = styled.div`
   padding: 2rem;
   color: #fff;
   height: 100%;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const GameHeader = styled.div`

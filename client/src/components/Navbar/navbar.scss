@@ -1,6 +1,7 @@
 .navbar-container {
   color: white;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .profile-container {
@@ -96,6 +97,48 @@ ul {
         #f00,
         #00f
       );
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .ledgers-container {
+    display: none;
+  }
+
+  .modes-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    img {
+      width: 50%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    }
+
+    .box1 {
+      margin: auto;
+      margin-bottom: 10px;
+      height: 50%;
+      width: 50%;
+    }
+
+    .box2 {
+      margin: auto;
+      margin-bottom: 10px;
+      height: 50%;
+      width: 50%;
+    }
+
+    .box3 {
+      margin: auto;
+      margin-bottom: 10px;
+      height: 50%;
+      width: 50%;
     }
   }
 }

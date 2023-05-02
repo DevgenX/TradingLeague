@@ -1,0 +1,124 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+/// Event wrapper
+/// @author Harry Roberts
+/// @param {Bool} $self [false] - Whether or not to include current selector
+/// @link https://twitter.com/csswizardry/status/478938530342006784 Original tweet from Harry Roberts
+@mixin on-event($self: false) {
+  @if $self {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  } @else {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+/// Make a context based selector a little more friendly
+/// @author Hugo Giraudel
+/// @param {String} $context
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint== "screen-xs" {
+    @media screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint== "screen-sm" {
+    @media (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  } @else if $breakpoint== "screen-md" {
+    @media (min-width: 992px) and (max-width: 1199px) {
+      @content;
+    }
+  } @else if $breakpoint== "screen-lg" {
+    @media screen and (min-width: 1200px) {
+      @content;
+    }
+  } @else if $breakpoint== "screen-xl" {
+    @media (min-width: 2560px) {
+      @content;
+    }
+  } @else if $breakpoint== "ipad-pro-p" {
+    @media (min-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint== "ipad-pro-l" {
+    @media (min-width: 1024px) and (max-width: 1366px) {
+      @content;
+    }
+  }
+}
+
+@mixin placeholder {
+  &.placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+@mixin font-face(
+  $fontFamily,
+  $path,
+  $fileName,
+  $svgLabel,
+  $fontWeight: normal,
+  $fontStyle: normal
+) {
+  @font-face {
+    font-family: $fontFamily;
+    src: url("#{$path + $fileName}.eot");
+    src: url("#{$path + $fileName}.eot?#iefix") format("embedded-opentype"),
+      url("#{$path + $fileName}.woff") format("woff"),
+      url("#{$path + $fileName}.ttf") format("truetype"),
+      url("#{$path + $fileName}.svg##{$svgLabel}") format("svg");
+
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+}
+
+// @mixin transition($transition-property, $transition-time, $method) {
+//     -webkit-transition: $transition-property $transition-time $method;
+//     -moz-transition: $transition-property $transition-time $method;
+//     -ms-transition: $transition-property $transition-time $method;
+//     -o-transition: $transition-property $transition-time $method;
+//     transition: $transition-property $transition-time $method;
+// }
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}

@@ -204,9 +204,17 @@ const GameDiv = styled.div`
   border-radius: 12px;
   padding: 2rem;
   color: #fff;
+  @media (max-width: 1024px) {
+    width: 350px;
+    max-width: 500px;
+  }
 `;
 
 const GameBody = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+
   margin: 2rem 0;
   padding: 16px 8px;
   background: linear-gradient(
@@ -253,6 +261,9 @@ const ButtonContainer = styled.div`
     }
     &.next-day {
       background: linear-gradient(180deg, #02a3fe 0%, #7d40ff 100%);
+    }
+    @media (max-width: 1024px) {
+      min-height: 20% !important;
     }
   }
 `;
@@ -332,7 +343,7 @@ const BodyDiv = styled.div`
     justify-content: space-between;
     &.stoploss {
       margin-left: 8px;
-      /* @include respond-to("screen-xs") {
+      @include respond-to("screen-xs") {
         margin-left: 0;
         margin-top: 8px;
       }
@@ -343,7 +354,7 @@ const BodyDiv = styled.div`
       @include respond-to("screen-md") {
         margin-left: 0;
         margin-top: 8px;
-      } */
+      }
     }
     small {
       color: #6a6ba0;

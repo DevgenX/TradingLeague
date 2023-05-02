@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const GameDiv = styled.div`
-  @import "../mixins/mixins";
+  @import "../../../src/styles/mixins.scss";
   @import "../common/variables";
   position: relative;
 

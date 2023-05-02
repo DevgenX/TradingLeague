@@ -25,11 +25,9 @@ const Game = ({ mode, challenge }) => {
   const {
     user,
     currentGame,
-
     toChallenge,
     newHistory,
     updateHistory,
-
     updateMMR,
     handleGameResultModal,
   } = useAppContext();
@@ -41,6 +39,7 @@ const Game = ({ mode, challenge }) => {
     status: false,
     desc: null,
   });
+
   const [position, setPosition] = useState(null);
   const [leverage, setLeverage] = useState(1);
   const [positionSize, setPositionSize] = useState(1000);
@@ -252,13 +251,13 @@ const Game = ({ mode, challenge }) => {
     try {
       if (mode === "rank") {
         // rank
-        const rank_history = {
-          profit: final_profit.toFixed(2),
-          gain_loss: total_gain,
-          game_mode: mode,
-          owner: user?._id,
-          status: "done",
-        };
+        // const rank_history = {
+        //   profit: final_profit.toFixed(2),
+        //   gain_loss: total_gain,
+        //   game_mode: mode,
+        //   owner: user?._id,
+        //   status: "done",
+        // };
 
         let new_mmr;
 

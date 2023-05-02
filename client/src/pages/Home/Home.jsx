@@ -11,7 +11,6 @@ const Home = () => {
   return (
     <>
       <TopNav />
-
       <Container className="my-4">
         {user && <Navbar />}
         <Modes />

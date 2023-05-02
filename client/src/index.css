@@ -234,3 +234,9 @@ button:disabled {
 span {
   color: gold;
 }
+
+@media (min-width: 390px) {
+  .navbar {
+    display: none;
+  }
+}
