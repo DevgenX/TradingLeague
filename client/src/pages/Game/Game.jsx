@@ -49,7 +49,7 @@ const Game = ({ mode, challenge }) => {
 
   const ref = useRef();
   const time = new Date();
-  time.setSeconds(time.getSeconds() - 20); // 60 seconds
+  time.setSeconds(time.getSeconds() - 10); // 60 seconds
 
   useEffect(() => {
     // Get crypto name to be displayed on game result
